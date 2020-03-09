@@ -23,7 +23,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Musify-Web-App", "Musify-We
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "51745"
+		SlnRelativePath = "Musify-Web-App\"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth Service", "Auth Service\Auth Service.csproj", "{8B84738B-618A-4564-8553-DFC95438887D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +42,10 @@ Global
 		{CBA3CF7C-19AA-488C-8E7F-9B8246281114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA3CF7C-19AA-488C-8E7F-9B8246281114}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBA3CF7C-19AA-488C-8E7F-9B8246281114}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8B84738B-618A-4564-8553-DFC95438887D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B84738B-618A-4564-8553-DFC95438887D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B84738B-618A-4564-8553-DFC95438887D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B84738B-618A-4564-8553-DFC95438887D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

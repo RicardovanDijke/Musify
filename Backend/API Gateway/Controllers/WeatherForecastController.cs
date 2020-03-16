@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace API_Gateway.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,7 +27,8 @@ namespace API_Gateway.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -35,5 +40,33 @@ namespace API_Gateway.Controllers
             })
             .ToArray();
         }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("post")]
+
+        public String Post()
+        {
+            return "Receiving?";
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("upload")]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            var file2 = file;
+
+            using (Stream stream = file.OpenReadStream())
+            {
+                using (var binaryReader = new BinaryReader(stream))
+                {
+                    var fileContent = binaryReader.ReadBytes((int)file.Length);
+                    string str = Encoding.Default.GetString(fileContent);
+                    //await this.UploadFile(file.ContentDisposition);
+                }
+            }
+
+            return new OkResult();
+        }
+
     }
 }

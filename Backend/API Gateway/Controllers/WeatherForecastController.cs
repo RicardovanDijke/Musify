@@ -55,7 +55,7 @@ namespace API_Gateway.Controllers
         {
             var file2 = file;
 
-            using (Stream stream = file.OpenReadStream())
+            await using (Stream stream = file.OpenReadStream())
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {

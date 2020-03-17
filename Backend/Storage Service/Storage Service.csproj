@@ -5,5 +5,10 @@
     <RootNamespace>Storage_Service</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="taglib" Version="2.1.0" />
+  </ItemGroup>
+
 
 </Project>

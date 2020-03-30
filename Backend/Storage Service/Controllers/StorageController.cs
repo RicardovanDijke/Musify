@@ -56,7 +56,7 @@ namespace Storage_Service.Controllers
                     var fileContent = binaryReader.ReadBytes((int)file.Length);
                     var str = Encoding.Default.GetString(fileContent);
                     //await this.UploadFile(file.ContentDisposition);
-                    var filePath = "C:\\users\\Pajama Sammy\\desktop\\testmp3.mp3";
+                    var filePath = "C:\\users\\ricar\\desktop\\testmp3.mp3";
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {

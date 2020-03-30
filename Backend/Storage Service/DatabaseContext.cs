@@ -1,4 +1,6 @@
-﻿using Core.Model;
+﻿
+
+using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Storage_Service
@@ -15,18 +17,18 @@ namespace Storage_Service
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().HasData(new User
-            //{
-            //    ID = 1,
-            //    UserName = "Uncle",
-            //    DisplayName = "Bob"
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                ID = 1,
+                UserName = "Uncle",
+                DisplayName = "Bob"
 
-            //}, new User
-            //{
-            //    ID = 2,
-            //    UserName = "Uncle",
-            //    DisplayName = "Bob"
-            //});
+            }, new User
+            {
+                ID = 2,
+                UserName = "Uncle",
+                DisplayName = "Bob"
+            });
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Auth_Service
             return context.Users.ToList();
         }
 
-        public void Update(User dbEntity, User entity)
+        public void Update(User entity)
         {
             throw new NotImplementedException();
         }

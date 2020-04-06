@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Storage_Service</RootNamespace>
+    <RootNamespace>Song_Service</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

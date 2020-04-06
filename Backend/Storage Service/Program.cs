@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Storage_Service
+namespace Song_Service
 {
     public class Program
     {

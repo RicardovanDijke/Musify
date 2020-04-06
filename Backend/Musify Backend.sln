@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Gateway", "API Gateway\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth Service", "Auth Service\Auth Service.csproj", "{8B84738B-618A-4564-8553-DFC95438887D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage Service", "Storage Service\Storage Service.csproj", "{B1917CB1-F71B-4622-B6A1-815A47EC5E0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Song Service", "Storage Service\Song Service.csproj", "{B1917CB1-F71B-4622-B6A1-815A47EC5E0D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{4D517DEC-21DF-483F-A867-45E56E8130F5}"
 EndProject

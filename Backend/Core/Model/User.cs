@@ -14,7 +14,8 @@ namespace Core.Model
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public List<Playlist> playlists;
+        public List<Playlist> Playlists;
+        public Song CurrentlyPlayingSong { get; set; }
 
     }
 }

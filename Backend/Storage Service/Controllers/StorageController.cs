@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TagLibFile = TagLib.File;
 
-namespace Storage_Service.Controllers
+namespace Song_Service.Controllers
 {
     [ApiController]
     [Route("api/storage/")]
@@ -69,6 +69,8 @@ namespace Storage_Service.Controllers
                     var artist = mp3.Tag.Performers;
                     var album = mp3.Tag.Album;
                     var albumNumber = mp3.Tag.Track;
+
+                    //todo create Song obj and add to db
 
                     var extension = Path.GetExtension(file.FileName);
                     var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", artist[0], album);

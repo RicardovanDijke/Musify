@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -46,12 +47,28 @@ namespace Musify_Desktop_App.ViewModels
 
             var stringTask = client.PostAsync("https://localhost:44321/api/login", new StringContent(payload, Encoding.UTF8, "application/json"));
 
-            var msg = await stringTask;
+            try
+            {
+                var msg = await stringTask;
+                var content = await msg.Content.ReadAsStringAsync();
 
-            var content = await msg.Content.ReadAsStringAsync();
+                var obj = JsonSerializer.Deserialize<Object>(content);
+                Console.Write(content);
 
-            var obj = JsonSerializer.Deserialize<Object>(content);
-            Console.Write(content);
+
+                var mainWindow = new MainWindow();
+                //window.Close();
+                mainWindow.Show();
+
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this) item.Close();
+                }
+            }
+            catch
+            {
+                //todo
+            }
         }
     }
 }

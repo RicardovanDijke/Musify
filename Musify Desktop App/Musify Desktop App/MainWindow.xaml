@@ -9,8 +9,9 @@
         Title="MainWindow" Height="700" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="950"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="600"/>
@@ -19,8 +20,8 @@
 
 
         <usercontrols:NavigationBarControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-        <usercontrols:CurrentSongControl  Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="2"/>
-
+        <usercontrols:CurrentSongControl  Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="3"/>
+        <usercontrols:FriendActivityControl Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

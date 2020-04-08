@@ -32,6 +32,7 @@ namespace Musify_Desktop_App.Panels.Login
 
         private async void Login()
         {
+            //todo move to LoginService
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(

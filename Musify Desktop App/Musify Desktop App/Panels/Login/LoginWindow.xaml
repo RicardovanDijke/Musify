@@ -1,16 +1,16 @@
-﻿<Window x:Class="Musify_Desktop_App.LoginWindow"
+﻿<Window x:Class="Musify_Desktop_App.Panels.Login.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Musify_Desktop_App"
-        xmlns:VM="clr-namespace:Musify_Desktop_App.ViewModels"
+        xmlns:login="clr-namespace:Musify_Desktop_App.Panels.Login"
 
         mc:Ignorable="d"
         Title="LoginWindow" Height="250" Width="400" Background="DarkSeaGreen"
         >
     <Window.DataContext>
-        <VM:LoginViewModel/>
+        <login:LoginViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>

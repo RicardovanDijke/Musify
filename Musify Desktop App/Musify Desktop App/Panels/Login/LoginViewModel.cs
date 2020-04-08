@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -8,7 +7,7 @@ using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
-namespace Musify_Desktop_App.ViewModels
+namespace Musify_Desktop_App.Panels.Login
 {
     class LoginViewModel : ViewModelBase
     {
@@ -52,22 +51,30 @@ namespace Musify_Desktop_App.ViewModels
                 var msg = await stringTask;
                 var content = await msg.Content.ReadAsStringAsync();
 
-                var obj = JsonSerializer.Deserialize<Object>(content);
+                //var obj = JsonSerializer.Deserialize<object>(content);
                 Console.Write(content);
 
+                GoToMainScreen();
 
-                var mainWindow = new MainWindow();
-                //window.Close();
-                mainWindow.Show();
-
-                foreach (Window item in Application.Current.Windows)
-                {
-                    if (item.DataContext == this) item.Close();
-                }
+               
             }
             catch
             {
-                //todo
+                //todo display LoginUnsuccesfull message
+                GoToMainScreen();
+            }
+        }
+
+        private void GoToMainScreen()
+        {
+            var mainWindow = new MainWindow();
+            //window.Close();
+            mainWindow.Show();
+
+            //close current screen from viewmodel
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.DataContext == this) item.Close();
             }
         }
     }

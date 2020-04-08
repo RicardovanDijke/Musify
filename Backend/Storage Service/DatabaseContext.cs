@@ -1,20 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Model;
+﻿using Core.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core
+namespace Song_Service
 {
+    /// <summary>
+    ///  add-migration Song_Service.DatabaseContext -Project "Song Service" -Context "Song_Service.DatabaseContext"
+    /// </summary>
     public class DatabaseContext : DbContext
     {
         public DbSet<Song> Songs { get; set; }
-
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<Album> Albums { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Artist>(artist =>
+            {
+                artist.HasKey(a => a.ArtistID);
+            });
+            
+            modelBuilder.Entity<Song>(song =>
+            {
+                song.HasKey(a => a.SongID);
+                song.HasOne(a => a.Artist)
+                    .WithMany(p => p.Songs); 
+                song.HasOne(a => a.Album)
+                    .WithMany(p => p.Songs);
+            });
+
+            modelBuilder.Entity<Album>(album =>
+            {
+                album.HasKey(a => a.AlbumID);
+                album.HasOne(a => a.Artist)
+                    .WithMany(p => p.Albums);
+                album.HasMany(a => a.Songs)
+                    .WithOne(p => p.Album);
+            });
+
+        }
+        /*
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
         {
 
            // var artist = new Artist
@@ -177,5 +208,8 @@ namespace Core
            // //}
            // //);
         }
+
+
+    */
     }
 }

@@ -17,13 +17,13 @@ namespace Auth_Service
         {
             modelBuilder.Entity<User>().HasData(new User
             {
-                ID=1,
+                UserID=1,
                 UserName = "Ricardo1184",
                 Password = "password"
 
             }, new User
             {
-                ID = 2,
+                UserID = 2,
                 UserName = "Remy561",
                 Password = "password"
             });

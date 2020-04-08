@@ -21,12 +21,19 @@ namespace Song_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<DatabaseContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
-            services.AddDbContext<DatabaseContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
+            // services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
+            services.AddDbContext<DatabaseContext>(opts =>
+            {
+                // opts.UseNpgsql(Configuration["ConnectionString:SongDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBMySql"]);
+                opts.EnableSensitiveDataLogging();
+            });
             services.AddScoped<DatabaseContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ISongRepository, SongRepository>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Core.Model
 {
     public class Album
     {
-        public long ID { get; set; }
+        public long AlbumID { get; set; }
 
         public string Name { get; set; }
 
-        public Artist artist { get; set; }
 
-        public List<Song> Songs { get; }
+        [ForeignKey("ArtistID")]
+        public virtual Artist Artist { get; set; }
+
+        [IgnoreDataMember]
+        public virtual List<Song> Songs { get; } = new List<Song>();
 
         //todo constructor
-        
+
         internal int GetTrackNumber(Song song)
         {
             if (Songs.Contains(song))
@@ -25,7 +30,7 @@ namespace Core.Model
 
             var trackNumber = 0;
 
-            foreach(var songInAlbum in Songs)
+            foreach (var songInAlbum in Songs)
             {
                 if (songInAlbum.Equals(song))
                 {

@@ -36,7 +36,7 @@ namespace Auth_Service
 
         public User Get(long id)
         {
-            return context.Users.First(user => user.ID == id);
+            return context.Users.First(user => user.UserID == id);
         }
 
         public IEnumerable<User> GetAll()

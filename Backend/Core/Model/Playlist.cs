@@ -9,7 +9,7 @@ namespace Core.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ID { get; set; }
+        public long PlaylistID { get; set; }
         public string Name { get; set; }
         public bool Private { get; set; }
         public User Creator { get; set; }

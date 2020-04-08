@@ -10,35 +10,29 @@ namespace Core.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ID { get; set; }
+        public long SongID { get; set; }
 
         public string Title { get; set; }
 
-        public long ArtistID { get; set; }
-        public Artist Artist { get; set; }
+        [ForeignKey("ArtistID")]
+        public virtual Artist Artist { get; set; }
 
-        public Album Album { get; set; }
+
+        [ForeignKey("AlbumID")]
+
+        public virtual Album Album { get; set; }
 
         public int Duration { get; set; }
 
-        public DateTime DateUploaded { get; set; }
+
+        public DateTime? DateUploaded { get; set; }
 
         public string FilePath { get; }
 
-        public Song(long ID, string title, Artist artist, int duration, DateTime uploaded)
+        public Song()
         {
-            this.ID = ID;
-            Title = title;
-            Artist = artist;
-            Duration = duration;
-            DateUploaded = uploaded;
-
-
-
-            //FilePath = 
+            DateUploaded = DateTime.Now;
         }
-
-        public Song() { }
 
         private void SetFolderPath()
         {

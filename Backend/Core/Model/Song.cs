@@ -26,17 +26,17 @@ namespace Core.Model
 
         public DateTime? DateUploaded { get; set; }
 
-        public string FilePath { get; }
+        public string FilePath { get; set; }
 
         public Song()
         {
             DateUploaded = DateTime.Now;
         }
 
-        private void SetFolderPath()
+        public void SetFolderPath()
         {
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, GetAlbumNumber() + " - " + Title);
-
+            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, /*GetAlbumNumber() + " - " +*/Title + ".mp3");
+            // return FilePath;
         }
 
         public int GetAlbumNumber()

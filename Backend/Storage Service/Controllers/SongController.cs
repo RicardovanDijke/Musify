@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Song_Service.Sockets;
 
 namespace Song_Service.Controllers
 {
@@ -44,6 +45,7 @@ namespace Song_Service.Controllers
         }
 
         [HttpPost]
+        [Route("addDefaultData")]
         public ActionResult AddDefaultData()
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
@@ -186,12 +188,37 @@ namespace Song_Service.Controllers
              }
             };
 
+            foreach (Song s in songs)
+            {
+                s.SetFolderPath();
+            }
 
             album.Songs.AddRange(songs);
 
             songManager.AddRange(songs);
 
             return new OkResult();
+        }
+
+
+        /// <summary>
+        /// client sends request for websocket to be opened up to <paramref ipAdress/>
+        /// </summary>
+        /// <param name="ipAdress"></param>
+        /// <returns> adress which client needs to connect to to receive file</returns>
+        [HttpPost]
+        [Route("stream")]
+        public ActionResult<string> GetSongStream(string ipAdress, long songID)
+        {
+            string a = "";
+
+            Song s = songManager.Get(songID);
+
+            SocketManager socketManager = new SocketManager();
+            socketManager.AddSocket(s, ipAdress);
+            
+            string localIP ="127.0.0.1";
+            return new ActionResult<string>(s.Title + localIP);
         }
 
     }

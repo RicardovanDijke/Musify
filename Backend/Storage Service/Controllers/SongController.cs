@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using Core.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Song_Service.Controllers
@@ -23,6 +23,8 @@ namespace Song_Service.Controllers
         [Route("/id")]
         public ActionResult<Song> GetOne(long id)
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
             var song = songManager.Get(id);
             
             return new ActionResult<Song>(song);
@@ -32,16 +34,19 @@ namespace Song_Service.Controllers
         [Route("all")]
         public ActionResult<List<Song>> GetAllSongs()
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
             //TODO create actual Songmanager that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumManager?
             var songs = songManager.GetAll().ToList();
 
-
+            Debug.WriteLine($"returning {songs.Count} songs");
             return new ActionResult<List<Song>>(songs);
         }
 
         [HttpPost]
         public ActionResult AddDefaultData()
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
 
             var artist = new Artist

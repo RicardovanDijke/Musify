@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Core.Model
 {
     public class Album
     {
+        [Key]
         public long AlbumID { get; set; }
 
         public string Name { get; set; }

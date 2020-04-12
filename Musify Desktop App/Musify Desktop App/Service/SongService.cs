@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -18,25 +19,24 @@ namespace Musify_Desktop_App.Service
 
         public async Task<List<Song>> GetAllSongs()
         {
-            //todo move to LoginService
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-           
+
 
             var httpTask = client.GetAsync(SongServiceApi + "songs/all");
 
             List<Song> songs;
             try
             {
-                var msg =  httpTask.Result;
+                var msg = httpTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
-                    Debug.Write(content);
+                Debug.Write(content);
 
-                    songs = JsonConvert.DeserializeObject<List<Song>>(content);
+                songs = JsonConvert.DeserializeObject<List<Song>>(content);
 
             }
             catch
@@ -48,5 +48,20 @@ namespace Musify_Desktop_App.Service
 
             return songs;
         }
+
+        public void RequestSocket(long songID)
+        {
+            WebClient webClient = new WebClient();
+
+           // var reqparm = new System.Collections.Specialized.NameValueCollection();
+            //reqparm.Add("ipAdress", "127.0.0.1");
+           // reqparm.Add("songID", songID.ToString()); 
+            webClient.QueryString.Add("ipAdress", "127.0.0.1");
+            webClient.QueryString.Add("songID", songID.ToString());
+         //   string result = webClient.UploadValues(SongServiceApi + "songs/stream");
+            webClient.UploadValues(SongServiceApi + "songs/stream", webClient.QueryString);
+
+        }
+
     }
 }

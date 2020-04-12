@@ -28,15 +28,27 @@ namespace Core.Model
 
         public string FilePath { get; set; }
 
+        private int trackNumber;
+
         public Song()
         {
             DateUploaded = DateTime.Now;
         }
 
+        public Song(string title, Artist artist, Album album, int duration, int trackNumber)
+        {
+            Title = title;
+            Artist = artist;
+            Album = album;
+            Duration = duration;
+            this.trackNumber = trackNumber;
+
+            SetFolderPath();
+        }
+
         public void SetFolderPath()
         {
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, /*GetAlbumNumber() + " - " +*/Title + ".mp3");
-            // return FilePath;
+            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, trackNumber + " - " + Title + ".mp3");
         }
 
         public int GetAlbumNumber()

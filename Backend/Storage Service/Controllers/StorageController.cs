@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TagLibFile = TagLib.File;
+using Microsoft.VisualBasic.CompilerServices;
+using NHibernate.Cfg.MappingSchema;
+using Song_Service.Database;
+using Song_Service.Service;
 
 namespace Song_Service.Controllers
 {
@@ -13,6 +18,18 @@ namespace Song_Service.Controllers
     [Route("api/storage/")]
     public class StorageController : ControllerBase
     {
+        private SongService songManager;
+        private IAlbumRepository albumManager;
+        private IArtistRepository artistManager;
+
+
+        public StorageController(SongService songManager, IAlbumRepository albumManager, IArtistRepository artistManager)
+        {
+            this.songManager = songManager;
+            this.albumManager = albumManager;
+            this.artistManager = artistManager;
+        }
+
         // GET: api/Storage
         [HttpGet]
         public IEnumerable<string> Get()
@@ -45,50 +62,39 @@ namespace Song_Service.Controllers
         {
         }
 
+        //todo add endpoint /uploadMany
+
+        [HttpPost]
+        [Route("uploadMany")]
+        public async Task<IActionResult> Upload(List<IFormFile> files)
+        {
+            var success = true;
+            foreach (var file in files)
+            {
+                if (!await songManager.AddSong(file))
+                {
+                    success = false;
+                }
+            }
+
+            if (success)
+            {
+                return new OkResult();
+            }
+            return StatusCode(500);
+
+        }
+
         [HttpPost]
         [Route("upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            await using (Stream stream = file.OpenReadStream())
+            if (await songManager.AddSong(file))
             {
-                using (var binaryReader = new BinaryReader(stream))
-                {
-                    var fileContent = binaryReader.ReadBytes((int)file.Length);
-                    var str = Encoding.Default.GetString(fileContent);
-                    //await this.UploadFile(file.ContentDisposition);
-                    var filePath = "C:\\users\\ricar\\desktop\\testmp3.mp3";
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                    TagLibFile.IFileAbstraction f = new TagLibFile.LocalFileAbstraction(filePath);
-
-                    var mp3 = TagLibFile.Create(f);
-
-                    var artist = mp3.Tag.Performers;
-                    var album = mp3.Tag.Album;
-                    var albumNumber = mp3.Tag.Track;
-
-                    //todo create Song obj and add to db
-
-                    var extension = Path.GetExtension(file.FileName);
-                    var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", artist[0], album);
-                    var fileName = albumNumber + " - " + mp3.Tag.Title;
-                    var fullPath = Path.Combine(folderPath, fileName + extension);
-
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-
-                    using (var fileStream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
+                return new OkResult();
             }
-            return new OkResult();
+
+            return StatusCode(500);
         }
     }
 }

@@ -22,20 +22,7 @@
 
         </Grid.RowDefinitions>
 
-        <!--<ItemsControl ItemsSource="{Binding Songs}" Background="MediumPurple" Grid.Row="0" Grid.Column="0">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,0,0,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Title}" />
-                        <Button Grid.Column="1" Content="{Binding Artist.Name}" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
+     
         <panels:SongListControl>
            
         </panels:SongListControl>

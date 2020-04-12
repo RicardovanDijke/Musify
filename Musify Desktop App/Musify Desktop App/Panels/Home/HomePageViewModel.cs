@@ -5,17 +5,36 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
+using Musify_Desktop_App.Socket;
 
 namespace Musify_Desktop_App.Panels.Home
 {
     class HomePageViewModel : ViewModelBase
     {
         private SongService songService;
+        private Song _selectedSong;
+
 
         public ObservableCollection<Song> Songs { get; set; }
 
+        public Song SelectedSong
+        {
+            get => _selectedSong;
+            set
+            {
+                _selectedSong = value;
+                DoSongSelected();
+            }
+        }
+
+        public RelayCommand SongSelectedCommand
+        {
+            get;
+            set;
+        }
 
         public HomePageViewModel()
         {
@@ -23,6 +42,14 @@ namespace Musify_Desktop_App.Panels.Home
 
             Songs = new ObservableCollection<Song>(songService.GetAllSongs().Result);
 
+
+            SongSelectedCommand = new RelayCommand(DoSongSelected);
+        }
+
+        private void DoSongSelected()
+        {
+            songService.RequestSocket(SelectedSong.SongID);
+            SongSocket.NewSongSocket();
         }
     }
 }

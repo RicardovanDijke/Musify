@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Song_Service.Sockets;
@@ -210,12 +211,17 @@ namespace Song_Service.Controllers
         [Route("stream")]
         public ActionResult<string> GetSongStream(string ipAdress, long songID)
         {
-            string a = "";
+
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested w/ params ipAdress: {ipAdress} and id: {songID}");
 
             Song s = songManager.Get(songID);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                SocketManager socketManager = new SocketManager();
+                socketManager.AddSocket(s, ipAdress);
+            }).Start();
 
-            SocketManager socketManager = new SocketManager();
-            socketManager.AddSocket(s, ipAdress);
             
             string localIP ="127.0.0.1";
             return new ActionResult<string>(s.Title + localIP);

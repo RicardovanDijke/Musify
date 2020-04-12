@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Song_Service.Database;
+using Song_Service.Service;
 
 namespace Song_Service
 {
@@ -23,13 +25,18 @@ namespace Song_Service
             // services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
             services.AddDbContext<DatabaseContext>(opts =>
             {
-                // opts.UseNpgsql(Configuration["ConnectionString:SongDBMySql"]);
+                // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
                 opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBMySql"]);
                 opts.EnableSensitiveDataLogging();
             });
             services.AddScoped<DatabaseContext>();
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ISongRepository, SongRepository>();
+            services.AddScoped<SongService>();
+            services.AddScoped<IArtistRepository, ArtistRepository>();
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
+
             services.AddControllers().AddNewtonsoftJson(options =>
                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );

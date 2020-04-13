@@ -68,7 +68,7 @@ namespace Musify_Desktop_App.Panels.Login
 
         private void GoToMainScreen()
         {
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainWindow(new MainViewModel());
             //window.Close();
             mainWindow.Show();
 

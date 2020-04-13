@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,15 @@ namespace Musify_Desktop_App
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(INotifyPropertyChanged ViewModel)
         {
             InitializeComponent();
+            this.DataContext = ViewModel;
+            this.Show();
         }
     }
+
 }

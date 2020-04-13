@@ -43,10 +43,10 @@ namespace Core.Model
             Duration = duration;
             this.trackNumber = trackNumber;
 
-            SetFolderPath();
+            SetFilePath();
         }
 
-        public void SetFolderPath()
+        public void SetFilePath()
         {
             FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, trackNumber + " - " + Title + ".mp3");
         }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Musify_Desktop_App.Panels.Login;
 
 namespace Musify_Desktop_App
 {
@@ -18,6 +19,8 @@ namespace Musify_Desktop_App
             // delete the startupuri tag from your app.xaml
             base.OnStartup(e);
             //this MainViewModel from your ViewModel project
+           // MainWindow = new LoginWindow();
+            //MainWindow.Show();
             MainWindow = new MainWindow(new MainViewModel());
         }
     }

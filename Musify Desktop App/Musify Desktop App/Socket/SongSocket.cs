@@ -37,8 +37,10 @@ namespace Musify_Desktop_App.Socket
                 numberOfBytesRead = stream.Read(buffer, 0, buffer.Length); //Read from network stream
                 receivedData.Write(buffer, 0, buffer.Length); //Write to memory stream
             } while (stream.DataAvailable);
-
-            File.WriteAllBytes(@"C:\users\ricar\Desktop\temp\song.mp3", receivedData.ToArray());
+            
+            var i = new DirectoryInfo(@"C:\users\ricar\Desktop\temp").GetFiles().Length;
+            File.WriteAllBytes(@"C:\users\ricar\Desktop\temp\song" + i + ".mp3", receivedData.ToArray());
+            //todo remove file when done playing
             // Console.WriteLine("name: " + myObject.Name);
             Debug.WriteLine("Song Received");
             listener.Stop();

@@ -191,7 +191,7 @@ namespace Song_Service.Controllers
 
             foreach (Song s in songs)
             {
-                s.SetFolderPath();
+                s.SetFilePath();
             }
 
             album.Songs.AddRange(songs);

@@ -18,7 +18,7 @@ namespace Musify_Desktop_App.Panels.Home
         private SongService songService;
         private Song _selectedSong;
 
-
+        private SongPlayer songPlayer;
         public ObservableCollection<Song> Songs { get; set; }
 
         public Song SelectedSong
@@ -43,6 +43,7 @@ namespace Musify_Desktop_App.Panels.Home
 
             Songs = new ObservableCollection<Song>(songService.GetAllSongs().Result);
 
+            songPlayer = new SongPlayer();
 
             SongSelectedCommand = new RelayCommand(DoSongSelected);
         }
@@ -53,7 +54,7 @@ namespace Musify_Desktop_App.Panels.Home
             SongSocket.NewSongSocket();
             CurrentSongViewModel.Instance.SongPlaying = SelectedSong;
 
-            new SongPlayer();
+            songPlayer.PlaySong();
         }
     }
 }

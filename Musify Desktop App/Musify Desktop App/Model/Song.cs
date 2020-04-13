@@ -21,10 +21,10 @@ namespace Musify_Desktop_App.Model
         public virtual Album Album { get; set; }
 
         public int Duration { get; set; }
-        
+
         public DateTime? DateUploaded { get; set; }
 
-        public string FilePath { get; }
+        public string FilePath { get; set; }
 
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
+using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Service;
 using Musify_Desktop_App.Socket;
 
@@ -50,6 +51,7 @@ namespace Musify_Desktop_App.Panels.Home
         {
             songService.RequestSocket(SelectedSong.SongID);
             SongSocket.NewSongSocket();
+            CurrentSongViewModel.Instance.SongPlaying = SelectedSong;
         }
     }
 }

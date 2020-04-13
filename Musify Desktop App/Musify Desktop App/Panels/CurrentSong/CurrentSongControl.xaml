@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
 
             <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="https://en.wikipedia.org/wiki/American_Idiot#/media/File:Green_Day_-_American_Idiot_album_cover.png" />
-            <Label Grid.Row="0" Grid.Column="1" Content="{Binding SongPlaying.Title, FallbackValue='SongTitle' }"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding SongPlaying.Title, FallbackValue='SongTitle'}"/>
             <Label Grid.Row="1" Grid.Column="1" Content="{Binding SongPlaying.Artist.Name, FallbackValue='SongArtist'}"/>
         </Grid>
 

@@ -52,6 +52,8 @@ namespace Musify_Desktop_App.Panels.Home
             songService.RequestSocket(SelectedSong.SongID);
             SongSocket.NewSongSocket();
             CurrentSongViewModel.Instance.SongPlaying = SelectedSong;
+
+            new SongPlayer();
         }
     }
 }

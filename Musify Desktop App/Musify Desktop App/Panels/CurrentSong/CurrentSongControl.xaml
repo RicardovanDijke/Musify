@@ -52,7 +52,7 @@
 
             <Button Width="35" Height="35" Grid.Column="3" Grid.Row="0" Content="shuff" />
             <Button Width="35" Height="35" Grid.Column="4" Grid.Row="0" FontFamily="Marlett" Content="3"/>
-            <Button Width="35" Height="35" Grid.Column="5" Grid.Row="0" Content="play"/>
+            <Button Width="35" Height="35" Grid.Column="5" Grid.Row="0" Content="play" Command="{Binding PlayPauseSongCommand}"/>
             <Button Width="35" Height="35" Grid.Column="6" Grid.Row="0" FontFamily="Marlett" Content="4"/>
             <Button Width="35" Height="35" Grid.Column="7" Grid.Row="0" Content="repeat"/>
 

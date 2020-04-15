@@ -1,4 +1,6 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Diagnostics;
+using System.Net.Mime;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -12,6 +14,8 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         public static CurrentSongViewModel Instance { get; private set; }
 
         private Song _songPlaying;
+        private int _songProgressPercentage;
+
         public Song SongPlaying
         {
             get => _songPlaying;
@@ -23,25 +27,43 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         }
 
         public int SongProgress { get; set; }
+
         public int SongProgressPercentage
         {
-            get;
-            set;
+            get => _songProgressPercentage;
+            set
+            {
+                _songProgressPercentage = value;
+                Debug.WriteLine(_songProgressPercentage);
+                if (_songPlaying != null)
+                {
+                    SongPlayer.Instance.PlaySong(_songPlaying, value);
+                }
+            }
         }
+
         public int SongDuration { get; set; }
 
 
         public RelayCommand PlayPauseSongCommand { get; private set; }
+        public RelayCommand PlayNextSongInQueueCommand { get; private set; }
 
-        public CurrentSongViewModel() { }
-        public CurrentSongViewModel(int progress)
+        public CurrentSongViewModel()
         {
-            SongProgressPercentage = progress;
+            SongProgressPercentage = 0;
 
             SongPlaying = new Song();
             Instance = this;
 
+
             PlayPauseSongCommand = new RelayCommand(DoPlayPauseSong);
+            PlayNextSongInQueueCommand = new RelayCommand(DoPlayNextSongInQueueComamand);
+
+        }
+
+        private void DoPlayNextSongInQueueComamand()
+        {
+            SongPlayer.Instance.PlayNextSongInQueue();
         }
 
         private void DoPlayPauseSong()

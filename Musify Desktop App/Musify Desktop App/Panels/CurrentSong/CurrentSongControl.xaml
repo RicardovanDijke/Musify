@@ -53,12 +53,12 @@
             <Button Width="35" Height="35" Grid.Column="3" Grid.Row="0" Content="shuff" />
             <Button Width="35" Height="35" Grid.Column="4" Grid.Row="0" FontFamily="Marlett" Content="3"/>
             <Button Width="35" Height="35" Grid.Column="5" Grid.Row="0" Content="play" Command="{Binding PlayPauseSongCommand}"/>
-            <Button Width="35" Height="35" Grid.Column="6" Grid.Row="0" FontFamily="Marlett" Content="4"/>
+            <Button Width="35" Height="35" Grid.Column="6" Grid.Row="0" FontFamily="Marlett" Content="4" Command="{Binding PlayNextSongInQueueCommand}"/>
             <Button Width="35" Height="35" Grid.Column="7" Grid.Row="0" Content="repeat"/>
 
 
             <Label Grid.Column="1" Grid.Row="1" Content="{Binding SongProgress,FallbackValue='0:23'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <ProgressBar  Height="13" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="7" Value="{Binding SongProgressPercentage}"/>
+            <Slider  Height="13" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="7" Value="{Binding SongProgressPercentage,Mode=TwoWay}" IsMoveToPointEnabled ="True" TickFrequency="1" Maximum="100"/>
             <Label Grid.Column="9" Grid.Row="1" Content="{Binding SongDuration,FallbackValue='3:22'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         </Grid>

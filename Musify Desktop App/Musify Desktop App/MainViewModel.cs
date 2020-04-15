@@ -13,7 +13,7 @@ namespace Musify_Desktop_App
         public MainViewModel()
         {
             HomePageView = new HomePageViewModel();
-            CurrentSongView = new CurrentSongViewModel(10);
+            CurrentSongView = new CurrentSongViewModel();
             FriendsActivityView = new FriendsActivityViewModel();
         }
     }

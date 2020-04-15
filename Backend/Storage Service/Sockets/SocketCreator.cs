@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -20,8 +21,8 @@ namespace Song_Service.Sockets
         //TODO send create SongDTO which has base64 string content and some other info
         public void StreamSong(Song song, string clientIP)
         {
-          //  FileTransfer fileTransfer = new FileTransfer();
-           // fileTransfer.Name = "TestFile";
+            //  FileTransfer fileTransfer = new FileTransfer();
+            // fileTransfer.Name = "TestFile";
             var content = System.Convert.ToBase64String(File.ReadAllBytes(song.FilePath));
 
             // var type = (song as IProxyTargetAccessor)?.DynProxyGetTarget().GetType();
@@ -32,19 +33,30 @@ namespace Song_Service.Sockets
 
             var type2 = ProxyUtil.GetUnproxiedType(song);
 
-          //  var songObject = UnwrapProxy<Song>(song);
-         // System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(content.GetType());
+            //  var songObject = UnwrapProxy<Song>(song);
+            // System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(content.GetType());
             TcpClient client = new TcpClient();
-            client.Connect(IPAddress.Parse("127.0.0.1"), 11000);
-            Stream stream = client.GetStream();
+            //todo if no connection after few seconds, disconnect
+            try
+            {
+                client.Connect(IPAddress.Parse("127.0.0.1"), 11000);
+                Stream stream = client.GetStream();
+
+                stream.Write(bytes, 0, bytes.Length);
+
+            }
+            catch (SocketException ex)
+            {
+
+            }
+            finally
+            {
+                client.Close();
+            }
 
 
+            //
 
-
-          //
-
-            stream.Write(bytes, 0, bytes.Length);
-            client.Close();
         }
 
         internal static TType UnwrapProxy<TType>(TType proxy)

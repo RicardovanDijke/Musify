@@ -58,16 +58,17 @@
 
 
             <Label Grid.Column="1" Grid.Row="1" Content="{Binding SongProgress,FallbackValue='0:23'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Slider  Height="13" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="7" Value="{Binding SongProgressPercentage,Mode=TwoWay}" IsMoveToPointEnabled ="True" TickFrequency="1" Maximum="100"/>
+            <Slider  Height="20" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="7" Value="{Binding SongProgressPercentage,Mode=TwoWay}" IsMoveToPointEnabled ="True" TickFrequency="1" Maximum="100"/>
             <Label Grid.Column="9" Grid.Row="1" Content="{Binding SongDuration,FallbackValue='3:22'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         </Grid>
 
+   
 
 
         <!--Current song volume, queue controls TODO-->
         <Grid Grid.Column="2">
-
+            <Slider  Height="15" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Value="{Binding VolumePercentage}"  IsMoveToPointEnabled="True" Minimum="0" Maximum="100"/>
         </Grid>
     </Grid>
 </UserControl>

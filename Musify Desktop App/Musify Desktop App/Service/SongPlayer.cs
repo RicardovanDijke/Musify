@@ -1,36 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading;
-using GalaSoft.MvvmLight.Command;
+using JetBrains.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using Musify_Desktop_App.Model;
 using NAudio.Wave;
 
 namespace Musify_Desktop_App.Service
 {
-    class SongPlayer
+    class SongPlayer : INotifyPropertyChanged
     {
         public static SongPlayer Instance { get; private set; }
 
-        private WaveOutEvent output;
+        private readonly WaveOutEvent output;
 
         public List<Song> History { get; } = new List<Song>();
 
-        public Song CurrentSong { get; set; }
-
+        private Song _currentSong;
+        public Song CurrentSong
+        {
+            get => _currentSong;
+            set
+            {
+                _currentSong = value;
+                OnPropertyChanged(nameof(CurrentSong));
+            }
+        }
         public List<Song> Queue { get; } = new List<Song>();
+
+
+        public int VolumePercentage
+        {
+            get => (int)(output.Volume * 100);
+            set
+            {
+                output.Volume = value / 100.000f;
+                OnPropertyChanged(nameof(VolumePercentage));
+            }
+        }
+
 
         // private IWaveProvider songFileReader;
         private Mp3FileReader songFileReader;
 
         private readonly DirectoryInfo tempFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\temp");
-
         private readonly DirectoryInfo downloadFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\downloaded");
 
-        private bool switchingSong = false;
+        private bool switchingSong;
+
         public SongPlayer()
         {
             Instance = this;
@@ -59,17 +79,13 @@ namespace Musify_Desktop_App.Service
 
         private string GetSongPath(Song song)
         {
-            string mp3Path;// = \{song.SongID}.mp3";
-
             //check if song exists in Downloaded folder
             if (File.Exists(Path.Combine(downloadFolder.FullName, $"{song.SongID}.mp3")))
             {
                 return Path.Combine(downloadFolder.FullName, $"{song.SongID}.mp3");
             }
-            else
-            {
-                return Path.Combine(tempFolder.FullName, $"{song.SongID}.mp3");
-            }
+            //else search in temp folder
+            return Path.Combine(tempFolder.FullName, $"{song.SongID}.mp3");
         }
 
         public void PlaySong(Song song, int percentage = 0)
@@ -91,12 +107,10 @@ namespace Musify_Desktop_App.Service
 
             songFileReader = new Mp3FileReader(mp3Path);
 
-            long duration;
 
-            ShellFile so = ShellFile.FromFilePath(mp3Path);
-            double nanoseconds;
-            double seconds = 0;
-            double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out nanoseconds);
+            var so = ShellFile.FromFilePath(mp3Path);
+            var seconds = 0.0;
+            double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out var nanoseconds);
             if (nanoseconds > 0)
             {
                 seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
@@ -111,6 +125,7 @@ namespace Musify_Desktop_App.Service
             output.Init(songFileReader);
             //output.GetPosition()
             output.Play();
+
             CurrentSong = song;
         }
 
@@ -158,6 +173,15 @@ namespace Musify_Desktop_App.Service
             {
                 output.Play();
             }
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

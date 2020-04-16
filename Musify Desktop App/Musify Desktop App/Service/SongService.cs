@@ -41,7 +41,7 @@ namespace Musify_Desktop_App.Service
             }
             catch
             {
-                //todo display LoginUnsuccesfull message
+                //todo display "songs not found" message
                 songs = null;
 
             }

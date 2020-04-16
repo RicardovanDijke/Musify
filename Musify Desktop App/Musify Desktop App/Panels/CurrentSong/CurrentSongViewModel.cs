@@ -13,20 +13,24 @@ namespace Musify_Desktop_App.Panels.CurrentSong
     {
         public static CurrentSongViewModel Instance { get; private set; }
 
-        private Song _songPlaying;
         private int _songProgressPercentage;
 
-        public Song SongPlaying
-        {
-            get => _songPlaying;
-            set
-            {
-                _songPlaying = value;
-                RaisePropertyChanged(nameof(SongPlaying));
-            }
-        }
+        public Song SongPlaying => SongPlayer.Instance.CurrentSong;
 
         public int SongProgress { get; set; }
+
+        public int VolumePercentage
+        {
+            get => SongPlayer.Instance.VolumePercentage;
+            set
+            {
+                if (SongPlayer.Instance.VolumePercentage != value)
+                {
+                    SongPlayer.Instance.VolumePercentage = value;
+                    RaisePropertyChanged(nameof(VolumePercentage));
+                }
+            }
+        }
 
         public int SongProgressPercentage
         {
@@ -35,9 +39,9 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             {
                 _songProgressPercentage = value;
                 Debug.WriteLine(_songProgressPercentage);
-                if (_songPlaying != null)
+                if (SongPlaying != null)
                 {
-                    SongPlayer.Instance.PlaySong(_songPlaying, value);
+                    SongPlayer.Instance.PlaySong(SongPlaying, value);
                 }
             }
         }
@@ -52,7 +56,6 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         {
             SongProgressPercentage = 0;
 
-            SongPlaying = new Song();
             Instance = this;
 
 

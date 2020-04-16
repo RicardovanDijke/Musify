@@ -14,6 +14,8 @@ namespace Song_Service.Controllers
     [ApiController]
     public class SongController : ControllerBase
     {
+
+        //TODO create actual Songmanager that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumManager?
         private ISongRepository songManager;
 
         public SongController(ISongRepository songManager)
@@ -38,7 +40,6 @@ namespace Song_Service.Controllers
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
-            //TODO create actual Songmanager that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumManager?
             var songs = songManager.GetAll().ToList();
 
             Debug.WriteLine($"returning {songs.Count} songs");

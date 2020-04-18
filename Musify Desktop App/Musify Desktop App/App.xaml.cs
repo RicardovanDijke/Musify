@@ -22,7 +22,6 @@ namespace Musify_Desktop_App
             //this MainViewModel from your ViewModel project
             // MainWindow = new LoginWindow();
             //MainWindow.Show();
-            new SongPlayer();
             MainWindow = new MainWindow(new MainViewModel());
         }
     }

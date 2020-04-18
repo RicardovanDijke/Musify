@@ -11,11 +11,31 @@ namespace Musify_Desktop_App.Panels.CurrentSong
 {
     class CurrentSongViewModel : ViewModelBase
     {
-        public static CurrentSongViewModel Instance { get; private set; }
+        private static readonly object padlock = new object();
+        private static CurrentSongViewModel instance;
+        public static CurrentSongViewModel Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    return instance ??= new CurrentSongViewModel();
+                }
+            }
+        }
 
         private int _songProgressPercentage;
 
-        public Song SongPlaying => SongPlayer.Instance.CurrentSong;
+        private Song _songPlaying;
+        public Song SongPlaying
+        {
+            get => _songPlaying;
+            set
+            {
+                _songPlaying = value;
+                RaisePropertyChanged(nameof(SongPlaying));
+            }
+        }
 
         public int SongProgress { get; set; }
 
@@ -52,16 +72,13 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         public RelayCommand PlayPauseSongCommand { get; private set; }
         public RelayCommand PlayNextSongInQueueCommand { get; private set; }
 
-        public CurrentSongViewModel()
+        private CurrentSongViewModel()
         {
             SongProgressPercentage = 0;
-
-            Instance = this;
 
 
             PlayPauseSongCommand = new RelayCommand(DoPlayPauseSong);
             PlayNextSongInQueueCommand = new RelayCommand(DoPlayNextSongInQueueComamand);
-
         }
 
         private void DoPlayNextSongInQueueComamand()

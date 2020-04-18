@@ -7,13 +7,25 @@ using System.Threading;
 using JetBrains.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
 using Musify_Desktop_App.Model;
+using Musify_Desktop_App.Panels.CurrentSong;
 using NAudio.Wave;
 
 namespace Musify_Desktop_App.Service
 {
     class SongPlayer : INotifyPropertyChanged
     {
-        public static SongPlayer Instance { get; private set; }
+        private static readonly object padlock = new object();
+        private static SongPlayer instance;
+        public static SongPlayer Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    return instance ??= new SongPlayer();
+                }
+            }
+        }
 
         private readonly WaveOutEvent output;
 
@@ -27,6 +39,7 @@ namespace Musify_Desktop_App.Service
             {
                 _currentSong = value;
                 OnPropertyChanged(nameof(CurrentSong));
+                CurrentSongViewModel.Instance.SongPlaying = value;
             }
         }
         public List<Song> Queue { get; } = new List<Song>();
@@ -51,9 +64,8 @@ namespace Musify_Desktop_App.Service
 
         private bool switchingSong;
 
-        public SongPlayer()
+        private SongPlayer()
         {
-            Instance = this;
             output = new WaveOutEvent();
 
             //create new storage folders to save songs in

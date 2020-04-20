@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -70,8 +71,9 @@ namespace Musify_Desktop_App.Service
             get => _timePlayed;
             private set
             {
-
-                OnPropertyChanged(nameof(PositionPercentage));
+                _timePlayed = value;
+                CurrentSongViewModel.Instance.SongProgress = value;
+                OnPropertyChanged(nameof(TimePlayed));
             }
         }
 
@@ -85,7 +87,8 @@ namespace Musify_Desktop_App.Service
             private set
             {
                 _positionPercentage = value;
-                CurrentSongViewModel.Instance.SongProgress = value;
+                CurrentSongViewModel.Instance.UpdateFromBackend = true;
+                CurrentSongViewModel.Instance.SongProgressPercentage = value;
 
                 OnPropertyChanged(nameof(PositionPercentage));
             }
@@ -191,9 +194,11 @@ namespace Musify_Desktop_App.Service
                 Duration = (int)(Convert100NanosecondsToMilliseconds(nanoseconds) / 1000);
             }
 
+            var relativeDuration = Convert.ToInt32(Duration * (percentage / 100.00));
 
-            var relativeDuration = Duration * (percentage / 100.00);
-            songFileReader.CurrentTime = songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, Convert.ToInt32(relativeDuration), 0));
+            TimePlayed = relativeDuration;
+
+            songFileReader.CurrentTime = songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, relativeDuration, 0));
 
             //songFileReader.Position = 10L;
             _output.Init(songFileReader);
@@ -213,8 +218,12 @@ namespace Musify_Desktop_App.Service
         //todo add SongPercentage checking, update CurrentSongControl
         private void ManagePlayback(object state)
         {
-          if(CurrentSong != null)
-            Debug.WriteLine(songFileReader.CurrentTime.Seconds);
+            if (CurrentSong != null)
+            {
+                TimePlayed++;
+                var percentage = (double)TimePlayed / (double)Duration * 100.0;
+                PositionPercentage = (int)percentage;
+            }
         }
 
         public void PlayNextSongInQueue()

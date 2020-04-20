@@ -29,8 +29,7 @@ namespace Musify_Desktop_App.Panels.CurrentSong
 
         private Song _songPlaying;
         private int _songDuration;
-        private string _songDurationString;
-
+        private int _songProgress;
 
         public Song SongPlaying
         {
@@ -42,7 +41,28 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             }
         }
 
-        public int SongProgress { get; set; }
+        public int SongProgress
+        {
+            get => _songProgress;
+            set
+            {
+                _songProgress = value;
+
+                RaisePropertyChanged(nameof(SongProgress));
+                RaisePropertyChanged(nameof(SongProgressString));
+            }
+        }
+
+
+        public string SongProgressString
+        {
+            get
+            {
+                var t = TimeSpan.FromSeconds(SongProgress);
+                return $"{t.Minutes:D2}:{t.Seconds:D2}";
+            }
+        }
+
 
         public int VolumePercentage
         {
@@ -57,6 +77,9 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             }
         }
 
+        //todo rly ugly way
+        public bool UpdateFromBackend;
+
         public int SongProgressPercentage
         {
             get => _songProgressPercentage;
@@ -64,10 +87,16 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             {
                 _songProgressPercentage = value;
                 Debug.WriteLine(_songProgressPercentage);
-                if (SongPlaying != null)
+                if (SongPlaying != null && !UpdateFromBackend)
                 {
                     SongPlayer.Instance.PlaySong(SongPlaying, value);
                 }
+                RaisePropertyChanged(nameof(SongProgress));
+                RaisePropertyChanged(nameof(SongProgressString));
+                RaisePropertyChanged(nameof(SongProgressPercentage));
+
+                Debug.WriteLine(SongProgressPercentage);
+                UpdateFromBackend = false;
             }
         }
 

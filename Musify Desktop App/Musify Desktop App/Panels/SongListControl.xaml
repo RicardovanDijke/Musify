@@ -8,10 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <ContextMenu x:Key="connectionButtonContext"  StaysOpen="true">
-            <!--<MenuItem Header="Play" Command="{Binding Source={x:Static service:SongPlayer+Instance+AddSongToQueueCommand}}"/>-->
-            <MenuItem Header="Play" Command="{Binding AddSongToQueueCommand}"/>
-            <MenuItem Header="Add to queue" Command="{Binding AddToQueue}"/>
+        <ContextMenu x:Key="contextMenu"  StaysOpen="true">
+            <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
+            <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
         </ContextMenu>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -25,9 +24,7 @@
                     Command="{Binding SongSelectedCommand}"/>
             </DataGrid.InputBindings>
             <DataGrid.ContextMenu>
-                <!--<ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}"/>-->
                 <ContextMenu StaysOpen="true">
-                    <!--<MenuItem Header="Play" Command="{Binding Source={x:Static service:SongPlayer+Instance+AddSongToQueueCommand}}"/>-->
                     <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
                     <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
                 </ContextMenu>

@@ -15,9 +15,6 @@ namespace Musify_Desktop_App.Socket
 {
     public static class SongSocket
     {
-
-
-
         //todo remove static
         public static void NewSongSocket(long songID)
         {

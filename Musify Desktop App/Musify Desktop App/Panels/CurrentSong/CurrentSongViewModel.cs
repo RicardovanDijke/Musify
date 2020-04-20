@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Mime;
+using System.Threading;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -27,6 +28,10 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         private int _songProgressPercentage;
 
         private Song _songPlaying;
+        private int _songDuration;
+        private string _songDurationString;
+
+
         public Song SongPlaying
         {
             get => _songPlaying;
@@ -66,7 +71,26 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             }
         }
 
-        public int SongDuration { get; set; }
+
+        public string SongDurationString
+        {
+            get
+            {
+                var t = TimeSpan.FromSeconds(SongDuration);
+                return $"{t.Minutes:D2}:{t.Seconds:D2}";
+            }
+        }
+
+        public int SongDuration
+        {
+            get => _songDuration;
+            set
+            {
+                _songDuration = value;
+                RaisePropertyChanged(nameof(SongDuration));
+                RaisePropertyChanged(nameof(SongDurationString));
+            }
+        }
 
 
         public RelayCommand PlayPauseSongCommand { get; private set; }

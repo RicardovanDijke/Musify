@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -8,30 +9,43 @@ using JetBrains.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
+using NAudio.Utils;
 using NAudio.Wave;
 
 namespace Musify_Desktop_App.Service
 {
+    //todo add events for song stopped playing 
     class SongPlayer : INotifyPropertyChanged
     {
+        //lock object
         private static readonly object padlock = new object();
-        private static SongPlayer instance;
+        private int _duration;
+        private int _positionPercentage;
+        private int _timePlayed;
+        private Song _currentSong;
+        private readonly WaveOutEvent _output;
+        private Timer songStatusTimer;
+
+        private static SongPlayer _instance;
         public static SongPlayer Instance
         {
             get
             {
                 lock (padlock)
                 {
-                    return instance ??= new SongPlayer();
+                    return _instance ??= new SongPlayer();
                 }
             }
         }
 
-        private readonly WaveOutEvent output;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public List<Song> History { get; } = new List<Song>();
 
-        private Song _currentSong;
+        /// <summary>
+        /// 
+        /// </summary>
         public Song CurrentSong
         {
             get => _currentSong;
@@ -42,15 +56,64 @@ namespace Musify_Desktop_App.Service
                 CurrentSongViewModel.Instance.SongPlaying = value;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public List<Song> Queue { get; } = new List<Song>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public int TimePlayed
+        {
+            get => _timePlayed;
+            private set
+            {
 
+                OnPropertyChanged(nameof(PositionPercentage));
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int PositionPercentage
+        {
+            get => _positionPercentage;
+            private set
+            {
+                _positionPercentage = value;
+                CurrentSongViewModel.Instance.SongProgress = value;
+
+                OnPropertyChanged(nameof(PositionPercentage));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Duration
+        {
+            get => _duration;
+            private set
+            {
+                _duration = value;
+                CurrentSongViewModel.Instance.SongDuration = value;
+                OnPropertyChanged(nameof(Duration));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int VolumePercentage
         {
-            get => (int)(output.Volume * 100);
+            get => (int)(_output.Volume * 100);
             set
             {
-                output.Volume = value / 100.000f;
+                _output.Volume = value / 100.000f;
                 OnPropertyChanged(nameof(VolumePercentage));
             }
         }
@@ -64,29 +127,30 @@ namespace Musify_Desktop_App.Service
 
         private bool switchingSong;
 
+
         private SongPlayer()
         {
-            output = new WaveOutEvent();
-
+            _instance = this;
+            _output = new WaveOutEvent();
+            _output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
             //todo maybe move to somewhere else
             if (!Directory.Exists(tempFolder.FullName))
             {
                 Directory.CreateDirectory(tempFolder.FullName);
             }
+
             if (!Directory.Exists(downloadFolder.FullName))
             {
                 Directory.CreateDirectory(downloadFolder.FullName);
             }
 
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                while (true)
-                {
-                    ManagePlayback();
-                }
-            }).Start();
+            songStatusTimer = new Timer(ManagePlayback, null, 0, 1000);
+        }
+
+        private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
+        {
+            PlayNextSongInQueue();
         }
 
         private string GetSongPath(Song song)
@@ -104,13 +168,13 @@ namespace Musify_Desktop_App.Service
         {
             var mp3Path = GetSongPath(song);
 
-            output.Stop();
+            _output.Stop();
 
             /*todo fix crash on Boulevard of Broken Dreams
              System.InvalidOperationException: 
              'Got a frame at sample rate 48000, in an MP3 with sample rate 44100. 
              Mp3FileReader does not support sample rate changes.'
-             
+
             fix: https://stackoverflow.com/questions/31453107/got-a-frame-at-sample-rate-44100-in-an-mp3-with-sample-rate-48000-mp3filereade
             use determine sample rate, use WaveFileReader or Mp3FileReader
              */
@@ -121,22 +185,20 @@ namespace Musify_Desktop_App.Service
 
 
             var so = ShellFile.FromFilePath(mp3Path);
-            var seconds = 0.0;
             double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out var nanoseconds);
             if (nanoseconds > 0)
             {
-                seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
-                Console.WriteLine(seconds.ToString());
+                Duration = (int)(Convert100NanosecondsToMilliseconds(nanoseconds) / 1000);
             }
 
 
-            var relativeDuration = seconds * (percentage / 100.00);
+            var relativeDuration = Duration * (percentage / 100.00);
             songFileReader.CurrentTime = songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, Convert.ToInt32(relativeDuration), 0));
 
             //songFileReader.Position = 10L;
-            output.Init(songFileReader);
+            _output.Init(songFileReader);
             //output.GetPosition()
-            output.Play();
+            _output.Play();
 
             CurrentSong = song;
         }
@@ -149,12 +211,10 @@ namespace Musify_Desktop_App.Service
         }
 
         //todo add SongPercentage checking, update CurrentSongControl
-        private void ManagePlayback()
+        private void ManagePlayback(object state)
         {
-            if (output.PlaybackState == PlaybackState.Stopped && !switchingSong)
-            {
-                PlayNextSongInQueue();
-            }
+          if(CurrentSong != null)
+            Debug.WriteLine(songFileReader.CurrentTime.Seconds);
         }
 
         public void PlayNextSongInQueue()
@@ -176,15 +236,17 @@ namespace Musify_Desktop_App.Service
 
         public void PlayPauseSong()
         {
+            var timespan = _output.GetPosition();
+            var length = songFileReader.Length;
+            var pos = songFileReader.Position;
+            // var duration =
+            var seconds = 0.0;
+            //// double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out var nanoseconds);
+            // if (nanoseconds > 0)
+            // {
+            //     seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
+            // }
 
-            if (output.PlaybackState == PlaybackState.Playing)
-            {
-                output.Pause();
-            }
-            else
-            {
-                output.Play();
-            }
         }
 
 

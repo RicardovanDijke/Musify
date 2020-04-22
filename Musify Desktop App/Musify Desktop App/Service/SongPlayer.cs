@@ -255,7 +255,14 @@ namespace Musify_Desktop_App.Service
             // {
             //     seconds = Convert100NanosecondsToMilliseconds(nanoseconds) / 1000;
             // }
-
+            if (_output.PlaybackState == PlaybackState.Playing)
+            {
+                _output.Pause();
+            }
+            else
+            {
+                _output.Play();
+            }
         }
 
 

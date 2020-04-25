@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.Mime;
-using System.Threading;
-using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
+using Musify_Desktop_App.Panels.SongQueue;
 using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.CurrentSong
@@ -14,14 +12,11 @@ namespace Musify_Desktop_App.Panels.CurrentSong
     {
         private static readonly object padlock = new object();
         private static CurrentSongViewModel instance;
-        public static CurrentSongViewModel Instance
+        public static CurrentSongViewModel Instance()
         {
-            get
+            lock (padlock)
             {
-                lock (padlock)
-                {
-                    return instance ??= new CurrentSongViewModel();
-                }
+                return instance ??= new CurrentSongViewModel();
             }
         }
 
@@ -125,16 +120,29 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         public RelayCommand PlayPauseSongCommand { get; private set; }
         public RelayCommand PlayNextSongInQueueCommand { get; private set; }
 
+        public RelayCommand OpenQueuePageCommand { get; private set; }
+
         private CurrentSongViewModel()
         {
             SongProgressPercentage = 0;
 
 
             PlayPauseSongCommand = new RelayCommand(DoPlayPauseSong);
-            PlayNextSongInQueueCommand = new RelayCommand(DoPlayNextSongInQueueComamand);
+            PlayNextSongInQueueCommand = new RelayCommand(DoPlayNextSongInQueue);
+
+
+            OpenQueuePageCommand = new RelayCommand(DoOpenQueuePage);
         }
 
-        private void DoPlayNextSongInQueueComamand()
+
+        private void DoOpenQueuePage()
+        {
+            //todo fix this not getting called
+           // MainView = SongQueueViewModel;
+           // RaisePropertyChanged(nameof(MainView));
+        }
+
+        private void DoPlayNextSongInQueue()
         {
             SongPlayer.Instance.PlayNextSongInQueue();
         }

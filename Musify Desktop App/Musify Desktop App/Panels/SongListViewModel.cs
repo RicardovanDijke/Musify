@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
-using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Service;
 using Musify_Desktop_App.Socket;
 
@@ -13,38 +12,41 @@ namespace Musify_Desktop_App.Panels
 {
     class SongListViewModel : ViewModelBase
     {
-        private SongService songService;
-        private Song _selectedSong;
-        
-        public ObservableCollection<Song> Songs { get; set; }
+        private readonly SongService _songService;
 
-        public Song SelectedSong
+        private ObservableCollection<Song> _songs = new ObservableCollection<Song>();
+        public ObservableCollection<Song> Songs
         {
-            get => _selectedSong;
+            get => _songs;
             set
             {
-                _selectedSong = value;
-                // DoSongSelected();
+                _songs = value;
+                RaisePropertyChanged(nameof(Songs));
             }
         }
 
+
+
+        public Song SelectedSong { get; set; }
+
         public RelayCommand SongSelectedCommand { get; set; }
         public RelayCommand PlaySongCommand { get; set; }
-
         public RelayCommand AddSongToQueueCommand { get; set; }
 
 
-        public SongListViewModel()
-        {
-            songService = new SongService();
+        public SongListViewModel() { }
 
-            Songs = new ObservableCollection<Song>(songService.GetAllSongs().Result);
-            
+        public SongListViewModel(SongService songService, Func<List<Song>> getSongMethod)
+        {
+            _songService = songService;
+            Songs = new ObservableCollection<Song>(getSongMethod.Invoke());
+
             SongSelectedCommand = new RelayCommand(DoSongSelected);
-            PlaySongCommand = new RelayCommand(PlaySong);
+            PlaySongCommand = new RelayCommand(DoPlaySong);
 
 
             AddSongToQueueCommand = new RelayCommand(AddSongToQueue);
+
         }
 
         private void AddSongToQueue()
@@ -52,11 +54,10 @@ namespace Musify_Desktop_App.Panels
             SongPlayer.Instance.AddSongToQueue(SelectedSong);
         }
 
-        private void PlaySong()
+        private void DoPlaySong()
         {
-            songService.RequestSocket(SelectedSong.SongID);
+            _songService.RequestSocket(SelectedSong.SongID);
             SongSocket.NewSongSocket(SelectedSong.SongID);
-            //CurrentSongViewModel.Instance.SongPlaying = SelectedSong;
 
             SongPlayer.Instance.PlaySong(SelectedSong);
         }

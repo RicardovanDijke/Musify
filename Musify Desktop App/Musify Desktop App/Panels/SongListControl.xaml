@@ -6,18 +6,18 @@
              xmlns:local="clr-namespace:Musify_Desktop_App.Panels"
              xmlns:service="clr-namespace:Musify_Desktop_App.Service"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ContextMenu x:Key="contextMenu"  StaysOpen="true">
-            <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
-            <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
-        </ContextMenu>
-    </UserControl.Resources>
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
     <UserControl.DataContext>
         <local:SongListViewModel></local:SongListViewModel>
     </UserControl.DataContext>
     <Grid>
-        <DataGrid ItemsSource="{Binding Songs}" Background="MediumPurple" Grid.Row="0" Grid.Column="0" SelectedItem="{Binding SelectedSong}" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Command="{Binding PlaySongCommand}"/>
+        <DataGrid ItemsSource="{Binding Songs}"  Background="MediumPurple" Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" IsReadOnly="True">
             <DataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"

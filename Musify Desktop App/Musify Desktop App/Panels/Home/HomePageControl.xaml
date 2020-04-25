@@ -9,9 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="CornflowerBlue"
              >
-    <UserControl.DataContext>
-        <home:HomePageViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -22,8 +19,8 @@
 
         </Grid.RowDefinitions>
 
-     
-        <panels:SongListControl>
+
+        <panels:SongListControl DataContext="{Binding AllSongsListViewModel}">
            
         </panels:SongListControl>
        

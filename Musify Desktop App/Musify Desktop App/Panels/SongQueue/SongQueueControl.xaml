@@ -10,8 +10,7 @@
     <Grid>
 
 
-        <panels:SongListControl>
-
+        <panels:SongListControl DataContext="{Binding SongQueueList}">
         </panels:SongListControl>
     </Grid>
 </UserControl>

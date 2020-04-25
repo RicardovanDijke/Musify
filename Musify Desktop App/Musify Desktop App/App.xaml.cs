@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Musify_Desktop_App.Panels.Login;
-using Musify_Desktop_App.Service;
+﻿using System.Windows;
 
 namespace Musify_Desktop_App
 {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -10,7 +8,6 @@ using JetBrains.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
-using NAudio.Utils;
 using NAudio.Wave;
 
 namespace Musify_Desktop_App.Service
@@ -54,7 +51,7 @@ namespace Musify_Desktop_App.Service
             {
                 _currentSong = value;
                 OnPropertyChanged(nameof(CurrentSong));
-                CurrentSongViewModel.Instance.SongPlaying = value;
+                CurrentSongViewModel.Instance().SongPlaying = value;
             }
         }
 
@@ -72,7 +69,7 @@ namespace Musify_Desktop_App.Service
             private set
             {
                 _timePlayed = value;
-                CurrentSongViewModel.Instance.SongProgress = value;
+                CurrentSongViewModel.Instance().SongProgress = value;
                 OnPropertyChanged(nameof(TimePlayed));
             }
         }
@@ -87,8 +84,8 @@ namespace Musify_Desktop_App.Service
             private set
             {
                 _positionPercentage = value;
-                CurrentSongViewModel.Instance.UpdateFromBackend = true;
-                CurrentSongViewModel.Instance.SongProgressPercentage = value;
+                CurrentSongViewModel.Instance().UpdateFromBackend = true;
+                CurrentSongViewModel.Instance().SongProgressPercentage = value;
 
                 OnPropertyChanged(nameof(PositionPercentage));
             }
@@ -103,7 +100,7 @@ namespace Musify_Desktop_App.Service
             private set
             {
                 _duration = value;
-                CurrentSongViewModel.Instance.SongDuration = value;
+                CurrentSongViewModel.Instance().SongDuration = value;
                 OnPropertyChanged(nameof(Duration));
             }
         }

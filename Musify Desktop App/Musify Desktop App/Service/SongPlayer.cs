@@ -132,7 +132,7 @@ namespace Musify_Desktop_App.Service
         {
             _instance = this;
             _output = new WaveOutEvent();
-            _output.PlaybackStopped += OnPlaybackStopped;
+            //_output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
             //todo maybe move to somewhere else
             if (!Directory.Exists(tempFolder.FullName))
@@ -179,10 +179,8 @@ namespace Musify_Desktop_App.Service
              Mp3FileReader does not support sample rate changes.'
 
             fix: https://stackoverflow.com/questions/31453107/got-a-frame-at-sample-rate-44100-in-an-mp3-with-sample-rate-48000-mp3filereade
-            use determine sample rate, use WaveFileReader or Mp3FileReader
+            determine sample rate, use WaveFileReader or Mp3FileReader
              */
-
-            // songFileReader.
 
             songFileReader = new Mp3FileReader(mp3Path);
 
@@ -223,6 +221,12 @@ namespace Musify_Desktop_App.Service
                 TimePlayed++;
                 var percentage = (double)TimePlayed / (double)Duration * 100.0;
                 PositionPercentage = (int)percentage;
+            }
+
+            //todo combine if statements maybe
+            if (_output.PlaybackState == PlaybackState.Stopped)
+            {
+                PlayNextSongInQueue();
             }
         }
 

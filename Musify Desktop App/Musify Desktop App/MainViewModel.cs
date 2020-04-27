@@ -1,8 +1,10 @@
-﻿using System.Printing.IndexedProperties;
+﻿using System;
+using System.Printing.IndexedProperties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Panels.Home;
+using Musify_Desktop_App.Panels.NavigationBar;
 using Musify_Desktop_App.Panels.SongQueue;
 using Musify_Desktop_App.Service;
 
@@ -10,8 +12,18 @@ namespace Musify_Desktop_App
 {
     class MainViewModel : ViewModelBase
     {
-        public ViewModelBase MainView { get; set; }
+        public ViewModelBase MainView
+        {
+            get => _mainView;
+            set
+            {
+                _mainView = value;
+                RaisePropertyChanged(nameof(MainView));
+            }
+        }
+
         public HomePageViewModel HomePageView { get; set; }
+        public NavigationBarViewModel NavigationBarViewModel { get; set; }
         public CurrentSongViewModel CurrentSongView { get; set; }
         public FriendsActivityViewModel FriendsActivityView { get; set; }
 
@@ -19,6 +31,8 @@ namespace Musify_Desktop_App
 
 
         private SongService _songService;
+        private ViewModelBase _mainView;
+
         public MainViewModel()
         {
             _songService = new SongService();
@@ -26,8 +40,24 @@ namespace Musify_Desktop_App
             HomePageView = new HomePageViewModel(_songService);
             CurrentSongView = CurrentSongViewModel.Instance();
             FriendsActivityView = new FriendsActivityViewModel(_songService);
+            SongQueueViewModel = new SongQueueViewModel(_songService);
+            NavigationBarViewModel = new NavigationBarViewModel();
+            
+
+            CurrentSongView.QueuePageButtonPressed += GotoQueuePage;
+            NavigationBarViewModel.HomePageButtonPressed += GotoHomePage;
+
+            MainView = HomePageView;
+        }
 
 
+        private void GotoQueuePage(object sender, EventArgs e)
+        {
+            MainView = new SongQueueViewModel(_songService);
+        }
+
+        private void GotoHomePage(object sender, EventArgs e)
+        {
             MainView = HomePageView;
         }
     }

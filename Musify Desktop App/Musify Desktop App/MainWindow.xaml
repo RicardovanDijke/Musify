@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
 
 
-        <navigationBar:NavigationBarControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding NavigationBarView}"/>
+        <navigationBar:NavigationBarControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding NavigationBarViewModel}"/>
         <currentSong:CurrentSongControl  Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="3" DataContext="{Binding CurrentSongView}"/>
         <friendsActivity:FriendActivityControl Grid.Column="2" Grid.Row="0"  DataContext="{Binding FriendsActivityView}"/>
 

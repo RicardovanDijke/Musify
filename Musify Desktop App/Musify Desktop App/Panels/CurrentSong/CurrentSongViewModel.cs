@@ -8,7 +8,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.CurrentSong
 {
-    class CurrentSongViewModel : ViewModelBase
+    class CurrentSongViewModel : BasePanelNavigation
     {
         private static readonly object padlock = new object();
         private static CurrentSongViewModel instance;
@@ -19,6 +19,9 @@ namespace Musify_Desktop_App.Panels.CurrentSong
                 return instance ??= new CurrentSongViewModel();
             }
         }
+
+        public event EventHandler ThresholdReached;
+
 
         private int _songProgressPercentage;
 
@@ -81,7 +84,6 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             set
             {
                 _songProgressPercentage = value;
-                Debug.WriteLine(_songProgressPercentage);
                 if (SongPlaying != null && !UpdateFromBackend)
                 {
                     SongPlayer.Instance.PlaySong(SongPlaying, value);
@@ -90,7 +92,6 @@ namespace Musify_Desktop_App.Panels.CurrentSong
                 RaisePropertyChanged(nameof(SongProgressString));
                 RaisePropertyChanged(nameof(SongProgressPercentage));
 
-                Debug.WriteLine(SongProgressPercentage);
                 UpdateFromBackend = false;
             }
         }
@@ -137,9 +138,8 @@ namespace Musify_Desktop_App.Panels.CurrentSong
 
         private void DoOpenQueuePage()
         {
-            //todo fix this not getting called
-           // MainView = SongQueueViewModel;
-           // RaisePropertyChanged(nameof(MainView));
+            
+            OnQueuePageButtonPressed();
         }
 
         private void DoPlayNextSongInQueue()

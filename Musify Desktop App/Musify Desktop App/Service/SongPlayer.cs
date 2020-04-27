@@ -150,7 +150,10 @@ namespace Musify_Desktop_App.Service
 
         private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            PlayNextSongInQueue();
+            if (!switchingSong)
+            {
+                PlayNextSongInQueue();
+            }
         }
 
         private string GetSongPath(Song song)
@@ -238,6 +241,7 @@ namespace Musify_Desktop_App.Service
         public void AddSongToQueue(Song song)
         {
             Queue.Add(song);
+            OnPropertyChanged(nameof(Queue));
         }
 
         public void PlayPauseSong()

@@ -47,6 +47,7 @@ namespace Musify_Desktop_App.Panels
         public SongListViewModel(SongService songService, Func<List<Song>> getSongMethod, string listName)
         {
             _songService = songService;
+            //todo fix crash if Storage service not online
             Songs = new ObservableCollection<Song>(getSongMethod.Invoke());
             ListName = listName;
 

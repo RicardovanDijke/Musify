@@ -131,7 +131,10 @@ namespace Musify_Desktop_App.Service
         private SongPlayer()
         {
             _instance = this;
-            _output = new WaveOutEvent();
+            _output = new WaveOutEvent
+            {
+                Volume = 0.5f
+            };
             //_output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
             //todo maybe move to somewhere else

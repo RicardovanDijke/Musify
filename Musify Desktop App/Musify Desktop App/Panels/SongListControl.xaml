@@ -18,11 +18,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="30"/>
-        <controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}"   Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay}" SelectionMode="Extended" IsReadOnly="True">
+        <controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}" 
+                                        Grid.Row="1" Grid.Column="0" 
+                                        SelectedItem="{Binding SelectedSong}"
+                                        SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay}"
+                                        SelectionMode="Extended"
+                                        IsReadOnly="True"
+                                        AutoGenerateColumns="False">
             <controls:MultiSelectedDataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"
-                    Command="{Binding SongSelectedCommand}"/>
+                    Command="{Binding PlaySongCommand}"/>
             </controls:MultiSelectedDataGrid.InputBindings>
             <controls:MultiSelectedDataGrid.ContextMenu>
                 <ContextMenu StaysOpen="true">

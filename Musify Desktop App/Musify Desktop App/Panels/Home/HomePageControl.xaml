@@ -16,11 +16,12 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
 
-        <panels:SongListControl DataContext="{Binding AllSongsListViewModel}">
+        <panels:SongListControl DataContext="{Binding AllSongsListViewModel}" Grid.RowSpan="2">
            
         </panels:SongListControl>
        

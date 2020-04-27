@@ -25,7 +25,7 @@ namespace Musify_Desktop_App.Panels
             }
         }
 
-
+        public string ListName { get; set; }
 
         public Song SelectedSong { get; set; }
 
@@ -36,16 +36,16 @@ namespace Musify_Desktop_App.Panels
 
         public SongListViewModel() { }
 
-        public SongListViewModel(SongService songService, Func<List<Song>> getSongMethod)
+        public SongListViewModel(SongService songService, Func<List<Song>> getSongMethod, string listName)
         {
             _songService = songService;
             Songs = new ObservableCollection<Song>(getSongMethod.Invoke());
+            ListName = listName;
 
             SongSelectedCommand = new RelayCommand(DoSongSelected);
             PlaySongCommand = new RelayCommand(DoPlaySong);
-
-
             AddSongToQueueCommand = new RelayCommand(AddSongToQueue);
+
 
         }
 

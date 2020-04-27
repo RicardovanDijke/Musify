@@ -24,7 +24,7 @@ namespace Musify_Desktop_App.Panels.SongQueue
         public SongQueueViewModel(SongService songService)
         {
 
-            SongQueueListViewModel = new SongListViewModel(songService, () => SongPlayer.Instance.Queue);
+            SongQueueListViewModel = new SongListViewModel(songService, () => SongPlayer.Instance.Queue, "Play Queue");
         }
     }
 }

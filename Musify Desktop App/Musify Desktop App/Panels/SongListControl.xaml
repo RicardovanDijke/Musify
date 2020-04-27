@@ -7,17 +7,17 @@
              xmlns:service="clr-namespace:Musify_Desktop_App.Service"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             >
+             Background="MediumPurple">
     <UserControl.DataContext>
         <local:SongListViewModel></local:SongListViewModel>
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Command="{Binding PlaySongCommand}"/>
-        <DataGrid ItemsSource="{Binding Songs}"  Background="MediumPurple" Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" IsReadOnly="True">
+        <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="30"/>
+        <DataGrid ItemsSource="{Binding Songs}"   Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" IsReadOnly="True">
             <DataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"
@@ -39,8 +39,8 @@
                 </DataGridTemplateColumn>
 
                 <DataGridTextColumn  Header="Title" Binding="{Binding Title}"  />
-                <DataGridTextColumn  Header="Title" Binding="{Binding Artist.Name}"/>
-                <DataGridTextColumn  Header="Title" Binding="{Binding Album.Name}"/>
+                <DataGridTextColumn  Header="Artist" Binding="{Binding Artist.Name}"/>
+                <DataGridTextColumn  Header="Album" Binding="{Binding Album.Name}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Musify_Desktop_App.Panels"
              xmlns:service="clr-namespace:Musify_Desktop_App.Service"
+             xmlns:controls="clr-namespace:Musify_Desktop_App.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="MediumPurple">
@@ -17,19 +18,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="30"/>
-        <DataGrid ItemsSource="{Binding Songs}"   Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" IsReadOnly="True">
-            <DataGrid.InputBindings>
+        <controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}"   Grid.Row="1" Grid.Column="0" SelectedItem="{Binding SelectedSong}" SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay}" SelectionMode="Extended" IsReadOnly="True">
+            <controls:MultiSelectedDataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"
                     Command="{Binding SongSelectedCommand}"/>
-            </DataGrid.InputBindings>
-            <DataGrid.ContextMenu>
+            </controls:MultiSelectedDataGrid.InputBindings>
+            <controls:MultiSelectedDataGrid.ContextMenu>
                 <ContextMenu StaysOpen="true">
                     <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
                     <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
                 </ContextMenu>
-            </DataGrid.ContextMenu>
-            <DataGrid.Columns>
+            </controls:MultiSelectedDataGrid.ContextMenu>
+            <controls:MultiSelectedDataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -41,7 +42,7 @@
                 <DataGridTextColumn  Header="Title" Binding="{Binding Title}"  />
                 <DataGridTextColumn  Header="Artist" Binding="{Binding Artist.Name}"/>
                 <DataGridTextColumn  Header="Album" Binding="{Binding Album.Name}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            </controls:MultiSelectedDataGrid.Columns>
+        </controls:MultiSelectedDataGrid>
     </Grid>
 </UserControl>

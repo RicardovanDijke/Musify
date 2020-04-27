@@ -223,11 +223,11 @@ namespace Musify_Desktop_App.Service
                 PositionPercentage = (int)percentage;
             }
 
-            //todo combine if statements maybe
-            if (_output.PlaybackState == PlaybackState.Stopped)
-            {
-                PlayNextSongInQueue();
-            }
+            ////todo combine if statements maybe
+            //if (_output.PlaybackState == PlaybackState.Stopped)
+            //{
+            //    PlayNextSongInQueue();
+            //}
         }
 
         public void PlayNextSongInQueue()
@@ -237,14 +237,14 @@ namespace Musify_Desktop_App.Service
                 switchingSong = true;
                 PlaySong(Queue[0]);
                 Queue.RemoveAt(0);
-
+                OnPropertyChanged(nameof(Queue));
                 switchingSong = false;
             }
         }
 
-        public void AddSongToQueue(Song song)
+        public void AddSongsToQueue(List<Song> songs)
         {
-            Queue.Add(song);
+            Queue.AddRange(songs);
             OnPropertyChanged(nameof(Queue));
         }
 

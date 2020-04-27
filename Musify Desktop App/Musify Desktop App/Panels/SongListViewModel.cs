@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -29,6 +31,12 @@ namespace Musify_Desktop_App.Panels
 
         public Song SelectedSong { get; set; }
 
+        public IList SelectedSongs
+        {
+            get;
+            set;
+        }
+
         public RelayCommand SongSelectedCommand { get; set; }
         public RelayCommand PlaySongCommand { get; set; }
         public RelayCommand AddSongToQueueCommand { get; set; }
@@ -44,14 +52,16 @@ namespace Musify_Desktop_App.Panels
 
             SongSelectedCommand = new RelayCommand(DoSongSelected);
             PlaySongCommand = new RelayCommand(DoPlaySong);
-            AddSongToQueueCommand = new RelayCommand(AddSongToQueue);
+            AddSongToQueueCommand = new RelayCommand(AddSelectedSongsToQueue);
 
 
         }
 
-        private void AddSongToQueue()
+        private void AddSelectedSongsToQueue()
         {
-            SongPlayer.Instance.AddSongToQueue(SelectedSong);
+            var songs = SelectedSongs.Cast<Song>().ToList();
+
+            SongPlayer.Instance.AddSongsToQueue(songs);
         }
 
         private void DoPlaySong()

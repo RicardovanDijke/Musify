@@ -16,17 +16,17 @@ namespace Auth_Service.Helpers
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private readonly ILoginService _loginService;
+        private readonly IUserService _userService;
 
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            ILoginService loginService)
+            IUserService userService)
             : base(options, logger, encoder, clock)
         {
-            _loginService = loginService;
+            _userService = userService;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -42,7 +42,7 @@ namespace Auth_Service.Helpers
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                user = _loginService.Authenticate(username, password);
+                user = _userService.Authenticate(username, password);
             }
             catch
             {

@@ -1,13 +1,16 @@
+using System.Text;
 using Auth_Service.Database;
 using Auth_Service.Helpers;
 using Auth_Service.Service;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Auth_Service
 {
@@ -26,6 +29,33 @@ namespace Auth_Service
             services.AddCors();
             services.AddControllers();
 
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+
             services.AddDbContext<DatabaseContext>(opts =>
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
@@ -33,12 +63,9 @@ namespace Auth_Service
                 opts.EnableSensitiveDataLogging();
             });
 
-            // configure basic authentication 
-            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
             // configure Dependency Injection
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 

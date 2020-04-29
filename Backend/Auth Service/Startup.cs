@@ -1,3 +1,6 @@
+using Auth_Service.Helpers;
+using Auth_Service.Service;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +22,18 @@ namespace Auth_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]));
-            services.AddScoped<IUserRepository, UserManager>();
-
+            services.AddCors();
             services.AddControllers();
+
+            services.AddDbContext<UserContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]));
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            // configure Dependency Injection
+            services.AddScoped<IUserRepository, UserManager>();
+            services.AddScoped<ILoginService, LoginService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +47,8 @@ namespace Auth_Service
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

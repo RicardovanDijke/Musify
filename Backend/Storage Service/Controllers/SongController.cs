@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Song_Service.Database;
 using Song_Service.Sockets;
 
 namespace Song_Service.Controllers

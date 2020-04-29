@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Song_Service.Database
+namespace Auth_Service.Database
 {
     public interface IRepository<T> where T : class
     {

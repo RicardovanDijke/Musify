@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auth_Service.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/")]
     public class LoginController : ControllerBase
@@ -33,9 +34,9 @@ namespace Auth_Service.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateModel model)
+        public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = await _loginService.Authenticate(model.Username, model.Password);
+            var user = _loginService.Authenticate(model.Username, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -43,6 +44,12 @@ namespace Auth_Service.Controllers
             return Ok(user);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = _loginService.GetAll();
+            return Ok(users);
+        }
 
 
         [HttpGet]

@@ -1,7 +1,7 @@
 ﻿using Core.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Song_Service
+namespace Song_Service.Database
 {
     /// <summary>
     ///  add-migration Song_Service.DatabaseContext -Project "Song Service" -Context "Song_Service.DatabaseContext"

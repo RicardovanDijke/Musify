@@ -1,3 +1,4 @@
+using Auth_Service.Database;
 using Auth_Service.Helpers;
 using Auth_Service.Service;
 using Microsoft.AspNetCore.Authentication;
@@ -25,13 +26,18 @@ namespace Auth_Service
             services.AddCors();
             services.AddControllers();
 
-            services.AddDbContext<UserContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]));
+            services.AddDbContext<DatabaseContext>(opts =>
+            {
+                // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
+                opts.UseMySql(Configuration["ConnectionString:AuthDBMySql"]);
+                opts.EnableSensitiveDataLogging();
+            });
 
             // configure basic authentication 
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
             // configure Dependency Injection
-            services.AddScoped<IUserRepository, UserManager>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILoginService, LoginService>();
 
         }

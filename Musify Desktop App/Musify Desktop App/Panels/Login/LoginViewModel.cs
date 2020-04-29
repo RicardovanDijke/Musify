@@ -6,19 +6,25 @@ using System.Text.Json;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Musify_Desktop_App.Model;
+using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.Login
 {
     class LoginViewModel : ViewModelBase
     {
-
+        private UserService _userService;
         public string Username { get; set; }
         public string Password { get; set; }
 
 
         public RelayCommand LoginCommand { get; set; }
-        public LoginViewModel()
+
+        public LoginViewModel() { }
+
+        public LoginViewModel(UserService userService)
         {
+            _userService = userService;
             Username = "Ricardo1184";
             Password = "password";
 
@@ -33,42 +39,17 @@ namespace Musify_Desktop_App.Panels.Login
         private async void Login()
         {
             //todo move to LoginService
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            string payload = JsonSerializer.Serialize(new
+            var user = _userService.Login(Username, Password);
+            if (user != null)
             {
-                username = Username,
-                password = Password,
-            });
-
-            var stringTask = client.PostAsync("https://localhost:44321/api/login", new StringContent(payload, Encoding.UTF8, "application/json"));
-
-            try
-            {
-                var msg = await stringTask;
-                var content = await msg.Content.ReadAsStringAsync();
-
-                //var obj = JsonSerializer.Deserialize<object>(content);
-                Console.Write(content);
-
-                GoToMainScreen();
-
-               
-            }
-            catch
-            {
-                //todo display LoginUnsuccesfull message
-                GoToMainScreen();
+                GoToMainScreen(user);
             }
         }
 
-        private void GoToMainScreen()
+        private void GoToMainScreen(User user)
         {
-            var mainWindow = new MainWindow(new MainViewModel());
+            var mainWindow = new MainWindow(new MainViewModel(user));
             //window.Close();
             mainWindow.Show();
 

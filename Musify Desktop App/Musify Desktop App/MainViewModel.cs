@@ -2,6 +2,7 @@
 using System.Printing.IndexedProperties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Panels.Home;
 using Musify_Desktop_App.Panels.NavigationBar;
@@ -33,7 +34,8 @@ namespace Musify_Desktop_App
         private SongService _songService;
         private ViewModelBase _mainView;
 
-        public MainViewModel()
+        //todo use user
+        public MainViewModel(User user)
         {
             _songService = new SongService();
 
@@ -42,7 +44,7 @@ namespace Musify_Desktop_App
             FriendsActivityView = new FriendsActivityViewModel(_songService);
             SongQueueViewModel = new SongQueueViewModel(_songService);
             NavigationBarViewModel = new NavigationBarViewModel();
-            
+
 
             CurrentSongView.QueuePageButtonPressed += GotoQueuePage;
             NavigationBarViewModel.HomePageButtonPressed += GotoHomePage;

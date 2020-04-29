@@ -18,7 +18,7 @@ namespace Musify_Desktop_App.Service
         {
             return GetAllSongsTask().Result;
         }
-        public async Task<List<Song>> GetAllSongsTask()
+        private async Task<List<Song>> GetAllSongsTask()
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
@@ -54,15 +54,10 @@ namespace Musify_Desktop_App.Service
         {
             WebClient webClient = new WebClient();
 
-            // var reqparm = new System.Collections.Specialized.NameValueCollection();
-            //reqparm.Add("ipAdress", "127.0.0.1");
-            // reqparm.Add("songID", songID.ToString()); 
             webClient.QueryString.Add("ipAdress", "127.0.0.1");
             webClient.QueryString.Add("songID", songID.ToString());
-            //   string result = webClient.UploadValues(SongServiceApi + "songs/stream");
+
             webClient.UploadValues(SongServiceApi + "songs/stream", webClient.QueryString);
-
         }
-
     }
 }

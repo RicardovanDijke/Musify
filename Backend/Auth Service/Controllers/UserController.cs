@@ -1,4 +1,6 @@
-﻿using Auth_Service.Entities;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Auth_Service.Entities;
 using Auth_Service.Helpers;
 using Auth_Service.Service;
 using Core.Model;
@@ -23,6 +25,8 @@ namespace Auth_Service.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested, userName = {model.Username}, pass = {model.Password}");
+
             var user = _userService.Authenticate(model.Username, model.Password);
 
             if (user == null)
@@ -35,6 +39,8 @@ namespace Auth_Service.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
             var users = _userService.GetAll();
             return Ok(users);
         }
@@ -43,6 +49,8 @@ namespace Auth_Service.Controllers
         [HttpGet("{id}")]
         public IActionResult getUserbyID(int id)
         {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
             // only allow admins to access other user records
             var currentUserId = int.Parse(User.Identity.Name);
             if (id != currentUserId && !User.IsInRole(Role.Admin))

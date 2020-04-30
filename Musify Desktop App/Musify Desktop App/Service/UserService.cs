@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Musify_Desktop_App.Model;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Musify_Desktop_App.Service
 {
@@ -41,7 +40,7 @@ namespace Musify_Desktop_App.Service
                 var msg = stringTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
 
-                var user = (User)JsonSerializer.Deserialize<object>(content);
+                var user = JsonConvert.DeserializeObject<User>(content);
                 Debug.Write(content);
                 return user;
             }

@@ -1,4 +1,5 @@
-﻿using Core.Model;
+﻿using Auth_Service.Entities;
+using Core.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth_Service.Database

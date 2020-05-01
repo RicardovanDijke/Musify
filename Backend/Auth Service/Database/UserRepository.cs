@@ -8,6 +8,7 @@ namespace Auth_Service.Database
     public interface IUserRepository : IRepository<User>
     {
         public User Authenticate(string username, string password);
+        void Add(User user);
     }
 
     public class UserRepository : IUserRepository

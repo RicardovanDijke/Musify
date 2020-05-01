@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Model;
+﻿using Core.Model;
 
 namespace Song_Service.Sockets
 {

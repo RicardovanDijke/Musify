@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Song_Service.Database;
-
 using TagLibFile = TagLib.File;
 
 namespace Song_Service.Service

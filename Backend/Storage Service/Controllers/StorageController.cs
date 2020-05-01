@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Mime;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic.CompilerServices;
-using NHibernate.Cfg.MappingSchema;
 using Song_Service.Database;
 using Song_Service.Service;
 

@@ -2,7 +2,6 @@ using System.Text;
 using Auth_Service.Database;
 using Auth_Service.Helpers;
 using Auth_Service.Service;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

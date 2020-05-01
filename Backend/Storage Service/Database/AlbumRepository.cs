@@ -12,53 +12,53 @@ namespace Song_Service.Database
 
     public class AlbumRepository : IAlbumRepository
     {
-        private DatabaseContext context;
-        private DbSet<Album> table;
+        private readonly DatabaseContext _context;
+        private readonly DbSet<Album> _table;
 
         public AlbumRepository(DatabaseContext context)
         {
-            this.context = context;
-            table = context.Set<Album>();
+            this._context = context;
+            _table = context.Set<Album>();
         }
 
         public IEnumerable<Album> GetAll()
         {
-            return table.ToList();
+            return _table.ToList();
         }
 
         public Album Get(long id)
         {
-            return table.Find(id);
+            return _table.Find(id);
         }
 
         public void Add(Album obj)
         {
-            table.Add(obj);
+            _table.Add(obj);
             Save();
         }
 
         public void Update(Album obj)
         {
-            table.Attach(obj);
-            context.Entry(obj).State = EntityState.Modified;
+            _table.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
             Save();
         }
 
         public void Delete(Album obj)
         {
-            var existing = table.Find(obj);
-            table.Remove(existing);
+            var existing = _table.Find(obj);
+            _table.Remove(existing);
             Save();
         }
 
         public Album FindByName(string name)
         {
-            return table.FirstOrDefault(a => a.Name == name);
+            return _table.FirstOrDefault(a => a.Name == name);
         }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

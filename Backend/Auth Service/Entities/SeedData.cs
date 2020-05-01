@@ -11,29 +11,27 @@ namespace Auth_Service.Entities
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new DatabaseContext(
+            using var context = new DatabaseContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
+                    DbContextOptions<DatabaseContext>>());
+            // Look for any movies.
+            if (context.Users.Any())
             {
-                // Look for any movies.
-                if (context.Users.Any())
-                {
-                    return; // DB has been seeded
-                }
-
-                context.Users.AddRange(
-                    new User()
-                    {
-                        UserID = 1,
-                        DisplayName = "Musify",
-                        UserName = "musify",
-                        Password = "musify",
-                        Role = Role.Admin,
-
-                    }
-                );
-                context.SaveChanges();
+                return; // DB has been seeded
             }
+
+            context.Users.AddRange(
+                new User()
+                {
+                    UserId = 1,
+                    DisplayName = "Musify",
+                    UserName = "musify",
+                    Password = "musify",
+                    Role = Role.Admin,
+
+                }
+            );
+            context.SaveChanges();
         }
     }
 }

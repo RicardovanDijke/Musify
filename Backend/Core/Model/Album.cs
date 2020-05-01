@@ -9,7 +9,7 @@ namespace Core.Model
     public class Album
     {
         [Key]
-        public long AlbumID { get; set; }
+        public long AlbumId { get; set; }
 
         public string Name { get; set; }
 

@@ -7,7 +7,7 @@ namespace Core.Model
     public class Artist
     {
         [Key]
-        public long ArtistID { get; set; }
+        public long ArtistId { get; set; }
 
         public string Name { get; set; }
 

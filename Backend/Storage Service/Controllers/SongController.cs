@@ -17,11 +17,11 @@ namespace Song_Service.Controllers
     {
 
         //TODO create actual Songmanager that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumManager?
-        private ISongRepository songManager;
+        private readonly ISongRepository _songManager;
 
         public SongController(ISongRepository songManager)
         {
-            this.songManager = songManager;
+            this._songManager = songManager;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace Song_Service.Controllers
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
-            var song = songManager.Get(id);
+            var song = _songManager.Get(id);
             
             return new ActionResult<Song>(song);
         }
@@ -41,7 +41,7 @@ namespace Song_Service.Controllers
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
-            var songs = songManager.GetAll().ToList();
+            var songs = _songManager.GetAll().ToList();
 
             Debug.WriteLine($"returning {songs.Count} songs");
             return new ActionResult<List<Song>>(songs);
@@ -56,13 +56,13 @@ namespace Song_Service.Controllers
 
             var artist = new Artist
             {
-                ArtistID = 1,
+                ArtistId = 1,
                 Name = "Green Day"
             };
 
             var album = new Album()
             {
-                AlbumID = 1,
+                AlbumId = 1,
                 Artist = artist,
                 Name = "American Idiot"
             };
@@ -86,7 +86,7 @@ namespace Song_Service.Controllers
             var songs = new List<Song> {
                 new Song
              {
-                 SongID = 1L,
+                 SongId = 1L,
                  Title = "American Idiot",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -94,7 +94,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 2L,
+                 SongId = 2L,
                  Title = "Jesus Of Suburbia",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -102,7 +102,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 3L,
+                 SongId = 3L,
                  Title = "Holiday",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -110,7 +110,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 4L,
+                 SongId = 4L,
                  Title = "Boulevard of Broken Dreams",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -118,7 +118,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 5L,
+                 SongId = 5L,
                  Title = "Are We The Waiting",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -126,7 +126,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 6L,
+                 SongId = 6L,
                  Title = "St. Jimmy",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -134,7 +134,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 7L,
+                 SongId = 7L,
                  Title = "Give Me Novacaine",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -142,7 +142,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 8L,
+                 SongId = 8L,
                  Title = "She's A Rebel",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -150,7 +150,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 9L,
+                 SongId = 9L,
                  Title = "Extraordinary Girl",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -158,7 +158,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 10L,
+                 SongId = 10L,
                  Title = "Letterbomb",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -166,7 +166,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 11L,
+                 SongId = 11L,
                  Title = "Wake Me up When September Ends",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -174,7 +174,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 12L,
+                 SongId = 12L,
                  Title = "Homecoming",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -182,7 +182,7 @@ namespace Song_Service.Controllers
                  Artist = artist
              }, new Song
              {
-                 SongID = 13L,
+                 SongId = 13L,
                  Title = "Whatsername",
                  Album = album,
                  DateUploaded = DateTime.Now,
@@ -198,7 +198,7 @@ namespace Song_Service.Controllers
 
             album.Songs.AddRange(songs);
 
-            songManager.AddRange(songs);
+            _songManager.AddRange(songs);
 
             return new OkResult();
         }
@@ -211,12 +211,12 @@ namespace Song_Service.Controllers
         /// <returns> adress which client needs to connect to to receive file</returns>
         [HttpPost]
         [Route("stream")]
-        public ActionResult<string> GetSongStream(string ipAdress, long songID)
+        public ActionResult<string> GetSongStream(string ipAdress, long songId)
         {
 
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested w/ params ipAdress: {ipAdress} and id: {songID}");
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested w/ params ipAdress: {ipAdress} and id: {songId}");
 
-            Song s = songManager.Get(songID);
+            Song s = _songManager.Get(songId);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -225,8 +225,8 @@ namespace Song_Service.Controllers
             }).Start();
 
             
-            string localIP ="127.0.0.1";
-            return new ActionResult<string>(s.Title + localIP);
+            string localIp ="127.0.0.1";
+            return new ActionResult<string>(s.Title + localIp);
         }
 
     }

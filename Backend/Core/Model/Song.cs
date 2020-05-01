@@ -9,7 +9,7 @@ namespace Core.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long SongID { get; set; }
+        public long SongId { get; set; }
 
         public string Title { get; set; }
 
@@ -28,7 +28,7 @@ namespace Core.Model
 
         public string FilePath { get; set; }
 
-        private int trackNumber;
+        private readonly int _trackNumber;
 
         public Song()
         {
@@ -41,14 +41,14 @@ namespace Core.Model
             Artist = artist;
             Album = album;
             Duration = duration;
-            this.trackNumber = trackNumber;
+            this._trackNumber = trackNumber;
 
             SetFilePath();
         }
 
         public void SetFilePath()
         {
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, trackNumber + " - " + Title + ".mp3");
+            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, _trackNumber + " - " + Title + ".mp3");
         }
 
         public int GetAlbumNumber()

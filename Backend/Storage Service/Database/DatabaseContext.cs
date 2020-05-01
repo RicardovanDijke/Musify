@@ -21,12 +21,12 @@ namespace Song_Service.Database
 
             modelBuilder.Entity<Artist>(artist =>
             {
-                artist.HasKey(a => a.ArtistID);
+                artist.HasKey(a => a.ArtistId);
             });
             
             modelBuilder.Entity<Song>(song =>
             {
-                song.HasKey(a => a.SongID);
+                song.HasKey(a => a.SongId);
                 song.HasOne(a => a.Artist)
                     .WithMany(p => p.Songs); 
                 song.HasOne(a => a.Album)
@@ -35,7 +35,7 @@ namespace Song_Service.Database
 
             modelBuilder.Entity<Album>(album =>
             {
-                album.HasKey(a => a.AlbumID);
+                album.HasKey(a => a.AlbumId);
                 album.HasOne(a => a.Artist)
                     .WithMany(p => p.Albums);
                 album.HasMany(a => a.Songs)

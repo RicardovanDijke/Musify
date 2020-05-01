@@ -14,7 +14,7 @@ namespace Song_Service.Sockets
         //TODO add datamapper to map Song proxy to songDTO, which is suitable for streaming
 
         //TODO send create SongDTO which has base64 string content and some other info
-        public void StreamSong(Song song, string clientIP)
+        public void StreamSong(Song song, string clientIp)
         {
             //  FileTransfer fileTransfer = new FileTransfer();
             // fileTransfer.Name = "TestFile";
@@ -23,6 +23,9 @@ namespace Song_Service.Sockets
             // var type = (song as IProxyTargetAccessor)?.DynProxyGetTarget().GetType();
 
             byte[] bytes = System.IO.File.ReadAllBytes(song.FilePath);
+
+            //this is actually needed
+            // ReSharper disable once UnusedVariable
             byte[] sendBytes = Encoding.UTF8.GetBytes(content);
 
 

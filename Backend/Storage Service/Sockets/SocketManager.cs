@@ -7,16 +7,16 @@ namespace Song_Service.Sockets
 
         //List<Task>
 
-        private SocketCreator socketCreator;
+        private readonly SocketCreator _socketCreator;
 
         public SocketManager()
         {
-            socketCreator = new SocketCreator();
+            _socketCreator = new SocketCreator();
         }
 
-        public void AddSocket(Song song, string clientIP)
+        public void AddSocket(Song song, string clientIp)
         {
-            socketCreator.StreamSong(song,clientIP);
+            _socketCreator.StreamSong(song,clientIp);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Auth_Service.Database
 
             modelBuilder.Entity<User>(user =>
             {
-                user.HasKey(u => u.UserID);
+                user.HasKey(u => u.UserId);
                 user.HasMany(u => u.Playlists);
             });
 

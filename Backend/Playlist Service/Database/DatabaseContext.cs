@@ -22,14 +22,14 @@ namespace Playlist_Service.Database
 
             modelBuilder.Entity<Playlist>(playlist =>
             {
-                playlist.HasKey(p => p.PlaylistID);
+                playlist.HasKey(p => p.PlaylistId);
                 playlist.HasOne(p => p.Creator);
                 playlist.HasMany<Song>(p => p.Songs);
             });
 
             modelBuilder.Entity<PlaylistSong>(ps =>
             {
-                ps.HasKey(x => new { x.PlaylistID, x.SongID });
+                ps.HasKey(x => new { PlaylistID = x.PlaylistId, SongID = x.SongId });
             });
         }
         /*

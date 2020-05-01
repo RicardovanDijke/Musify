@@ -12,52 +12,52 @@ namespace Song_Service.Database
 
     public class SongRepository : ISongRepository
     {
-        private DatabaseContext context;
+        private readonly DatabaseContext _context;
 
         public SongRepository(DatabaseContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         public IEnumerable<Song> GetAll()
         {
-            return context.Songs.ToList();
+            return _context.Songs.ToList();
         }
 
         public Song Get(long id)
         {
-            return context.Songs.Find(id);
+            return _context.Songs.Find(id);
         }
 
         public void Add(Song obj)
         {
-            context.Songs.Add(obj);
+            _context.Songs.Add(obj);
             Save();
         }
 
         public void Update(Song obj)
         {
-            context.Songs.Attach(obj);
-            context.Entry(obj).State = EntityState.Modified;
+            _context.Songs.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
             Save();
         }
 
         public void Delete(Song obj)
         {
-            Song existing = context.Songs.Find(obj);
-            context.Songs.Remove(existing);
+            Song existing = _context.Songs.Find(obj);
+            _context.Songs.Remove(existing);
             Save();
         }
 
         public void AddRange(ICollection<Song> songs)
         {
-            context.Songs.AddRange(songs);
+            _context.Songs.AddRange(songs);
             Save();
         }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

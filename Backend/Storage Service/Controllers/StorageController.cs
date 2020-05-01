@@ -11,51 +11,18 @@ namespace Song_Service.Controllers
     [Route("api/storage/")]
     public class StorageController : ControllerBase
     {
-        private SongService songManager;
-        private IAlbumRepository albumManager;
-        private IArtistRepository artistManager;
+        private readonly SongService _songManager;
+        private readonly IAlbumRepository _albumManager;
+        private IArtistRepository _artistManager;
 
 
         public StorageController(SongService songManager, IAlbumRepository albumManager, IArtistRepository artistManager)
         {
-            this.songManager = songManager;
-            this.albumManager = albumManager;
-            this.artistManager = artistManager;
+            _songManager = songManager;
+            _albumManager = albumManager;
+            _artistManager = artistManager;
         }
 
-        // GET: api/Storage
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new[] { "value1", "value2" };
-        }
-
-        // GET: api/Storage/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Storage
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Storage/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        //todo add endpoint /uploadMany
 
         [HttpPost]
         [Route("uploadMany")]
@@ -64,7 +31,7 @@ namespace Song_Service.Controllers
             var success = true;
             foreach (var file in files)
             {
-                if (!await songManager.AddSong(file))
+                if (!await _songManager.AddSong(file))
                 {
                     success = false;
                 }
@@ -82,7 +49,7 @@ namespace Song_Service.Controllers
         [Route("upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            if (await songManager.AddSong(file))
+            if (await _songManager.AddSong(file))
             {
                 return new OkResult();
             }

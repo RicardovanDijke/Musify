@@ -25,8 +25,8 @@ namespace Musify_Desktop_App.Panels.Login
         public LoginViewModel(UserService userService)
         {
             _userService = userService;
-            Username = "Ricardo1184";
-            Password = "password";
+            Username = "Musify";
+            Password = "musify";
 
             LoginCommand = new RelayCommand(Login, CanLogin);
         }

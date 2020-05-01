@@ -16,13 +16,13 @@ namespace Auth_Service.Service
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
-        User GetByID(int id);
+        User GetById(int id);
         void Add(User user);
     }
 
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly AppSettings _appSettings;
 
         public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
@@ -46,7 +46,7 @@ namespace Auth_Service.Service
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserID.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -63,7 +63,7 @@ namespace Auth_Service.Service
             return _userRepository.GetAll().WithoutPasswords();
         }
 
-        public User GetByID(int id)
+        public User GetById(int id)
         {
             return _userRepository.Get(id);
         }

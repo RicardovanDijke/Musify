@@ -51,7 +51,7 @@ namespace Auth_Service.Helpers
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);

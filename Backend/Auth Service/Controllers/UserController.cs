@@ -47,7 +47,7 @@ namespace Auth_Service.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult getUserbyID(int id)
+        public IActionResult GetUserbyId(int id)
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
@@ -56,7 +56,7 @@ namespace Auth_Service.Controllers
             if (id != currentUserId && !User.IsInRole(Role.Admin))
                 return Forbid();
 
-            var user = _userService.GetByID(id);
+            var user = _userService.GetById(id);
 
             if (user == null)
                 return NotFound();
@@ -76,7 +76,7 @@ namespace Auth_Service.Controllers
         }
         */
         [HttpPost]
-        public ActionResult addUser(User user)
+        public ActionResult AddUser(User user)
         {
             _userService.Add(user);
             return Ok();

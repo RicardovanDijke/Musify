@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Playlist_Service.Entities;
 using Playlist_Service.Service;
 
 namespace Playlist_Service.Controllers
@@ -15,11 +15,11 @@ namespace Playlist_Service.Controllers
     public class PlaylistController : ControllerBase
     {
 
-        private readonly PlaylistService _playlistService;
+        private readonly IPlaylistService _playlistService;
 
-        public PlaylistController(PlaylistService playlistService)
+        public PlaylistController(IPlaylistService playlistService)
         {
-            this._playlistService = playlistService;
+            _playlistService = playlistService;
         }
 
         [HttpGet]
@@ -52,14 +52,116 @@ namespace Playlist_Service.Controllers
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
 
+
             var playlist = new Playlist
             {
                 PlaylistId = 1,
                 Name = "American Idiot Reversed",
                 Private = false,
-                //    Creator =
+                CreatorUserID = 1
             };
 
+            var playlistSongs = new[]{
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 13,
+                    Number = 0
+                    
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 12,
+                    Number = 1
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 11,
+                    Number = 2
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 10,
+                    Number = 3
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 9,
+                    Number = 4
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 8,
+                    Number = 5
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 7,
+                    Number = 6
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 6,
+                    Number = 7
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 5,
+                    Number = 8
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 4,
+                    Number = 9
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 3,
+                    Number = 10
+                },
+                new PlaylistSong()
+                {
+                    Playlist =playlist,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist.PlaylistId,
+                    SongId = 2,
+                    Number = 11
+                }
+                }.ToList();
+
+            playlist.Songs = playlistSongs;
 
             _playlistService.Add(playlist);
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Model;
 using Microsoft.EntityFrameworkCore;
+using Playlist_Service.Entities;
 
 namespace Playlist_Service.Database
 {

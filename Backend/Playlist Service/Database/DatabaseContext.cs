@@ -1,5 +1,5 @@
-﻿using Core.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Playlist_Service.Entities;
 
 namespace Playlist_Service.Database
 {
@@ -18,25 +18,25 @@ namespace Playlist_Service.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<Playlist>(playlist =>
-            //{
-            //    playlist.HasKey(p => p.PlaylistId);
-            //    playlist.HasOne(p => p.Creator);
-            //    playlist.HasMany(p => p.Songs);
-            //});
+            modelBuilder.Entity<Playlist>(playlist =>
+            {
+                playlist.HasKey(p => p.PlaylistId);
+             //   playlist.HasOne(p => p.CreatorUserID);
+                playlist.HasMany(p => p.Songs);
+            });
 
-            //modelBuilder.Entity<PlaylistSong>(ps =>
-            //{
-            //    ps.HasKey(x => new { PlaylistID = x.PlaylistId, SongID = x.SongId });
+            modelBuilder.Entity<PlaylistSong>(ps =>
+            {
+                ps.HasKey(x => new { PlaylistID = x.PlaylistId, SongID = x.SongId });
 
-            //    ps.HasOne(x => x.Song)
-            //        .WithMany(s => s.Playlists)
-            //        .HasForeignKey(x => x.SongId);
+                //ps.HasOne(x => x.Song)
+                //    .WithMany(s => s.Playlists)
+                //    .HasForeignKey(x => x.SongId);
 
-            //    ps.HasOne(x => x.Playlist)
-            //        .WithMany(s => s.Songs)
-            //        .HasForeignKey(x => x.PlaylistId);
-            //});
+                //ps.HasOne(x => x.Playlist)
+                //    .WithMany(s => s.Songs)
+                //    .HasForeignKey(x => x.PlaylistId);
+            });
         }
     }
 }

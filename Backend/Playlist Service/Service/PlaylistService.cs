@@ -4,10 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Playlist_Service.Database;
+using Playlist_Service.Entities;
 
 namespace Playlist_Service.Service
 {

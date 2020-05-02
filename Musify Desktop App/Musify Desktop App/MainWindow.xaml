@@ -9,6 +9,7 @@
         xmlns:friendsActivity="clr-namespace:Musify_Desktop_App.Panels.FriendsActivity"
         xmlns:home="clr-namespace:Musify_Desktop_App.Panels.Home"
         xmlns:songQueue="clr-namespace:Musify_Desktop_App.Panels.SongQueue"
+        xmlns:playlist="clr-namespace:Musify_Desktop_App.Panels.Playlist"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
     <Window.Resources>
@@ -17,6 +18,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type home:HomePageViewModel}">
             <home:HomePageControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type playlist:PlaylistPageViewModel}">
+            <playlist:PlaylistPageControl/>
         </DataTemplate>
     </Window.Resources>
 

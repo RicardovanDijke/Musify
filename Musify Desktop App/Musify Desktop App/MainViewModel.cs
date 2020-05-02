@@ -6,6 +6,7 @@ using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Panels.Home;
 using Musify_Desktop_App.Panels.NavigationBar;
+using Musify_Desktop_App.Panels.Playlist;
 using Musify_Desktop_App.Panels.SongQueue;
 using Musify_Desktop_App.Service;
 
@@ -50,10 +51,10 @@ namespace Musify_Desktop_App
 
             CurrentSongView.QueuePageButtonPressed += GotoQueuePage;
             NavigationBarViewModel.HomePageButtonPressed += GotoHomePage;
+            NavigationBarViewModel.PlaylistSelected += OpenPlaylistPage;
 
             MainView = HomePageView;
         }
-
 
         private void GotoQueuePage(object sender, EventArgs e)
         {
@@ -63,6 +64,11 @@ namespace Musify_Desktop_App
         private void GotoHomePage(object sender, EventArgs e)
         {
             MainView = HomePageView;
+        }
+        private void OpenPlaylistPage(object? sender, EventArgs e)
+        {
+            var playlist = (Playlist)sender;
+            MainView = new PlaylistPageViewModel(_songService, playlist);
         }
     }
 }

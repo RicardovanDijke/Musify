@@ -17,7 +17,6 @@
 
         <Button Grid.Row="2" Content="Home" Command="{Binding GotoHomePageCommand}"/>
 
-
-        <ListView Grid.Row="4" ItemsSource="{Binding UserPlaylists}" DisplayMemberPath="Name"/>
+        <ListView Grid.Row="4" ItemsSource="{Binding UserPlaylists}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPlaylist}"/>
     </Grid>
 </UserControl>

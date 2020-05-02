@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 
 namespace Musify_Desktop_App

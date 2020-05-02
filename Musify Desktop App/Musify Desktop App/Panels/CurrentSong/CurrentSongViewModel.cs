@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
-using Musify_Desktop_App.Panels.SongQueue;
 using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.CurrentSong

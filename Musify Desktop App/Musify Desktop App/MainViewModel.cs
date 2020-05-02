@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Printing.IndexedProperties;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Panels.Home;

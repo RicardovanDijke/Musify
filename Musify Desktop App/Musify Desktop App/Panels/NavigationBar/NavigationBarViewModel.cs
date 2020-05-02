@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GalaSoft.MvvmLight;
+﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Service;
-using Playlist = Musify_Desktop_App.Model.Playlist;
 
 namespace Musify_Desktop_App.Panels.NavigationBar
 {

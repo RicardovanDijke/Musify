@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using Musify_Desktop_App.Service;
+﻿using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.Playlist
 {

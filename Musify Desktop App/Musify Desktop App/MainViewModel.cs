@@ -31,7 +31,7 @@ namespace Musify_Desktop_App
         public SongQueueViewModel SongQueueViewModel { get; set; }
 
 
-        private SongService _songService;
+        private readonly SongService _songService;
         private ViewModelBase _mainView;
 
         //todo use user

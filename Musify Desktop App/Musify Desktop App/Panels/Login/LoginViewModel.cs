@@ -13,7 +13,7 @@ namespace Musify_Desktop_App.Panels.Login
 {
     class LoginViewModel : ViewModelBase
     {
-        private UserService _userService;
+        private readonly UserService _userService;
         public string Username { get; set; }
         public string Password { get; set; }
 

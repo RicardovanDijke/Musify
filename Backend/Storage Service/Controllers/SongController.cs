@@ -67,22 +67,6 @@ namespace Song_Service.Controllers
                 Name = "American Idiot"
             };
 
-            //var song = new Song
-            //{
-            //    SongID = 13L,
-            //    Title = "Whatsername",
-            //    Album = null,
-            //    // DateUploaded = DateTime.Now,
-            //    Duration = 180,
-            //    Artist = artist
-            //};
-
-            //songManager.Add(song);
-
-            //return new OkResult();
-
-
-
             var songs = new List<Song> {
                 new Song
              {

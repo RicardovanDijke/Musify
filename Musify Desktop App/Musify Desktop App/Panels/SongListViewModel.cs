@@ -12,7 +12,7 @@ using Musify_Desktop_App.Socket;
 
 namespace Musify_Desktop_App.Panels
 {
-    class SongListViewModel : ViewModelBase
+    internal class SongListViewModel : ViewModelBase
     {
         private readonly SongService _songService;
 

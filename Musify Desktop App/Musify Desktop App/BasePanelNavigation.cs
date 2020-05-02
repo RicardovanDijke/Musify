@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Musify_Desktop_App
 {
-    abstract class BasePanelNavigation : ViewModelBase
+    internal abstract class BasePanelNavigation : ViewModelBase
     {
         public event EventHandler QueuePageButtonPressed;
         public event EventHandler HomePageButtonPressed;

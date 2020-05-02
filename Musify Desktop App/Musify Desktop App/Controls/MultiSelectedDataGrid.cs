@@ -7,14 +7,14 @@ using System.Windows.Controls;
 
 namespace Musify_Desktop_App.Controls
 {
-    class MultiSelectedDataGrid : DataGrid
+    internal class MultiSelectedDataGrid : DataGrid
     {
         public MultiSelectedDataGrid()
         {
             this.SelectionChanged += CustomDataGrid_SelectionChanged;
         }
 
-        void CustomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CustomDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.SelectedItemsList = this.SelectedItems;
         }

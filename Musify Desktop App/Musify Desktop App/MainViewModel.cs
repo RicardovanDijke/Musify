@@ -11,7 +11,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App
 {
-    class MainViewModel : ViewModelBase
+    internal class MainViewModel : ViewModelBase
     {
         public ViewModelBase MainView
         {

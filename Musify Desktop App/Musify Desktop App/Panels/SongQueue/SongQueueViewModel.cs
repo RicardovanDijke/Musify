@@ -4,7 +4,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.SongQueue
 {
-    class SongQueueViewModel : BasePanelNavigation
+    internal class SongQueueViewModel : BasePanelNavigation
     {
         private readonly object _lock = new object();
         private static SongQueueViewModel _instance;

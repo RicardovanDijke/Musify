@@ -3,7 +3,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.Home
 {
-    class HomePageViewModel : ViewModelBase
+    internal class HomePageViewModel : ViewModelBase
     {
 
         public SongListViewModel AllSongsListViewModel

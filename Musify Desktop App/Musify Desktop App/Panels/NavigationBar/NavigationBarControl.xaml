@@ -12,8 +12,12 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
 
         <Button Grid.Row="2" Content="Home" Command="{Binding GotoHomePageCommand}"/>
+
+
+        <ListView Grid.Row="4" ItemsSource="{Binding UserPlaylists}"></ListView>
     </Grid>
 </UserControl>

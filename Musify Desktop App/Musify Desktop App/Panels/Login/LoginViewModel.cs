@@ -11,7 +11,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.Login
 {
-    class LoginViewModel : ViewModelBase
+    internal class LoginViewModel : ViewModelBase
     {
         private readonly UserService _userService;
         public string Username { get; set; }

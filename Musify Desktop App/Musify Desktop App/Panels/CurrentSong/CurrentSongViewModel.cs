@@ -8,7 +8,7 @@ using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.CurrentSong
 {
-    class CurrentSongViewModel : BasePanelNavigation
+    internal class CurrentSongViewModel : BasePanelNavigation
     {
         private static readonly object padlock = new object();
         private static CurrentSongViewModel instance;

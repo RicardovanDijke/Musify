@@ -13,7 +13,7 @@ using NAudio.Wave;
 namespace Musify_Desktop_App.Service
 {
     //todo add events for song stopped playing 
-    class SongPlayer : INotifyPropertyChanged
+    internal class SongPlayer : INotifyPropertyChanged
     {
         //lock object
         private static readonly object padlock = new object();

@@ -10,7 +10,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Musify_Desktop_App.Service
 {
-    class UserService
+    internal class UserService
     {
         private const string UserServiceApi = "https://localhost:44321/api/";
 

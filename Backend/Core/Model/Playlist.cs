@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Model
@@ -13,7 +12,6 @@ namespace Core.Model
         public string Name { get; set; }
         public bool Private { get; set; }
         public User Creator { get; set; }
-        public List<PlaylistSong> Songs { get; set; }
 
     }
 }

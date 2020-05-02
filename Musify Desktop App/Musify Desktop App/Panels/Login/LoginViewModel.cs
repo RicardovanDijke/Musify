@@ -33,13 +33,11 @@ namespace Musify_Desktop_App.Panels.Login
 
         private bool CanLogin()
         {
-            return !String.IsNullOrEmpty(Username) && !String.IsNullOrEmpty(Password);
+            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
 
-        private async void Login()
+        private void Login()
         {
-            //todo move to LoginService
-
             var user = _userService.Login(Username, Password);
             if (user != null)
             {

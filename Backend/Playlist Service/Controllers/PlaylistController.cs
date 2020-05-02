@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Playlist_Service.Entities;
 using Playlist_Service.Service;
@@ -14,7 +13,6 @@ namespace Playlist_Service.Controllers
     [ApiController]
     public class PlaylistController : ControllerBase
     {
-
         private readonly IPlaylistService _playlistService;
 
         public PlaylistController(IPlaylistService playlistService)
@@ -35,7 +33,7 @@ namespace Playlist_Service.Controllers
 
         [HttpGet]
         [Route("all")]
-        public ActionResult<List<Playlist>> GetAlPlaylists()
+        public ActionResult<List<Playlist>> GetAllPlaylists()
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
@@ -50,8 +48,6 @@ namespace Playlist_Service.Controllers
         public ActionResult AddDefaultData()
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
-
-
 
             var playlist = new Playlist
             {
@@ -69,7 +65,7 @@ namespace Playlist_Service.Controllers
                     PlaylistId = playlist.PlaylistId,
                     SongId = 13,
                     Number = 0
-                    
+
                 },
                 new PlaylistSong()
                 {

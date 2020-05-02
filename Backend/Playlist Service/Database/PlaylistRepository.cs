@@ -8,6 +8,7 @@ namespace Playlist_Service.Database
     public interface IPlaylistRepository : IRepository<Playlist>
     {
         public Playlist FindByName(string name);
+        List<Playlist> GetFollowedPlaylistsByUserId(int id);
     }
 
     public class PlaylistRepository : IPlaylistRepository
@@ -56,6 +57,10 @@ namespace Playlist_Service.Database
             return table.FirstOrDefault(a => a.Name == name);
         }
 
+        public List<Playlist> GetFollowedPlaylistsByUserId(int id)
+        {
+            return table.Where(p => p.CreatorUserID == id).ToList();
+        }
         public void Save()
         {
             context.SaveChanges();

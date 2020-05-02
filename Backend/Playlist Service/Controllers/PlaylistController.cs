@@ -32,6 +32,17 @@ namespace Playlist_Service.Controllers
         }
 
         [HttpGet]
+        [Route("getFollowedPlaylistsByUserId")]
+        public ActionResult<List<Playlist>> GetAllFollowedPlaylistsByUserId(int id)
+        {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
+            var playlists = _playlistService.GetFollowedPlaylistsByUserId(id);
+
+            return new ActionResult<List<Playlist>>(playlists);
+        }
+
+        [HttpGet]
         [Route("all")]
         public ActionResult<List<Playlist>> GetAllPlaylists()
         {

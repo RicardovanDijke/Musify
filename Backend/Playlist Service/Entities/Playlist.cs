@@ -13,7 +13,7 @@ namespace Playlist_Service.Entities
         public string Name { get; set; }
         public bool Private { get; set; }
         public int CreatorUserID { get; set; }
-        public List<PlaylistSong> Songs { get; set; }
+        public virtual List<PlaylistSong> Songs { get; set; }
 
     }
 }

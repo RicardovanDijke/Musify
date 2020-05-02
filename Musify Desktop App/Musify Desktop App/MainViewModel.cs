@@ -32,18 +32,20 @@ namespace Musify_Desktop_App
 
 
         private readonly SongService _songService;
+        private readonly PlaylistService _playlistService;
         private ViewModelBase _mainView;
 
         //todo use user
         public MainViewModel(User user)
         {
             _songService = new SongService();
+            _playlistService = new PlaylistService();
 
             HomePageView = new HomePageViewModel(_songService);
             CurrentSongView = CurrentSongViewModel.Instance();
             FriendsActivityView = new FriendsActivityViewModel(_songService);
             SongQueueViewModel = new SongQueueViewModel(_songService);
-            NavigationBarViewModel = new NavigationBarViewModel();
+            NavigationBarViewModel = new NavigationBarViewModel(_playlistService);
 
 
             CurrentSongView.QueuePageButtonPressed += GotoQueuePage;

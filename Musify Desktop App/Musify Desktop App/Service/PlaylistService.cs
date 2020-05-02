@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,16 +12,18 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Musify_Desktop_App.Service
 {
-    internal class UserService
+    internal class PlaylistService
     {
-        private const string UserServiceApi = "https://localhost:44321/api/";
+        private const string PlaylistServiceApi = "https://localhost:44331/api/";
 
 
-        public User Login(string username, string password)
+        public List<Playlist> GetFollowedPlaylistsByUserId(int userId)
         {
-            return LoginTask(username, password).Result;
+            return GetAllFollowedPlaylistsByUserIdTask(userId).Result;
         }
-        private async Task<User> LoginTask(string username, string password)
+
+
+        private async Task<List<Playlist>> GetAllFollowedPlaylistsByUserIdTask(int userId)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
@@ -26,27 +31,20 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var payload = JsonSerializer.Serialize(new
-            {
-                username,
-                password,
-            });
-
-            var stringTask = client.PostAsync(UserServiceApi + "authenticate", new StringContent(payload, Encoding.UTF8, "application/json"));
+            var stringTask = client.GetAsync(PlaylistServiceApi + $"playlists/getFollowedPlaylistsByUserId?id={userId}");
 
             try
             {
                 var msg = stringTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
 
-                var user = JsonConvert.DeserializeObject<User>(content);
+                var playlists = JsonConvert.DeserializeObject<List<Playlist>>(content);
                 Debug.Write(content);
-                return user;
+                return playlists;
             }
-            catch
+            catch (Exception ex)
             {
-                //todo display LoginUnsuccesfull message
-                return null;
+                return new List<Playlist>();
             }
 
         }

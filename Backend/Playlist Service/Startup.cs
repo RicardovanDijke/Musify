@@ -31,17 +31,17 @@ namespace Playlist_Service
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
                 //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-                opts.UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
                 opts.EnableSensitiveDataLogging();
             });
             services.AddScoped<DatabaseContext>();
 
             services.AddScoped<IPlaylistService, PlaylistService>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
-          
-            //services.AddControllers().AddNewtonsoftJson(options =>
-            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            //);
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

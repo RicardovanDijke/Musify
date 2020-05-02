@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Playlist_Service.Database;
 using Playlist_Service.Entities;
 
@@ -10,6 +11,7 @@ namespace Playlist_Service.Service
         IEnumerable<Playlist> GetAll();
         Playlist GetById(int id);
         void Add(Playlist playlist);
+        List<Playlist> GetFollowedPlaylistsByUserId(int id);
     }
 
     public class PlaylistService : IPlaylistService
@@ -36,6 +38,11 @@ namespace Playlist_Service.Service
         public void Add(Playlist user)
         {
             _playlistRepository.Add(user);
+        }
+
+        public List<Playlist> GetFollowedPlaylistsByUserId(int id)
+        {
+            return _playlistRepository.GetFollowedPlaylistsByUserId(id);
         }
     }
 }

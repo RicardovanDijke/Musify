@@ -7,13 +7,13 @@ namespace Musify_Desktop_App.Panels.CurrentSong
 {
     internal class CurrentSongViewModel : BasePanelNavigation
     {
-        private static readonly object padlock = new object();
-        private static CurrentSongViewModel instance;
+        private static readonly object Padlock = new object();
+        private static CurrentSongViewModel _instance;
         public static CurrentSongViewModel Instance()
         {
-            lock (padlock)
+            lock (Padlock)
             {
-                return instance ??= new CurrentSongViewModel();
+                return _instance ??= new CurrentSongViewModel();
             }
         }
 

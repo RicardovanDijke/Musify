@@ -64,8 +64,8 @@ namespace Musify_Desktop_App.Panels
 
         private void DoPlaySong()
         {
-            _songService.RequestSocket(SelectedSong.SongID);
-            SongSocket.NewSongSocket(SelectedSong.SongID);
+            _songService.RequestSocket(SelectedSong.SongId);
+            SongSocket.NewSongSocket(SelectedSong.SongId);
 
             SongPlayer.Instance.PlaySong(SelectedSong);
         }

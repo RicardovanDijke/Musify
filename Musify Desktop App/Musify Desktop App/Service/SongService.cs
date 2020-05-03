@@ -17,18 +17,18 @@ namespace Musify_Desktop_App.Service
         {
             foreach (var playlistSong in playlist.Songs)
             {
-                playlistSong.Song = getSongById((int)playlistSong.SongId);
+                playlistSong.Song = GetSongById((int)playlistSong.SongId);
             }
 
             return playlist;
         }
 
-        public Song getSongById(int songId)
+        public Song GetSongById(int songId)
         {
-            return getSongByIdTask(songId).Result;
+            return GetSongByIdTask(songId).Result;
         }
 
-        private async Task<Song> getSongByIdTask(int songId)
+        private async Task<Song> GetSongByIdTask(int songId)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
@@ -95,12 +95,12 @@ namespace Musify_Desktop_App.Service
             return songs;
         }
 
-        public void RequestSocket(long songID)
+        public void RequestSocket(long songId)
         {
             WebClient webClient = new WebClient();
 
             webClient.QueryString.Add("ipAdress", "127.0.0.1");
-            webClient.QueryString.Add("songID", songID.ToString());
+            webClient.QueryString.Add("songID", songId.ToString());
 
             webClient.UploadValues(SongServiceApi + "songs/stream", webClient.QueryString);
         }

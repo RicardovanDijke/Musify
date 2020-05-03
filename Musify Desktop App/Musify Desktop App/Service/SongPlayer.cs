@@ -16,20 +16,20 @@ namespace Musify_Desktop_App.Service
     internal class SongPlayer : INotifyPropertyChanged
     {
         //lock object
-        private static readonly object padlock = new object();
+        private static readonly object Padlock = new object();
         private int _duration;
         private int _positionPercentage;
         private int _timePlayed;
         private Song _currentSong;
         private readonly WaveOutEvent _output;
-        private Timer songStatusTimer;
+        private Timer _songStatusTimer;
 
         private static SongPlayer _instance;
         public static SongPlayer Instance
         {
             get
             {
-                lock (padlock)
+                lock (Padlock)
                 {
                     return _instance ??= new SongPlayer();
                 }
@@ -120,12 +120,12 @@ namespace Musify_Desktop_App.Service
 
 
         // private IWaveProvider songFileReader;
-        private Mp3FileReader songFileReader;
+        private Mp3FileReader _songFileReader;
 
-        private readonly DirectoryInfo tempFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\temp");
-        private readonly DirectoryInfo downloadFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\downloaded");
+        private readonly DirectoryInfo _tempFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\temp");
+        private readonly DirectoryInfo _downloadFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\downloaded");
 
-        private bool switchingSong;
+        private bool _switchingSong;
 
 
         private SongPlayer()
@@ -138,22 +138,22 @@ namespace Musify_Desktop_App.Service
             //_output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
             //todo maybe move to somewhere else
-            if (!Directory.Exists(tempFolder.FullName))
+            if (!Directory.Exists(_tempFolder.FullName))
             {
-                Directory.CreateDirectory(tempFolder.FullName);
+                Directory.CreateDirectory(_tempFolder.FullName);
             }
 
-            if (!Directory.Exists(downloadFolder.FullName))
+            if (!Directory.Exists(_downloadFolder.FullName))
             {
-                Directory.CreateDirectory(downloadFolder.FullName);
+                Directory.CreateDirectory(_downloadFolder.FullName);
             }
 
-            songStatusTimer = new Timer(ManagePlayback, null, 0, 1000);
+            _songStatusTimer = new Timer(ManagePlayback, null, 0, 1000);
         }
 
         private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            if (!switchingSong)
+            if (!_switchingSong)
             {
                 PlayNextSongInQueue();
             }
@@ -162,12 +162,12 @@ namespace Musify_Desktop_App.Service
         private string GetSongPath(Song song)
         {
             //check if song exists in Downloaded folder
-            if (File.Exists(Path.Combine(downloadFolder.FullName, $"{song.SongID}.mp3")))
+            if (File.Exists(Path.Combine(_downloadFolder.FullName, $"{song.SongId}.mp3")))
             {
-                return Path.Combine(downloadFolder.FullName, $"{song.SongID}.mp3");
+                return Path.Combine(_downloadFolder.FullName, $"{song.SongId}.mp3");
             }
             //else search in temp folder
-            return Path.Combine(tempFolder.FullName, $"{song.SongID}.mp3");
+            return Path.Combine(_tempFolder.FullName, $"{song.SongId}.mp3");
         }
 
         public void PlaySong(Song song, int percentage = 0)
@@ -185,7 +185,7 @@ namespace Musify_Desktop_App.Service
             determine sample rate, use WaveFileReader or Mp3FileReader
              */
 
-            songFileReader = new Mp3FileReader(mp3Path);
+            _songFileReader = new Mp3FileReader(mp3Path);
 
 
             var so = ShellFile.FromFilePath(mp3Path);
@@ -199,10 +199,10 @@ namespace Musify_Desktop_App.Service
 
             TimePlayed = relativeDuration;
 
-            songFileReader.CurrentTime = songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, relativeDuration, 0));
+            _songFileReader.CurrentTime = _songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, relativeDuration, 0));
 
             //songFileReader.Position = 10L;
-            _output.Init(songFileReader);
+            _output.Init(_songFileReader);
             //output.GetPosition()
             _output.Play();
 
@@ -237,11 +237,11 @@ namespace Musify_Desktop_App.Service
         {
             if (Queue.Count > 0)
             {
-                switchingSong = true;
+                _switchingSong = true;
                 PlaySong(Queue[0]);
                 Queue.RemoveAt(0);
                 OnPropertyChanged(nameof(Queue));
-                switchingSong = false;
+                _switchingSong = false;
             }
         }
 
@@ -254,8 +254,8 @@ namespace Musify_Desktop_App.Service
         public void PlayPauseSong()
         {
             var timespan = _output.GetPosition();
-            var length = songFileReader.Length;
-            var pos = songFileReader.Position;
+            var length = _songFileReader.Length;
+            var pos = _songFileReader.Position;
             // var duration =
             var seconds = 0.0;
             //// double.TryParse(so.Properties.System.Media.Duration.Value.ToString(), out var nanoseconds);

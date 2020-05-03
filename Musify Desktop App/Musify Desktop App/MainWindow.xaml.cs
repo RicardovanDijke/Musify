@@ -9,10 +9,10 @@ namespace Musify_Desktop_App
 
     public partial class MainWindow : Window
     {
-        public MainWindow(INotifyPropertyChanged ViewModel)
+        public MainWindow(INotifyPropertyChanged viewModel)
         {
             InitializeComponent();
-            this.DataContext = ViewModel;
+            this.DataContext = viewModel;
             this.Show();
         }
     }

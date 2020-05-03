@@ -9,7 +9,7 @@ namespace Musify_Desktop_App.Model
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long PlaylistID { get; set; }
+        public long PlaylistId { get; set; }
         public string Name { get; set; }
         public bool Private { get; set; }
         public User Creator { get; set; }

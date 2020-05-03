@@ -4,7 +4,7 @@ namespace Musify_Desktop_App.Model
 {
     public class Album
     {
-        public long AlbumID { get; set; }
+        public long AlbumId { get; set; }
 
         public string Name { get; set; }
 

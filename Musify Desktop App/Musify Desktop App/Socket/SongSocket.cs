@@ -9,9 +9,9 @@ namespace Musify_Desktop_App.Socket
     public static class SongSocket
     {
         //todo remove static
-        public static void NewSongSocket(long songID)
+        public static void NewSongSocket(long songId)
         {
-            var fileLocation = @$"C:\users\ricar\Desktop\Musify\temp\{songID}.mp3";
+            var fileLocation = @$"C:\users\ricar\Desktop\Musify\temp\{songId}.mp3";
 
             if (!File.Exists(fileLocation))
             {

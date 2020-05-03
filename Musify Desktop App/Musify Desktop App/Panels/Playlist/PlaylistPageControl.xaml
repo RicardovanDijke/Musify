@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <panels:SongListControl DataContext="{Binding SongQueueListViewModel}">
+        <panels:SongListControl DataContext="{Binding SongListViewModel}">
         </panels:SongListControl>
     </Grid>
 </UserControl>

@@ -13,7 +13,7 @@ namespace Musify_Desktop_App.Model
         public string Name { get; set; }
         public bool Private { get; set; }
         public User Creator { get; set; }
-        public List<Song> Songs { get; set; }
+        public List<PlaylistSong> Songs { get; set; }
 
     }
 }

@@ -6,6 +6,9 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 {
     internal class NavigationBarViewModel : BasePanelNavigation
     {
+        private SongService _songService;
+        private PlaylistService _playlistService;
+
         private Model.Playlist _selectedPlaylist;
         public RelayCommand GotoHomePageCommand { get; set; }
 
@@ -25,8 +28,10 @@ namespace Musify_Desktop_App.Panels.NavigationBar
         // ReSharper disable once UnusedMember.Global
         public NavigationBarViewModel() { }
 
-        public NavigationBarViewModel(PlaylistService playlistService)
+        public NavigationBarViewModel(PlaylistService playlistService, SongService songService)
         {
+            _songService = songService;
+            _playlistService = playlistService;
 
             GotoHomePageCommand = new RelayCommand(OnHomePageButtonPressed);
 
@@ -38,7 +43,8 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 
         private void OpenPlaylistPage()
         {
-            OnPlaylistSelected(SelectedPlaylist);
+            var playlist = _songService.GetSongsInPlaylist(SelectedPlaylist);
+            OnPlaylistSelected(playlist);
         }
     }
 }

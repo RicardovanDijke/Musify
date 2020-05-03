@@ -44,7 +44,7 @@ namespace Musify_Desktop_App
             CurrentSongView = CurrentSongViewModel.Instance();
             FriendsActivityView = new FriendsActivityViewModel(_songService);
             SongQueueViewModel = new SongQueueViewModel(_songService);
-            NavigationBarViewModel = new NavigationBarViewModel(_playlistService);
+            NavigationBarViewModel = new NavigationBarViewModel(_playlistService, _songService);
 
 
             CurrentSongView.QueuePageButtonPressed += GotoQueuePage;

@@ -13,6 +13,51 @@ namespace Musify_Desktop_App.Service
     {
         private const string SongServiceApi = "https://localhost:44337/api/";
 
+        public Playlist GetSongsInPlaylist(Playlist playlist)
+        {
+            foreach (var playlistSong in playlist.Songs)
+            {
+                playlistSong.Song = getSongById((int)playlistSong.SongId);
+            }
+
+            return playlist;
+        }
+
+        public Song getSongById(int songId)
+        {
+            return getSongByIdTask(songId).Result;
+        }
+
+        private async Task<Song> getSongByIdTask(int songId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+
+
+            var httpTask = client.GetAsync(SongServiceApi + $"songs/id?id={songId}");
+
+            Song song;
+            try
+            {
+                var msg = httpTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+                Debug.Write(content);
+
+                song = JsonConvert.DeserializeObject<Song>(content);
+            }
+            catch
+            {
+                //todo display "song not found" message
+                song = null;
+
+            }
+
+            return song;
+        }
 
         public List<Song> GetAllSongs()
         {

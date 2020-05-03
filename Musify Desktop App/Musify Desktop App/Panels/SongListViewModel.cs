@@ -53,8 +53,6 @@ namespace Musify_Desktop_App.Panels
             SongSelectedCommand = new RelayCommand(DoSongSelected);
             PlaySongCommand = new RelayCommand(DoPlaySong);
             AddSongToQueueCommand = new RelayCommand(AddSelectedSongsToQueue);
-
-
         }
 
         private void AddSelectedSongsToQueue()

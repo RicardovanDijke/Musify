@@ -16,7 +16,7 @@ namespace Musify_Desktop_App.Panels.Playlist
             var songsInPlaylist = playlist.Songs.OrderBy(x => x.Number).Select(playlistItem => playlistItem.Song).ToList();
 
 
-            SongListViewModel = new SongListViewModel(songService, () => songsInPlaylist, playlist.Name);
+            SongListViewModel = new SongListViewModel(songService, songsInPlaylist, playlist.Name);
             RaisePropertyChanged(nameof(SongListViewModel));
         }
     }

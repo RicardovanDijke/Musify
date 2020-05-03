@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight.Command;
+using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.NavigationBar
@@ -35,9 +36,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 
             GotoHomePageCommand = new RelayCommand(OnHomePageButtonPressed);
 
-            //todo add userid
-            //todo retrieve song info here from SongService based on songIDs
-            UserPlaylists = playlistService.GetFollowedPlaylistsByUserId(1);
+            UserPlaylists = playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId);
             RaisePropertyChanged(nameof(UserPlaylists));
         }
 

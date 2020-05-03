@@ -34,8 +34,7 @@ namespace Musify_Desktop_App
         private readonly PlaylistService _playlistService;
         private ViewModelBase _mainView;
 
-        //todo use user
-        public MainViewModel(User user)
+        public MainViewModel()
         {
             _songService = new SongService();
             _playlistService = new PlaylistService();
@@ -43,7 +42,7 @@ namespace Musify_Desktop_App
             HomePageView = new HomePageViewModel(_songService);
             CurrentSongView = CurrentSongViewModel.Instance();
             FriendsActivityView = new FriendsActivityViewModel(_songService);
-            SongQueueViewModel = new SongQueueViewModel(_songService);
+            SongQueueViewModel = SongQueueViewModel.Instance(_songService);
             NavigationBarViewModel = new NavigationBarViewModel(_playlistService, _songService);
 
 
@@ -56,7 +55,8 @@ namespace Musify_Desktop_App
 
         private void GotoQueuePage(object sender, EventArgs e)
         {
-            MainView = new SongQueueViewModel(_songService);
+            //MainView = new SongQueueViewModel(_songService);
+            MainView = SongQueueViewModel;
         }
 
         private void GotoHomePage(object sender, EventArgs e)

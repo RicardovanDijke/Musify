@@ -36,13 +36,14 @@ namespace Musify_Desktop_App.Panels.Login
             var user = _userService.Login(Username, Password);
             if (user != null)
             {
-                GoToMainScreen(user);
+                Session.User = user;
+                GoToMainScreen();
             }
         }
 
-        private void GoToMainScreen(User user)
+        private void GoToMainScreen()
         {
-            var mainWindow = new MainWindow(new MainViewModel(user));
+            var mainWindow = new MainWindow(new MainViewModel());
             //window.Close();
             mainWindow.Show();
 

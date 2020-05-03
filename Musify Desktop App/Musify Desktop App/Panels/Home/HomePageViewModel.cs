@@ -15,7 +15,7 @@ namespace Musify_Desktop_App.Panels.Home
         public HomePageViewModel() { }
         public HomePageViewModel(SongService songService)
         {
-            AllSongsListViewModel = new SongListViewModel(songService, songService.GetAllSongs, "Recently Added");
+            AllSongsListViewModel = new SongListViewModel(songService, songService.GetAllSongs(), "Recently Added");
             RaisePropertyChanged(nameof(AllSongsListViewModel));
         }
     }

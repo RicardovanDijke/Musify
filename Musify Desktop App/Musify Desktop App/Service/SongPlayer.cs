@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows;
 using JetBrains.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
 using Musify_Desktop_App.Model;
@@ -13,6 +15,7 @@ using NAudio.Wave;
 namespace Musify_Desktop_App.Service
 {
     //todo add events for song stopped playing 
+    //todo rewrite song stopping / playing logic, add private variables that call output.stop() and output.play()
     internal class SongPlayer : INotifyPropertyChanged
     {
         //lock object
@@ -58,7 +61,7 @@ namespace Musify_Desktop_App.Service
         /// <summary>
         /// 
         /// </summary>
-        public List<Song> Queue { get; } = new List<Song>();
+        public ObservableCollection<Song> Queue { get; } = new ObservableCollection<Song>();
 
         /// <summary>
         /// 
@@ -135,7 +138,7 @@ namespace Musify_Desktop_App.Service
             {
                 Volume = 0.5f
             };
-            //_output.PlaybackStopped += OnPlaybackStopped;
+            _output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
             //todo maybe move to somewhere else
             if (!Directory.Exists(_tempFolder.FullName))
@@ -153,21 +156,23 @@ namespace Musify_Desktop_App.Service
 
         private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            if (!_switchingSong)
-            {
-                PlayNextSongInQueue();
-            }
+            //if (!_switchingSong)
+            //{
+            //    PlayNextSongInQueue();
+            //}
         }
 
         private string GetSongPath(Song song)
         {
-            //check if song exists in Downloaded folder
-            if (File.Exists(Path.Combine(_downloadFolder.FullName, $"{song.SongId}.mp3")))
+            var songFileName = $"{song.SongId}.mp3";
+            //check if song exists in Downloaded fol$"{song.SongId}.mp3"der
+            if (File.Exists(Path.Combine(_downloadFolder.FullName, songFileName)))
             {
-                return Path.Combine(_downloadFolder.FullName, $"{song.SongId}.mp3");
+                return Path.Combine(_downloadFolder.FullName, songFileName);
             }
             //else search in temp folder
-            return Path.Combine(_tempFolder.FullName, $"{song.SongId}.mp3");
+            return Path.Combine(_tempFolder.FullName, songFileName);
+            //todo else download the song instead of downloading immediately
         }
 
         public void PlaySong(Song song, int percentage = 0)
@@ -226,11 +231,11 @@ namespace Musify_Desktop_App.Service
                 PositionPercentage = (int)percentage;
             }
 
-            ////todo combine if statements maybe
-            //if (_output.PlaybackState == PlaybackState.Stopped)
-            //{
-            //    PlayNextSongInQueue();
-            //}
+            //todo combine if statements maybe
+            if (_output.PlaybackState == PlaybackState.Stopped)
+            {
+                PlayNextSongInQueue();
+            }
         }
 
         public void PlayNextSongInQueue()
@@ -239,7 +244,10 @@ namespace Musify_Desktop_App.Service
             {
                 _switchingSong = true;
                 PlaySong(Queue[0]);
-                Queue.RemoveAt(0);
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    Queue.RemoveAt(0);
+                });
                 OnPropertyChanged(nameof(Queue));
                 _switchingSong = false;
             }
@@ -247,7 +255,10 @@ namespace Musify_Desktop_App.Service
 
         public void AddSongsToQueue(List<Song> songs)
         {
-            Queue.AddRange(songs);
+            foreach (var song in songs)
+            {
+                Queue.Add(song);
+            }
             OnPropertyChanged(nameof(Queue));
         }
 

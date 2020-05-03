@@ -15,13 +15,13 @@ namespace Musify_Desktop_App.Service
         private const string PlaylistServiceApi = "https://localhost:44331/api/";
 
 
-        public List<Playlist> GetFollowedPlaylistsByUserId(int userId)
+        public List<Playlist> GetFollowedPlaylistsByUserId(long userId)
         {
             return GetAllFollowedPlaylistsByUserIdTask(userId).Result;
         }
 
 
-        private async Task<List<Playlist>> GetAllFollowedPlaylistsByUserIdTask(int userId)
+        private async Task<List<Playlist>> GetAllFollowedPlaylistsByUserIdTask(long userId)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();

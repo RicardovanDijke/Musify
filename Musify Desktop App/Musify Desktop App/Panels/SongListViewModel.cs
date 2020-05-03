@@ -43,11 +43,24 @@ namespace Musify_Desktop_App.Panels
 
         public SongListViewModel() { }
 
-        public SongListViewModel(SongService songService, Func<List<Song>> getSongMethod, string listName)
+        public SongListViewModel(SongService songService, ObservableCollection<Song> songList, string listName)
         {
             _songService = songService;
             //todo fix crash if Storage service not online
-            Songs = new ObservableCollection<Song>(getSongMethod.Invoke());
+
+            Songs = songList;
+            ListName = listName;
+
+            SongSelectedCommand = new RelayCommand(DoSongSelected);
+            PlaySongCommand = new RelayCommand(DoPlaySong);
+            AddSongToQueueCommand = new RelayCommand(AddSelectedSongsToQueue);
+        }
+        public SongListViewModel(SongService songService, IEnumerable<Song> songList, string listName)
+        {
+            _songService = songService;
+            //todo fix crash if Storage service not online
+
+            Songs = new ObservableCollection<Song>(songList);
             ListName = listName;
 
             SongSelectedCommand = new RelayCommand(DoSongSelected);

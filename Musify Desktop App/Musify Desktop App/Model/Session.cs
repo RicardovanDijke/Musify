@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JetBrains.Annotations;
-
-namespace Musify_Desktop_App.Model
+﻿namespace Musify_Desktop_App.Model
 {
     static class Session
     {

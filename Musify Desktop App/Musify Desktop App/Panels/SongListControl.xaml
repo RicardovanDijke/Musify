@@ -34,6 +34,7 @@
                 <ContextMenu StaysOpen="true">
                     <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
                     <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
+                    <MenuItem Header="Add to Playlist" Command="{Binding AddSongToQueueCommand}"/>
                 </ContextMenu>
             </controls:MultiSelectedDataGrid.ContextMenu>
             <controls:MultiSelectedDataGrid.Columns>

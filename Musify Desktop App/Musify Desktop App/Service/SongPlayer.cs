@@ -151,7 +151,7 @@ namespace Musify_Desktop_App.Service
             _songStatusTimer = new Timer(ManagePlayback, null, 0, 1000);
         }
 
-        private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
+        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             //if (!_switchingSong)
             //{

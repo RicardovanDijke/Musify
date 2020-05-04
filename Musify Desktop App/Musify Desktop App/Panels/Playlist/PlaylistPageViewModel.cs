@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Musify_Desktop_App.Model;
+﻿using System.Linq;
 using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.Playlist

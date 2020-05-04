@@ -63,7 +63,7 @@ namespace Musify_Desktop_App
         {
             MainView = HomePageView;
         }
-        private void OpenPlaylistPage(object? sender, EventArgs e)
+        private void OpenPlaylistPage(object sender, EventArgs e)
         {
             var playlist = (Playlist)sender;
             MainView = new PlaylistPageViewModel(_songService, playlist);

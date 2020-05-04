@@ -13,7 +13,7 @@ namespace Musify_Desktop_App.Model
         public string Token { get; set; }
 
 
-        public List<Playlist> Playlists;
+        public List<Playlist> Playlists { get; set; }
         public Song CurrentlyPlayingSong { get; set; }
     }
 }

@@ -9,9 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="MediumPurple">
-    <UserControl.DataContext>
-        <local:SongListViewModel></local:SongListViewModel>
-    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -33,9 +30,19 @@
             <controls:MultiSelectedDataGrid.ContextMenu>
                 <ContextMenu StaysOpen="true">
                     <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
-                    <MenuItem Header="Add to queue" Command="{Binding AddSongToQueueCommand}"/>
-                    <MenuItem Header="Add to Playlist" Command="{Binding AddSongToQueueCommand}"/>
+                    <MenuItem Header="Add to queue" Command="{Binding AddSongsToQueueCommand}"/>
+
+                    <MenuItem ItemsSource="{Binding SubMenuPlaylistItems}" Header="Add to Playlist"/>
                 </ContextMenu>
+                <!--<ContextMenu ItemsSource="{Binding ContextMenuItemsSource}">
+                    <ContextMenu.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="ItemsSource" Value="{Binding ContextMenuSubItems}"></Setter>
+                            <Setter Property="Header" Value="{Binding ContextMenuCommandHeader}"></Setter>
+                            <Setter Property="Command" Value="{Binding ContextMenuCommand}"></Setter>
+                        </Style>
+                    </ContextMenu.ItemContainerStyle>
+                </ContextMenu>-->
             </controls:MultiSelectedDataGrid.ContextMenu>
             <controls:MultiSelectedDataGrid.Columns>
                 <DataGridTemplateColumn>

@@ -6,11 +6,11 @@ namespace Musify_Desktop_App.Panels.SongQueue
     {
         private static readonly object _lock = new object();
         private static SongQueueViewModel _instance;
-        public static SongQueueViewModel Instance(SongService songService)
+        public static SongQueueViewModel Instance(SongService songService, PlaylistService playlistService)
         {
             lock (_lock)
             {
-                return _instance ??= new SongQueueViewModel(songService);
+                return _instance ??= new SongQueueViewModel(songService, playlistService);
             }
 
         }
@@ -18,10 +18,10 @@ namespace Musify_Desktop_App.Panels.SongQueue
 
         public SongListViewModel SongQueueListViewModel { get; set; }
 
-        public SongQueueViewModel() { }
-        private SongQueueViewModel(SongService songService)
+        private SongQueueViewModel() { }
+        private SongQueueViewModel(SongService songService, PlaylistService playlistService)
         {
-            SongQueueListViewModel = new SongListViewModel(songService, SongPlayer.Instance.Queue, "Play Queue");
+            SongQueueListViewModel = new SongListViewModel(songService, playlistService, SongPlayer.Instance.Queue, "Play Queue");
         }
     }
 }

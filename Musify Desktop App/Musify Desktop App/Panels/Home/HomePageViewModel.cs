@@ -22,9 +22,9 @@ namespace Musify_Desktop_App.Panels.Home
         }
 
         public HomePageViewModel() { }
-        public HomePageViewModel(SongService songService)
+        public HomePageViewModel(SongService songService, PlaylistService playlistService)
         {
-            AllSongsListViewModel = new SongListViewModel(songService, songService.GetAllSongs(), "Recently Added");
+            AllSongsListViewModel = new SongListViewModel(songService, playlistService, songService.GetAllSongs(), "Recently Added");
             WelcomeText = $"Welcome, {Session.User.DisplayName}";
         }
     }

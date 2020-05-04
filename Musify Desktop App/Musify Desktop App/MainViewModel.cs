@@ -39,11 +39,11 @@ namespace Musify_Desktop_App
             _songService = new SongService();
             _playlistService = new PlaylistService();
 
-            HomePageView = new HomePageViewModel(_songService);
+            HomePageView = new HomePageViewModel(_songService, _playlistService);
             CurrentSongView = CurrentSongViewModel.Instance();
             FriendsActivityView = new FriendsActivityViewModel(_songService);
-            SongQueueViewModel = SongQueueViewModel.Instance(_songService);
-            NavigationBarViewModel = new NavigationBarViewModel(_playlistService, _songService);
+            SongQueueViewModel = SongQueueViewModel.Instance(_songService, _playlistService);
+            NavigationBarViewModel = new NavigationBarViewModel(_songService, _playlistService);
 
 
             CurrentSongView.QueuePageButtonPressed += GotoQueuePage;
@@ -66,7 +66,7 @@ namespace Musify_Desktop_App
         private void OpenPlaylistPage(object sender, EventArgs e)
         {
             var playlist = (Playlist)sender;
-            MainView = new PlaylistPageViewModel(_songService, playlist);
+            MainView = new PlaylistPageViewModel(_songService, _playlistService, playlist);
         }
     }
 }

@@ -9,12 +9,12 @@ namespace Musify_Desktop_App.Panels.Playlist
         public SongListViewModel SongListViewModel { get; set; }
 
         public PlaylistPageViewModel() { }
-        public PlaylistPageViewModel(SongService songService, Model.Playlist playlist)
+        public PlaylistPageViewModel(SongService songService, PlaylistService playlistService, Model.Playlist playlist)
         {
             var songsInPlaylist = playlist.Songs.OrderBy(x => x.Number).Select(playlistItem => playlistItem.Song).ToList();
 
 
-            SongListViewModel = new SongListViewModel(songService, songsInPlaylist, playlist.Name);
+            SongListViewModel = new SongListViewModel(songService, playlistService, songsInPlaylist, playlist.Name);
             RaisePropertyChanged(nameof(SongListViewModel));
         }
     }

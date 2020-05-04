@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
@@ -24,19 +25,18 @@ namespace Musify_Desktop_App.Panels.NavigationBar
             }
         }
 
-        public List<Model.Playlist> UserPlaylists { get; set; }
+        public List<Model.Playlist> UserPlaylists => Session.User.Playlists;
 
         // ReSharper disable once UnusedMember.Global
         public NavigationBarViewModel() { }
 
-        public NavigationBarViewModel(PlaylistService playlistService, SongService songService)
+        public NavigationBarViewModel(SongService songService, PlaylistService playlistService)
         {
             _songService = songService;
             _playlistService = playlistService;
 
             GotoHomePageCommand = new RelayCommand(OnHomePageButtonPressed);
 
-            UserPlaylists = playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId);
             RaisePropertyChanged(nameof(UserPlaylists));
         }
 

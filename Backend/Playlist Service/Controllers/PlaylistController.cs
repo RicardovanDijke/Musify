@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Playlist_Service.Entities;
 using Playlist_Service.Service;
 
@@ -40,6 +45,28 @@ namespace Playlist_Service.Controllers
             var playlists = _playlistService.GetFollowedPlaylistsByUserId(id);
 
             return new ActionResult<List<Playlist>>(playlists);
+        }
+
+        [HttpPost]
+        [Route("addSongsToPlaylist")]
+        //public ActionResult AddSongsToPlaylist(int playlistId, List<int> songIds)
+        public ActionResult AddSongsToPlaylist(JArray paramList)
+        {
+            if (paramList.Count > 0)
+            {
+                var playlistId = JsonConvert.DeserializeObject<long>(paramList[0].ToString());
+                var songIds = JsonConvert.DeserializeObject<int[]>(paramList[1].ToString());
+
+                //TODO: add songs to playlist in database
+
+                HttpResponseMessage response = new HttpResponseMessage { StatusCode = HttpStatusCode.Created };
+                return new OkResult();
+            }
+            else
+            {
+                HttpResponseMessage response = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
+                return new BadRequestResult();
+            }
         }
 
         [HttpGet]

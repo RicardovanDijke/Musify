@@ -24,7 +24,7 @@ namespace Core.Model
 
         internal int GetTrackNumber(Song song)
         {
-            if (Songs.Contains(song))
+            if (!Songs.Contains(song))
             {
                 throw new Exception($"Song {song.Artist.Name} - {song.Title} is not in Album {Name}");
             }

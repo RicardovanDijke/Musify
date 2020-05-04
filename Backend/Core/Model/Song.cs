@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -31,7 +30,6 @@ namespace Core.Model
 
         private readonly int _trackNumber;
 
-        public List<PlaylistSong> Playlists { get; set; }
 
         public Song()
         {
@@ -44,7 +42,7 @@ namespace Core.Model
             Artist = artist;
             Album = album;
             Duration = duration;
-            this._trackNumber = trackNumber;
+            _trackNumber = trackNumber;
 
             SetFilePath();
         }

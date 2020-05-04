@@ -16,14 +16,14 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding WelcomeText,FallbackValue='Welcome,'}" FontSize="30"/>
 
+        <panels:SongListControl Grid.Row="1" Grid.Column="0" DataContext="{Binding AllSongsListViewModel}">
 
-        <panels:SongListControl DataContext="{Binding AllSongsListViewModel}" Grid.RowSpan="2">
-           
         </panels:SongListControl>
-       
+
     </Grid>
 </UserControl>

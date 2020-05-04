@@ -16,7 +16,7 @@ namespace Song_Service.Controllers
     public class SongController : ControllerBase
     {
 
-        //TODO create actual Songmanager that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumManager?
+        //TODO create SongService that has a SongRepository, ArtistRepository, AlbumRepository? same for artist/albumService?
         private readonly ISongRepository _songManager;
 
         public SongController(ISongRepository songManager)

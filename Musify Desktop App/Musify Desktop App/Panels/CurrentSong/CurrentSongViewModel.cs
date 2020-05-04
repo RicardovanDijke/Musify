@@ -17,9 +17,6 @@ namespace Musify_Desktop_App.Panels.CurrentSong
             }
         }
 
-        public event EventHandler ThresholdReached;
-
-
         private int _songProgressPercentage;
 
         private Song _songPlaying;
@@ -115,10 +112,10 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         }
 
 
-        public RelayCommand PlayPauseSongCommand { get; private set; }
-        public RelayCommand PlayNextSongInQueueCommand { get; private set; }
+        public RelayCommand PlayPauseSongCommand { get; }
+        public RelayCommand PlayNextSongInQueueCommand { get; }
 
-        public RelayCommand OpenQueuePageCommand { get; private set; }
+        public RelayCommand OpenQueuePageCommand { get; }
 
         private CurrentSongViewModel()
         {
@@ -135,7 +132,7 @@ namespace Musify_Desktop_App.Panels.CurrentSong
 
         private void DoOpenQueuePage()
         {
-            
+
             OnQueuePageButtonPressed();
         }
 

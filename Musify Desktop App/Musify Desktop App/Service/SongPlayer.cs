@@ -127,10 +127,7 @@ namespace Musify_Desktop_App.Service
 
         private readonly DirectoryInfo _tempFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\temp");
         private readonly DirectoryInfo _downloadFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\downloaded");
-
-        private bool _switchingSong;
-
-
+        
         private SongPlayer()
         {
             _instance = this;
@@ -140,7 +137,7 @@ namespace Musify_Desktop_App.Service
             };
             _output.PlaybackStopped += OnPlaybackStopped;
             //create new storage folders to save songs in
-            //todo maybe move to somewhere else
+            //todo maybe move creating folders to somewhere else
             if (!Directory.Exists(_tempFolder.FullName))
             {
                 Directory.CreateDirectory(_tempFolder.FullName);
@@ -242,14 +239,12 @@ namespace Musify_Desktop_App.Service
         {
             if (Queue.Count > 0)
             {
-                _switchingSong = true;
                 PlaySong(Queue[0]);
                 Application.Current.Dispatcher.Invoke(delegate
                 {
                     Queue.RemoveAt(0);
                 });
                 OnPropertyChanged(nameof(Queue));
-                _switchingSong = false;
             }
         }
 

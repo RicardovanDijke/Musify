@@ -45,14 +45,6 @@
                 </ContextMenu>-->
             </controls:MultiSelectedDataGrid.ContextMenu>
             <controls:MultiSelectedDataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Command="{Binding SongSelectedCommand}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
                 <DataGridTextColumn  Header="Title" Binding="{Binding Title}"  />
                 <DataGridTextColumn  Header="Artist" Binding="{Binding Artist.Name}"/>
                 <DataGridTextColumn  Header="Album" Binding="{Binding Album.Name}"/>

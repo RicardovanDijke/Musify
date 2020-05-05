@@ -25,10 +25,9 @@ namespace Playlist_Service.Database
                 playlist.HasMany(p => p.Songs);
             });
 
-            //todo fix duplicate songs not being added to db (combination of keys isnt unique)
             modelBuilder.Entity<PlaylistSong>(ps =>
             {
-                ps.HasKey(x => new { PlaylistID = x.PlaylistId, SongID = x.SongId });
+                ps.HasKey(x => x.PlaylistSongId);
 
                 //ps.HasOne(x => x.Song)
                 //    .WithMany(s => s.Playlists)

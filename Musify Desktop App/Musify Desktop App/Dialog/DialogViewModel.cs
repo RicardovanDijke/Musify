@@ -28,9 +28,25 @@ namespace Musify_Desktop_App.Dialog
             DialogTitle = dialogTitle;
             DialogText = dialogText;
 
-            OkCommand = new RelayCommand(() => Result = MessageBoxResult.OK);
-            NoCommand = new RelayCommand(() => Result = MessageBoxResult.No);
+            OkCommand = new RelayCommand(() =>
+            {
+                Result = MessageBoxResult.OK;
+                CloseWindow();
+            });
+            NoCommand = new RelayCommand(() =>
+            {
+                Result = MessageBoxResult.No;
+                CloseWindow();
+            });
             CancelCommand = new RelayCommand(() => Result = MessageBoxResult.Cancel);
+        }
+
+        private void CloseWindow()
+        {
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.DataContext == this) item.Close();
+            }
         }
     }
 }

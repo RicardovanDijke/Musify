@@ -77,10 +77,12 @@ namespace Musify_Desktop_App.Service
         {
             var songIds = songs.Select(x => (long)x.SongId).ToArray();
 
-            JArray paramList = new JArray();
+            var paramList = new JArray
+            {
+                JsonConvert.SerializeObject(playlist.PlaylistId),
+                JsonConvert.SerializeObject(songIds)
+            };
 
-            paramList.Add(JsonConvert.SerializeObject(playlist.PlaylistId));
-            paramList.Add(JsonConvert.SerializeObject(songIds));
 
 
             try
@@ -89,44 +91,12 @@ namespace Musify_Desktop_App.Service
                 HttpResponseMessage response = await httpClient.PostAsJsonAsync(PlaylistServiceApi + $"playlists/addSongsToPlaylist", paramList);
                 // response.EnsureSuccessStatusCode();
 
-                string data = await response.Content.ReadAsStringAsync();
+                var data = await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
 
             }
         }
-
-        //private async Task AddSongsToPlaylistTask(Playlist playlist, List<Song> songs)
-        //{
-        //    var client = new HttpClient();
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(
-        //        new MediaTypeWithQualityHeaderValue("application/json"));
-        //    client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-        //    var songIds = songs.Select(x => (int)x.SongId).ToArray();
-        //    var a = songIds.ToString();
-        //    var parameters = new Dictionary<string, string> { { "playlistId", playlist.PlaylistId.ToString() }, { "songIds", songIds.ToString() } };
-
-
-        //    var stringTask = client.PostAsync(
-        //        "",
-        //        new StringContent(
-        //            songIds.ToString(),
-        //            Encoding.UTF8,
-        //            "application/json"));
-
-        //    try
-        //    {
-        //        var msg = stringTask.Result;
-        //        var content = await msg.Content.ReadAsStringAsync();
-
-        //        Debug.Write(content);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //}
     }
 }

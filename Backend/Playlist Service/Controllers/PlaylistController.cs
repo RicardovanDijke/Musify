@@ -193,7 +193,7 @@ namespace Playlist_Service.Controllers
                     SongId = 2,
                     Number = 11
                 }
-                }.ToList();
+            }.ToList();
 
             playlist.Songs = playlistSongs;
 

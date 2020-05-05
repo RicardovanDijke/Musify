@@ -122,14 +122,17 @@ namespace Musify_Desktop_App.Panels
 
                 switch (dialogvm.Result)
                 {
+                    case MessageBoxResult.OK:
+                        {
+                            _playlistService.AddSongsToPlaylist(playlist, songs);
+                            break;
+                        }
                     case MessageBoxResult.Cancel:
                         {
-
                             break;
                         }
                 }
             }
-            _playlistService.AddSongsToPlaylist(playlist, songs);
         }
 
         private void DoPlaySong()

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,6 +19,8 @@ namespace Musify_Desktop_App.Service
         List<Playlist> GetFollowedPlaylistsByUserId(long userId);
 
         void AddSongsToPlaylist(Playlist playlist, List<Song> song);
+
+        bool CheckSongsInPlaylist(Playlist playlist, List<Song> song);
     }
 
     //todo add base Service class with 1 httpClient
@@ -63,9 +66,16 @@ namespace Musify_Desktop_App.Service
             _ = AddSongsToPlaylistTask(playlist, songs);
         }
 
+        public bool CheckSongsInPlaylist(Playlist playlist, List<Song> songs)
+        {
+            var playlistSongIds = playlist.Songs.Select(x => (int)x.SongId).ToList();
+
+            return songs.Any(song => playlistSongIds.Contains(song.SongId));
+        }
+
         private async Task AddSongsToPlaylistTask(Playlist playlist, List<Song> songs)
         {
-            var songIds = songs.Select(x => (int)x.SongId).ToArray();
+            var songIds = songs.Select(x => (long)x.SongId).ToArray();
 
             JArray paramList = new JArray();
 
@@ -77,7 +87,7 @@ namespace Musify_Desktop_App.Service
             {
                 var httpClient = new HttpClient(new HttpClientHandler());
                 HttpResponseMessage response = await httpClient.PostAsJsonAsync(PlaylistServiceApi + $"playlists/addSongsToPlaylist", paramList);
-               // response.EnsureSuccessStatusCode();
+                // response.EnsureSuccessStatusCode();
 
                 string data = await response.Content.ReadAsStringAsync();
             }

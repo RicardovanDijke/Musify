@@ -25,7 +25,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
             }
         }
 
-        public List<Model.Playlist> UserPlaylists => Session.User.Playlists;
+        public List<Model.Playlist> UserPlaylists => _playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId);
 
         // ReSharper disable once UnusedMember.Global
         public NavigationBarViewModel() { }

@@ -21,10 +21,11 @@ namespace Playlist_Service.Database
             modelBuilder.Entity<Playlist>(playlist =>
             {
                 playlist.HasKey(p => p.PlaylistId);
-             //   playlist.HasOne(p => p.CreatorUserID);
+                //   playlist.HasOne(p => p.CreatorUserID);
                 playlist.HasMany(p => p.Songs);
             });
 
+            //todo fix duplicate songs not being added to db (combination of keys isnt unique)
             modelBuilder.Entity<PlaylistSong>(ps =>
             {
                 ps.HasKey(x => new { PlaylistID = x.PlaylistId, SongID = x.SongId });

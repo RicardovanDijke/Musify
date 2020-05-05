@@ -55,16 +55,16 @@ namespace Playlist_Service.Controllers
             if (paramList.Count > 0)
             {
                 var playlistId = JsonConvert.DeserializeObject<long>(paramList[0].ToString());
-                var songIds = JsonConvert.DeserializeObject<int[]>(paramList[1].ToString());
+                var songIds = new List<long>(JsonConvert.DeserializeObject<long[]>(paramList[1].ToString()));
 
                 //TODO: add songs to playlist in database
 
-                HttpResponseMessage response = new HttpResponseMessage { StatusCode = HttpStatusCode.Created };
+                _playlistService.AddSongsToPlaylist(playlistId, songIds);
+
                 return new OkResult();
             }
             else
             {
-                HttpResponseMessage response = new HttpResponseMessage { StatusCode = HttpStatusCode.InternalServerError };
                 return new BadRequestResult();
             }
         }

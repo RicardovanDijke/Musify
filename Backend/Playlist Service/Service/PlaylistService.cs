@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Playlist_Service.Database;
@@ -9,9 +10,10 @@ namespace Playlist_Service.Service
     public interface IPlaylistService
     {
         IEnumerable<Playlist> GetAll();
-        Playlist GetById(int id);
+        Playlist GetById(long id);
         void Add(Playlist playlist);
-        List<Playlist> GetFollowedPlaylistsByUserId(int id);
+        List<Playlist> GetFollowedPlaylistsByUserId(long id);
+        void AddSongsToPlaylist(long playlistId, List<long> songIds);
     }
 
     public class PlaylistService : IPlaylistService
@@ -30,7 +32,7 @@ namespace Playlist_Service.Service
             return _playlistRepository.GetAll().ToList();
         }
 
-        public Playlist GetById(int id)
+        public Playlist GetById(long id)
         {
             return _playlistRepository.Get(id);
         }
@@ -40,9 +42,31 @@ namespace Playlist_Service.Service
             _playlistRepository.Add(user);
         }
 
-        public List<Playlist> GetFollowedPlaylistsByUserId(int id)
+        public List<Playlist> GetFollowedPlaylistsByUserId(long id)
         {
             return _playlistRepository.GetFollowedPlaylistsByUserId(id);
+        }
+
+        public void AddSongsToPlaylist(long playlistId, List<long> songIds)
+        {
+            var playlist = GetById(playlistId);
+
+            var number = playlist.Songs.Select(x => x.Number).Max();
+
+            foreach (var songId in songIds)
+            {
+                var playlistSong = new PlaylistSong()
+                {
+                    DateAdded = DateTime.Now,
+                    Number = number,
+                    SongId = songId,
+                    Playlist = playlist,
+                    PlaylistId = playlist.PlaylistId
+                };
+                playlist.Songs.Add(playlistSong);
+                number++;
+            }
+            _playlistRepository.Update(playlist);
         }
     }
 }

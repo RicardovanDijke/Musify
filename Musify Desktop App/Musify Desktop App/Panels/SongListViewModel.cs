@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Musify_Desktop_App.Dialog;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
 using Musify_Desktop_App.Socket;
@@ -15,7 +17,7 @@ namespace Musify_Desktop_App.Panels
     internal class SongListViewModel : ViewModelBase
     {
         private readonly SongService _songService;
-        private readonly PlaylistService _playlistService;
+        private readonly IPlaylistService _playlistService;
 
         private ObservableCollection<Song> _songs = new ObservableCollection<Song>();
         public ObservableCollection<Song> Songs
@@ -52,7 +54,7 @@ namespace Musify_Desktop_App.Panels
 
         public SongListViewModel() { }
 
-        public SongListViewModel(SongService songService, PlaylistService playlistService, ObservableCollection<Song> songList, string listName) : base()
+        public SongListViewModel(SongService songService, IPlaylistService playlistService, ObservableCollection<Song> songList, string listName) : base()
         {
             _songService = songService;
             _playlistService = playlistService;
@@ -113,6 +115,20 @@ namespace Musify_Desktop_App.Panels
         private void AddSelectedSongsToPlaylist(Model.Playlist playlist)
         {
             var songs = SelectedSongs.Cast<Song>().ToList();
+            if (_playlistService.CheckSongsInPlaylist(playlist, songs))
+            {
+                var dialogvm = new DialogViewModel("Duplicate songs", "Some of these songs are already in this playlist");
+                new BooleanDialog { DataContext = dialogvm }.ShowDialog();
+
+                switch (dialogvm.Result)
+                {
+                    case MessageBoxResult.Cancel:
+                        {
+
+                            break;
+                        }
+                }
+            }
             _playlistService.AddSongsToPlaylist(playlist, songs);
         }
 

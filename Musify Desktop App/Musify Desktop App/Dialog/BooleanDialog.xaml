@@ -1,0 +1,33 @@
+﻿<Window x:Class="Musify_Desktop_App.Dialog.BooleanDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Musify_Desktop_App.Dialog"
+        xmlns:z="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="{Binding DialogTitle}">
+    <z:Interaction.Triggers>
+        <z:EventTrigger EventName="Closing">
+            <z:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </z:EventTrigger>
+    </z:Interaction.Triggers>
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label  Grid.Column="1" Content="{Binding DialogText}"/>
+
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button IsDefault="True" Command="{Binding OkCommand}" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+            <Button IsCancel="True" Command="{Binding CancelCommand}" MinWidth="60">_Cancel</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

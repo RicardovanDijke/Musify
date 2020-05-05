@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Playlist_Service.Entities;
@@ -8,7 +9,8 @@ namespace Playlist_Service.Database
     public interface IPlaylistRepository : IRepository<Playlist>
     {
         public Playlist FindByName(string name);
-        List<Playlist> GetFollowedPlaylistsByUserId(int id);
+        List<Playlist> GetFollowedPlaylistsByUserId(long id);
+        void AddSongsToPlaylist(Playlist playlist, List<long> songIds);
     }
 
     public class PlaylistRepository : IPlaylistRepository
@@ -57,10 +59,16 @@ namespace Playlist_Service.Database
             return table.FirstOrDefault(a => a.Name == name);
         }
 
-        public List<Playlist> GetFollowedPlaylistsByUserId(int id)
+        public List<Playlist> GetFollowedPlaylistsByUserId(long id)
         {
             return table.Where(p => p.CreatorUserID == id).ToList();
         }
+
+        public void AddSongsToPlaylist(Playlist playlist, List<long> songIds)
+        {
+           
+        }
+        
         public void Save()
         {
             context.SaveChanges();

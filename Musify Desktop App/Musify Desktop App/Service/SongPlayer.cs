@@ -116,7 +116,16 @@ namespace Musify_Desktop_App.Service
             get => (int)(_output.Volume * 100);
             set
             {
-                _output.Volume = value / 100.000f;
+                var volume = (value / 100.000f) - 0.01f;
+                if (volume < 0f)
+                {
+                    _output.Volume = 0;
+                }
+                else
+                {
+                    _output.Volume = volume;
+
+                }
                 OnPropertyChanged(nameof(VolumePercentage));
             }
         }
@@ -127,7 +136,7 @@ namespace Musify_Desktop_App.Service
 
         private readonly DirectoryInfo _tempFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\temp");
         private readonly DirectoryInfo _downloadFolder = new DirectoryInfo(@"C:\users\ricar\Desktop\Musify\downloaded");
-        
+
         private SongPlayer()
         {
             _instance = this;

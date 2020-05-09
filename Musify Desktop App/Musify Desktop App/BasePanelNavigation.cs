@@ -6,22 +6,27 @@ namespace Musify_Desktop_App
 {
     internal abstract class BasePanelNavigation : ViewModelBase
     {
-        public event EventHandler QueuePageButtonPressed;
-        public event EventHandler HomePageButtonPressed;
-        public event EventHandler PlaylistSelected;
+        public event EventHandler QueuePageRequested;
+        public event EventHandler HomePageRequested;
+        public event EventHandler AlbumPageRequested;
+        public event EventHandler PlaylistPageRequested;
 
-        protected virtual void OnQueuePageButtonPressed()
+        protected virtual void OnQueuePageRequested()
         {
-            QueuePageButtonPressed?.Invoke(this, null);
+            QueuePageRequested?.Invoke(this, null);
         }
 
-        protected virtual void OnHomePageButtonPressed()
+        protected virtual void OnHomePageRequested()
         {
-            HomePageButtonPressed?.Invoke(this, null);
+            HomePageRequested?.Invoke(this, null);
         }
-        protected virtual void OnPlaylistSelected(Playlist playlist)
+        protected virtual void OnAlbumPageRequested(Album album)
         {
-            PlaylistSelected?.Invoke(playlist, null);
+            AlbumPageRequested?.Invoke(album, null);
+        }
+        protected virtual void OnPlaylistPageRequested(Playlist playlist)
+        {
+            PlaylistPageRequested?.Invoke(playlist, null);
         }
     }
 }

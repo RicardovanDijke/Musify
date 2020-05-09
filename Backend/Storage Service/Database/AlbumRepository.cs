@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Song_Service.Database
@@ -8,6 +9,7 @@ namespace Song_Service.Database
     public interface IAlbumRepository : IRepository<Album>
     {
         public Album FindByName(string name);
+        public Album GetBySong(Song song);
     }
 
     public class AlbumRepository : IAlbumRepository
@@ -54,6 +56,11 @@ namespace Song_Service.Database
         public Album FindByName(string name)
         {
             return _table.FirstOrDefault(a => a.Name == name);
+        }
+
+        public Album GetBySong(Song song)
+        {
+            return _table.FirstOrDefault(a => a.Songs.Contains(song));
         }
 
         public void Save()

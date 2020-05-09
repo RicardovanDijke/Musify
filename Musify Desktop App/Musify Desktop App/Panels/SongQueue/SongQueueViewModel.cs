@@ -1,4 +1,5 @@
-﻿using Musify_Desktop_App.Service;
+﻿using Musify_Desktop_App.Panels.Playlist;
+using Musify_Desktop_App.Service;
 
 namespace Musify_Desktop_App.Panels.SongQueue
 {
@@ -16,12 +17,12 @@ namespace Musify_Desktop_App.Panels.SongQueue
         }
 
 
-        public SongListViewModel SongQueueListViewModel { get; set; }
+        public PlaylistPageViewModel SongQueueListViewModel { get; set; }
 
         private SongQueueViewModel() { }
         private SongQueueViewModel(SongService songService, IPlaylistService playlistService)
         {
-            SongQueueListViewModel = new SongListViewModel(songService, playlistService, SongPlayer.Instance.Queue, "Play Queue");
+            SongQueueListViewModel = new PlaylistPageViewModel(songService, playlistService, SongPlayer.Instance.Queue, "Play Queue");
         }
     }
 }

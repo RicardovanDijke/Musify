@@ -6,6 +6,7 @@
              xmlns:login="clr-namespace:Musify_Desktop_App.Panels.Login"
              xmlns:home="clr-namespace:Musify_Desktop_App.Panels.Home"
              xmlns:panels="clr-namespace:Musify_Desktop_App.Panels"
+             xmlns:playlist="clr-namespace:Musify_Desktop_App.Panels.Playlist"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="CornflowerBlue"
              >
@@ -21,9 +22,9 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding WelcomeText,FallbackValue='Welcome,'}" FontSize="30"/>
 
-        <panels:SongListControl Grid.Row="1" Grid.Column="0" DataContext="{Binding AllSongsListViewModel}">
+        <playlist:PlaylistPageControl Grid.Row="1" Grid.Column="0" DataContext="{Binding AllSongsListViewModel}">
 
-        </panels:SongListControl>
+        </playlist:PlaylistPageControl>
 
     </Grid>
 </UserControl>

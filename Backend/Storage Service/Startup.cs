@@ -30,9 +30,10 @@ namespace Song_Service
             });
             services.AddScoped<DatabaseContext>();
 
-           // services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            // services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ISongRepository, SongRepository>();
             services.AddScoped<SongService>();
+            services.AddScoped<AlbumService>();
             services.AddScoped<IArtistRepository, ArtistRepository>();
             services.AddScoped<IAlbumRepository, AlbumRepository>();
 

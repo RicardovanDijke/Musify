@@ -35,7 +35,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
             _songService = songService;
             _playlistService = playlistService;
 
-            GotoHomePageCommand = new RelayCommand(OnHomePageButtonPressed);
+            GotoHomePageCommand = new RelayCommand(OnHomePageRequested);
 
             RaisePropertyChanged(nameof(UserPlaylists));
         }
@@ -43,7 +43,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
         private void OpenPlaylistPage()
         {
             var playlist = _songService.GetSongsInPlaylist(SelectedPlaylist);
-            OnPlaylistSelected(playlist);
+            OnPlaylistPageRequested(playlist);
         }
     }
 }

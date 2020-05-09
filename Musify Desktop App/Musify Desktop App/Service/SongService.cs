@@ -17,7 +17,7 @@ namespace Musify_Desktop_App.Service
         {
             foreach (var playlistSong in playlist.Songs)
             {
-                playlistSong.Song = GetSongById((int)playlistSong.SongId);
+                playlistSong.Song = GetSongById(playlistSong.SongId);
             }
 
             return playlist;
@@ -94,6 +94,54 @@ namespace Musify_Desktop_App.Service
 
             return songs;
         }
+
+
+        public Album GetSongsInAlbum(Album album)
+        {
+            foreach (var playlistSong in album.Songs)
+            {
+                playlistSong.Song = GetSongById(playlistSong.SongId);
+            }
+
+            return album;
+        }
+
+        public Album GetAlbumBySong(Song selectedSong)
+        {
+            return GetAlbumBySongTask(selectedSong.SongId).Result;
+        }
+
+        private async Task<Album> GetAlbumBySongTask(int songId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+
+
+            var httpTask = client.GetAsync(SongServiceApi + "albums?songId=" + songId);
+
+            Album album;
+            try
+            {
+                var msg = httpTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+                Debug.Write(content);
+
+                album = JsonConvert.DeserializeObject<Album>(content);
+
+            }
+            catch
+            {
+                //todo display "songs not found" message
+                album = null;
+            }
+
+            return album;
+        }
+
 
         public void RequestSocket(long songId)
         {

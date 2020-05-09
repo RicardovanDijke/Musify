@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
@@ -12,7 +13,9 @@ namespace Musify_Desktop_App
 {
     internal class MainViewModel : ViewModelBase
     {
-        public ViewModelBase MainView
+
+        private BasePanelNavigation _mainView;
+        public BasePanelNavigation MainView
         {
             get => _mainView;
             set
@@ -32,7 +35,6 @@ namespace Musify_Desktop_App
 
         private readonly SongService _songService;
         private readonly PlaylistService _playlistService;
-        private ViewModelBase _mainView;
 
         public MainViewModel()
         {
@@ -46,27 +48,38 @@ namespace Musify_Desktop_App
             NavigationBarViewModel = new NavigationBarViewModel(_songService, _playlistService);
 
 
-            CurrentSongView.QueuePageButtonPressed += GotoQueuePage;
-            NavigationBarViewModel.HomePageButtonPressed += GotoHomePage;
-            NavigationBarViewModel.PlaylistSelected += OpenPlaylistPage;
-
+            CurrentSongView.QueuePageRequested += GoToQueuePage;
+            NavigationBarViewModel.HomePageRequested += GoToHomePage;
+            NavigationBarViewModel.PlaylistPageRequested += GoToPlaylistPage;
+            HomePageView.AlbumPageRequested += GoToAlbumPage;
             MainView = HomePageView;
         }
 
-        private void GotoQueuePage(object sender, EventArgs e)
+
+        private void GoToQueuePage(object sender, EventArgs e)
         {
-            //MainView = new SongQueueViewModel(_songService);
             MainView = SongQueueViewModel;
         }
 
-        private void GotoHomePage(object sender, EventArgs e)
+        private void GoToHomePage(object sender, EventArgs e)
         {
             MainView = HomePageView;
         }
-        private void OpenPlaylistPage(object sender, EventArgs e)
+
+        private void GoToAlbumPage(object sender, EventArgs e)
+        {
+            var album = (Album)sender;
+            album = _songService.GetSongsInAlbum(album);
+            var songsInAlbum = album.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
+
+            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInAlbum, album.Name);
+        }
+        private void GoToPlaylistPage(object sender, EventArgs e)
         {
             var playlist = (Playlist)sender;
-            MainView = new PlaylistPageViewModel(_songService, _playlistService, playlist);
+            var songsInPlaylist = playlist.Songs.OrderBy(x => x.Number).Select(playlistItem => playlistItem.Song).ToList();
+
+            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInPlaylist, playlist.Name);
         }
     }
 }

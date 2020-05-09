@@ -133,7 +133,7 @@ namespace Musify_Desktop_App.Panels.CurrentSong
         private void DoOpenQueuePage()
         {
 
-            OnQueuePageButtonPressed();
+            OnQueuePageRequested();
         }
 
         private void DoPlayNextSongInQueue()

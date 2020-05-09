@@ -10,7 +10,6 @@ namespace Song_Service.Service
 {
     public class SongService
     {
-
         private readonly ISongRepository _songManager;
         private readonly IAlbumRepository _albumManager;
         private readonly IArtistRepository _artistManager;
@@ -18,11 +17,10 @@ namespace Song_Service.Service
 
         public SongService(ISongRepository songManager, IAlbumRepository albumManager, IArtistRepository artistManager)
         {
-            this._songManager = songManager;
-            this._albumManager = albumManager;
-            this._artistManager = artistManager;
+            _songManager = songManager;
+            _albumManager = albumManager;
+            _artistManager = artistManager;
         }
-
 
         public async Task<bool> AddSong(IFormFile file)
         {

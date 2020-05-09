@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Musify_Desktop_App.Model
 {
-    public class Album
+    public class Album : SongList
     {
-        public long AlbumId { get; set; }
+        [JsonProperty("artist")]
 
-        public string Name { get; set; }
+        public new User Creator { get; set; }
 
-        public Artist Artist { get; set; }
-
-        public List<Song> Songs { get; } = new List<Song>();
-     }
+        public Album()
+        {
+            SongListType = SongListType.Album;
+        }
+    }
 }

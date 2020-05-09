@@ -79,7 +79,7 @@ namespace Musify_Desktop_App.Service
 
             var paramList = new JArray
             {
-                JsonConvert.SerializeObject(playlist.PlaylistId),
+                JsonConvert.SerializeObject(playlist.SongListId),
                 JsonConvert.SerializeObject(songIds)
             };
 

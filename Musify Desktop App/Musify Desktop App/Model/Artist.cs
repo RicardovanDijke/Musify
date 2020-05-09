@@ -6,7 +6,6 @@ namespace Musify_Desktop_App.Model
 {
     public class Artist
     {
-        [Key]
         public long ArtistId { get; set; }
 
         public string Name { get; set; }

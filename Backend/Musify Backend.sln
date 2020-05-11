@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Gateway", "API Gateway\API Gateway.csproj", "{22629FD6-9C13-4396-8893-66ABA5B06F7C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth Service", "Auth Service\Auth Service.csproj", "{8B84738B-618A-4564-8553-DFC95438887D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Song Service", "Storage Service\Song Service.csproj", "{B1917CB1-F71B-4622-B6A1-815A47EC5E0D}"
@@ -14,9 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playlist Service", "Playlist Service\Playlist Service.csproj", "{5939DAD2-6174-4734-BF82-9644E4C2E661}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playlist Service", "Playlist Service\Playlist Service.csproj", "{5939DAD2-6174-4734-BF82-9644E4C2E661}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{A579FE51-C06D-41BB-BD89-765FB991D319}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streaming Service", "Streaming Service\Streaming Service.csproj", "{06E000BE-19B9-49E1-8A98-9946E7A473E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +24,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{22629FD6-9C13-4396-8893-66ABA5B06F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22629FD6-9C13-4396-8893-66ABA5B06F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22629FD6-9C13-4396-8893-66ABA5B06F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22629FD6-9C13-4396-8893-66ABA5B06F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B84738B-618A-4564-8553-DFC95438887D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B84738B-618A-4564-8553-DFC95438887D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B84738B-618A-4564-8553-DFC95438887D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,6 +40,10 @@ Global
 		{A579FE51-C06D-41BB-BD89-765FB991D319}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A579FE51-C06D-41BB-BD89-765FB991D319}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A579FE51-C06D-41BB-BD89-765FB991D319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

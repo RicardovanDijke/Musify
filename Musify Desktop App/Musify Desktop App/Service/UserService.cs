@@ -11,7 +11,7 @@ namespace Musify_Desktop_App.Service
 {
     internal class UserService
     {
-        private const string UserServiceApi = "https://localhost:44321/api/";
+        private const string GatewayApi = "https://localhost:44389/api/";
 
 
         public User Login(string username, string password)
@@ -32,7 +32,7 @@ namespace Musify_Desktop_App.Service
                 password,
             });
 
-            var stringTask = client.PostAsync(UserServiceApi + "authenticate", new StringContent(payload, Encoding.UTF8, "application/json"));
+            var stringTask = client.PostAsync(GatewayApi + "auth/login", new StringContent(payload, Encoding.UTF8, "application/json"));
 
             try
             {

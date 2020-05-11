@@ -11,7 +11,7 @@ namespace Musify_Desktop_App.Service
 {
     public class SongService
     {
-        private const string SongServiceApi = "https://localhost:44337/api/";
+        private const string GatewayApi = "https://localhost:44389/api/";
 
         public Playlist GetSongsInPlaylist(Playlist playlist)
         {
@@ -38,7 +38,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(SongServiceApi + $"songs/id?id={songId}");
+            var httpTask = client.GetAsync(GatewayApi + $"songs/id?id={songId}");
 
             Song song;
             try
@@ -73,7 +73,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(SongServiceApi + "songs/all");
+            var httpTask = client.GetAsync(GatewayApi + "songs/all");
 
             List<Song> songs;
             try
@@ -121,7 +121,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(SongServiceApi + "albums?songId=" + songId);
+            var httpTask = client.GetAsync(GatewayApi + "albums?songId=" + songId);
 
             Album album;
             try
@@ -150,7 +150,7 @@ namespace Musify_Desktop_App.Service
             webClient.QueryString.Add("ipAdress", "127.0.0.1");
             webClient.QueryString.Add("songID", songId.ToString());
 
-            webClient.UploadValues(SongServiceApi + "songs/stream", webClient.QueryString);
+            webClient.UploadValues(GatewayApi + "songs/stream", webClient.QueryString);
         }
     }
 }

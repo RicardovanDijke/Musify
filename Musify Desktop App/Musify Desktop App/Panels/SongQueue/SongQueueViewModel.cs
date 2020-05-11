@@ -5,11 +5,11 @@ namespace Musify_Desktop_App.Panels.SongQueue
 {
     internal class SongQueueViewModel : BasePanelNavigation
     {
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
         private static SongQueueViewModel _instance;
         public static SongQueueViewModel Instance(SongService songService, IPlaylistService playlistService)
         {
-            lock (_lock)
+            lock (Lock)
             {
                 return _instance ??= new SongQueueViewModel(songService, playlistService);
             }

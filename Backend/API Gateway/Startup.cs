@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,8 +41,26 @@ namespace API_Gateway
 
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
+            app.Use(async (context, next) =>
+            {
 
-            app.UseOcelot();
+                string newPath = null;
+                var url = context.Request.Path;
+                Debug.WriteLine(url);
+                if (url == "/dan")
+                {
+                    //newPath = "/somereports";
+                    //context.Request.Path = newPath;
+                    //context.Request.Method = "POST";
+                    //context.Request.ContentType = "application/json";
+
+                }
+
+                await next();
+
+            });
+
+            app.UseOcelot().Wait();
 
 
             //if (env.IsDevelopment())

@@ -26,7 +26,7 @@ namespace Musify_Desktop_App.Service
     //todo add base Service class with 1 httpClient
     internal class PlaylistService : IPlaylistService
     {
-        private const string PlaylistServiceApi = "https://localhost:44331/api/";
+        private const string GatewayApi = "https://localhost:44389/api/";
 
 
         public List<Playlist> GetFollowedPlaylistsByUserId(long userId)
@@ -42,7 +42,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var stringTask = client.GetAsync(PlaylistServiceApi + $"playlists/getFollowedPlaylistsByUserId?id={userId}");
+            var stringTask = client.GetAsync(GatewayApi + $"playlists/getFollowedPlaylistsByUserId?id={userId}");
 
             try
             {
@@ -88,7 +88,7 @@ namespace Musify_Desktop_App.Service
             try
             {
                 var httpClient = new HttpClient(new HttpClientHandler());
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync(PlaylistServiceApi + $"playlists/addSongsToPlaylist", paramList);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync(GatewayApi + $"playlists/addSongsToPlaylist", paramList);
                 // response.EnsureSuccessStatusCode();
 
                 var data = await response.Content.ReadAsStringAsync();

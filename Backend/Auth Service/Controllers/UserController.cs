@@ -11,7 +11,7 @@ namespace Auth_Service.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/")]
+    [Route("api/auth")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -22,7 +22,7 @@ namespace Auth_Service.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
+        [HttpPost("login")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested, userName = {model.Username}, pass = {model.Password}");

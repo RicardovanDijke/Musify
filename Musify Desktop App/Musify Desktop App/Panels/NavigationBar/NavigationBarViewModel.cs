@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Navigation;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
@@ -12,6 +14,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
         private PlaylistService _playlistService;
 
         private Model.Playlist _selectedPlaylist;
+        private ObservableCollection<Model.Playlist> _playlists;
         public RelayCommand GotoHomePageCommand { get; set; }
 
         public Model.Playlist SelectedPlaylist
@@ -25,7 +28,17 @@ namespace Musify_Desktop_App.Panels.NavigationBar
             }
         }
 
-        public List<Model.Playlist> UserPlaylists => _playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId);
+
+        public ObservableCollection<Model.Playlist> UserPlaylists
+        {
+            get => _playlists;
+            set
+            {
+                _playlists = value;
+                RaisePropertyChanged(nameof(UserPlaylists));
+            }
+        }
+
 
         // ReSharper disable once UnusedMember.Global
         public NavigationBarViewModel() { }
@@ -37,12 +50,12 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 
             GotoHomePageCommand = new RelayCommand(OnHomePageRequested);
 
-            RaisePropertyChanged(nameof(UserPlaylists));
+            UserPlaylists = new ObservableCollection<Model.Playlist>(_playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId));
         }
 
         private void OpenPlaylistPage()
         {
-            var playlist = _songService.GetSongsInPlaylist(SelectedPlaylist);
+            var playlist = _songService.GetSongsInSongList(SelectedPlaylist);
             OnPlaylistPageRequested(playlist);
         }
     }

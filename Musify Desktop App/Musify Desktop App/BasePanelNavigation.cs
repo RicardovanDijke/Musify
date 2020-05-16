@@ -24,9 +24,9 @@ namespace Musify_Desktop_App
         {
             AlbumPageRequested?.Invoke(album, null);
         }
-        protected virtual void OnPlaylistPageRequested(Playlist playlist)
+        protected virtual void OnPlaylistPageRequested(SongList songList)
         {
-            PlaylistPageRequested?.Invoke(playlist, null);
+            PlaylistPageRequested?.Invoke(songList, null);
         }
     }
 }

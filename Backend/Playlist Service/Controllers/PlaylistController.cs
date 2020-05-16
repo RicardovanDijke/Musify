@@ -44,6 +44,7 @@ namespace Playlist_Service.Controllers
 
             var playlists = _playlistService.GetFollowedPlaylistsByUserId(id);
 
+            Debug.WriteLine($"returning {playlists.Count} playlists");
             return new ActionResult<List<Playlist>>(playlists);
         }
 

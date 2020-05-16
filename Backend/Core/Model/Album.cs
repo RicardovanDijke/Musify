@@ -17,7 +17,7 @@ namespace Core.Model
         [ForeignKey("ArtistID")]
         public virtual Artist Artist { get; set; }
 
-        public virtual List<Song> Songs { get; } = new List<Song>();
+        public virtual List<Song> Songs { get; set; } = new List<Song>();
 
         //todo constructor
 

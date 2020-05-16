@@ -19,6 +19,9 @@ namespace Musify_Desktop_App.Panels.Playlist
         private readonly IPlaylistService _playlistService;
 
         private ObservableCollection<Song> _songs = new ObservableCollection<Song>();
+        private Song _selectedSong;
+        private IList _selectedSongs;
+
         public ObservableCollection<Song> Songs
         {
             get => _songs;
@@ -33,12 +36,16 @@ namespace Musify_Desktop_App.Panels.Playlist
 
         public string ListName { get; set; }
 
-        public Song SelectedSong { get; set; }
+        public Song SelectedSong
+        {
+            get => _selectedSong;
+            set => _selectedSong = value;
+        }
 
         public IList SelectedSongs
         {
-            get;
-            set;
+            get => _selectedSongs;
+            set => _selectedSongs = value;
         }
 
         public RelayCommand SongSelectedCommand { get; set; }

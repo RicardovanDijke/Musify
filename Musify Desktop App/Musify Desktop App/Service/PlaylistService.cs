@@ -28,10 +28,11 @@ namespace Musify_Desktop_App.Service
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 
+        private List<Playlist> _followedPlaylistsByUser;
 
         public List<Playlist> GetFollowedPlaylistsByUserId(long userId)
         {
-            return GetAllFollowedPlaylistsByUserIdTask(userId).Result;
+            return _followedPlaylistsByUser ?? GetAllFollowedPlaylistsByUserIdTask(userId).Result;
         }
 
         private async Task<List<Playlist>> GetAllFollowedPlaylistsByUserIdTask(long userId)
@@ -51,6 +52,7 @@ namespace Musify_Desktop_App.Service
 
                 var playlists = JsonConvert.DeserializeObject<List<Playlist>>(content);
                 Debug.Write(content);
+                _followedPlaylistsByUser = playlists;
                 return playlists;
             }
             catch (Exception ex)

@@ -31,8 +31,20 @@ namespace Song_Service.Controllers
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
             var song = _songManager.Get(id);
-            
+
             return new ActionResult<Song>(song);
+        }
+
+        [HttpPost]
+        [Route("many")]
+        public ActionResult<List<Song>> GetMany([FromBody]int[] ids)
+        {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested with ids {ids}");
+
+            var songs = ids.Select(id => _songManager.Get(id)).ToList();
+
+            Debug.WriteLine($"returning {songs.Count} songs");
+            return new ActionResult<List<Song>>(songs);
         }
 
         [HttpGet]
@@ -187,9 +199,9 @@ namespace Song_Service.Controllers
             return new OkResult();
         }
 
-
         /// <summary>
         /// client sends request for websocket to be opened up to <paramref ipAdress/>
+        /// todo: move to streamservice
         /// </summary>
         /// <param name="ipAdress"></param>
         /// <returns> adress which client needs to connect to to receive file</returns>
@@ -208,8 +220,8 @@ namespace Song_Service.Controllers
                 socketManager.AddSocket(s, ipAdress);
             }).Start();
 
-            
-            string localIp ="127.0.0.1";
+
+            string localIp = "127.0.0.1";
             return new ActionResult<string>(s.Title + localIp);
         }
 

@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
@@ -13,14 +16,18 @@ namespace Musify_Desktop_App.Service
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 
-        public Playlist GetSongsInPlaylist(Playlist playlist)
+        public SongList GetSongsInSongList(SongList songList)
         {
-            foreach (var playlistSong in playlist.Songs)
+            var ids = songList.Songs.Select(song => song.SongId).ToList();
+            var songs = GetSongsByIds(ids);
+
+            foreach (var playlistSong in songList.Songs)
             {
-                playlistSong.Song = GetSongById(playlistSong.SongId);
+                var newSong = songs.First(x => x.SongId == playlistSong.SongId);
+                playlistSong.Song = newSong;
             }
 
-            return playlist;
+            return songList;
         }
 
         public Song GetSongById(int songId)
@@ -57,6 +64,47 @@ namespace Musify_Desktop_App.Service
             }
 
             return song;
+        }
+
+        public List<Song> GetSongsByIds(List<int> songIds)
+        {
+            return GetSongsByIdsTask(songIds).Result;
+        }
+
+        private async Task<List<Song>> GetSongsByIdsTask(List<int> songIds)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+            var listString = "[" + String.Join(",", songIds.Select(i => i.ToString()).ToArray()) + "]"; 
+
+
+            var body = new StringContent(
+                listString,
+                Encoding.UTF8,
+                "application/json");
+            var httpTask = client.PostAsync(GatewayApi + $"songs/many", body);
+
+            List<Song> songs;
+            try
+            {
+                var msg = httpTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+                Debug.Write(content);
+
+                songs = JsonConvert.DeserializeObject<List<Song>>(content);
+            }
+            catch
+            {
+                //todo display "song not found" message
+                songs = null;
+
+            }
+
+            return songs;
         }
 
         public List<Song> GetAllSongs()

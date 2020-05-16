@@ -18,7 +18,6 @@ namespace Core.Model
 
 
         [ForeignKey("AlbumID")]
-
         public virtual Album Album { get; set; }
 
         public int Duration { get; set; }

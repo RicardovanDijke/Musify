@@ -21,7 +21,7 @@ namespace Song_Service.Controllers
 
         public SongController(ISongRepository songManager)
         {
-            this._songManager = songManager;
+            _songManager = songManager;
         }
 
         [HttpGet]
@@ -41,7 +41,15 @@ namespace Song_Service.Controllers
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested with ids {ids}");
 
-            var songs = ids.Select(id => _songManager.Get(id)).ToList();
+            var songs = ids.Select(id =>
+            {
+                var song = _songManager.Get(id);
+                if (song.Album != null)
+                {
+                    song.Album.Songs = null;
+                }
+                return song;
+            }).ToList();
 
             Debug.WriteLine($"returning {songs.Count} songs");
             return new ActionResult<List<Song>>(songs);

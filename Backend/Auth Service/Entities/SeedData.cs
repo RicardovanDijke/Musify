@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Auth_Service.Database;
-using Core.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Model;
-using Microsoft.AspNetCore.Http;
 using Song_Service.Database;
 using TagLibFile = TagLib.File;
 

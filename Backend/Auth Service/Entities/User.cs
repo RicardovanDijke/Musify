@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Auth_Service.Entities;
 
-namespace Core.Model
+namespace Auth_Service.Entities
 {
     [Table("User")]
     public class User

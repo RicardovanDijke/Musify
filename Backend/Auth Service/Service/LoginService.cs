@@ -5,8 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Auth_Service.Database;
+using Auth_Service.Entities;
 using Auth_Service.Helpers;
-using Core.Model;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,8 +16,10 @@ namespace Auth_Service.Service
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
-        User GetById(int id);
+        User GetById(long id);
         void Add(User user);
+        List<User> GetFollowersByUser(long userId);
+        List<User> GetFollowingByUser(long userId);
     }
 
     public class UserService : IUserService
@@ -63,7 +65,7 @@ namespace Auth_Service.Service
             return _userRepository.GetAll().WithoutPasswords();
         }
 
-        public User GetById(int id)
+        public User GetById(long id)
         {
             return _userRepository.Get(id);
         }
@@ -71,6 +73,16 @@ namespace Auth_Service.Service
         public void Add(User user)
         {
             _userRepository.Add(user);
+        }
+
+        public List<User> GetFollowersByUser(long userId)
+        {
+            return _userRepository.GetFollowersByUser(userId);
+        }
+
+        public List<User> GetFollowingByUser(long userId)
+        {
+            return _userRepository.GetFollowingByUser(userId);
         }
     }
 }

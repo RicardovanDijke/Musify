@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using Core.Model;
+﻿using Core.Model;
 using Microsoft.AspNetCore.Mvc;
-using Song_Service.Database;
 using Song_Service.Service;
-using Song_Service.Sockets;
 
 namespace Song_Service.Controllers
 {

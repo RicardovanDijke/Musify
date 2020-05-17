@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Model;
+using Auth_Service.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth_Service.Database
@@ -8,6 +8,8 @@ namespace Auth_Service.Database
     public interface IUserRepository : IRepository<User>
     {
         public User Authenticate(string username, string password);
+        List<User> GetFollowersByUser(long userId);
+        List<User> GetFollowingByUser(long userId);
     }
 
     public class UserRepository : IUserRepository
@@ -57,6 +59,22 @@ namespace Auth_Service.Database
                 .SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             return user;
+        }
+
+        public List<User> GetFollowersByUser(long userId)
+        {
+            var followers = Get(userId).Followers;
+
+            var usersFollowing = followers.Select(f => f.Follower).ToList();
+            return usersFollowing;
+        }
+
+        public List<User> GetFollowingByUser(long userId)
+        {
+            var following = Get(userId).Following;
+
+            var usersFollowing = following.Select(f => f.Followee).ToList();
+            return usersFollowing;
         }
 
         public void Save()

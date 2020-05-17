@@ -3,7 +3,6 @@ using System.Reflection;
 using Auth_Service.Entities;
 using Auth_Service.Helpers;
 using Auth_Service.Service;
-using Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +46,7 @@ namespace Auth_Service.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetUserbyId(int id)
+        public IActionResult GetUserbyId(long id)
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 

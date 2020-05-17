@@ -11,7 +11,7 @@ namespace Core.Model
         public long PlaylistId { get; set; }
         public string Name { get; set; }
         public bool Private { get; set; }
-        public User Creator { get; set; }
+        public long CreatorId { get; set; }
 
     }
 }

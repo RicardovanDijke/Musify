@@ -25,8 +25,10 @@ namespace Auth_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddControllers();
+            services.AddCors(); 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -58,7 +60,7 @@ namespace Auth_Service
             services.AddDbContext<DatabaseContext>(opts =>
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
-                opts.UseMySql(Configuration["ConnectionString:AuthDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"]);
                 opts.EnableSensitiveDataLogging();
             });
 

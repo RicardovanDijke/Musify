@@ -51,7 +51,10 @@ namespace Auth_Service.Database
 
         public User Authenticate(string username, string password)
         {
-            var user = _context.Users.SingleOrDefault(x => x.UserName == username && x.Password == password);
+            var user = _context.Users
+                .Include(x=>x.Following)
+                .Include(x=>x.Followers)
+                .SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             return user;
         }

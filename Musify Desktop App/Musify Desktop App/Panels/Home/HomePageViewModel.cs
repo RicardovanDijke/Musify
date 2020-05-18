@@ -1,5 +1,4 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.Playlist;
 using Musify_Desktop_App.Service;

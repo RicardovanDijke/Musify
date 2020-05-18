@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Dialog;
 using Musify_Desktop_App.Model;

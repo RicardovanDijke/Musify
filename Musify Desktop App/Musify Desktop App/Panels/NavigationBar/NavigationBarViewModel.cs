@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Navigation;
-using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;

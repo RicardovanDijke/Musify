@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Musify_Desktop_App.Model
+﻿namespace Musify_Desktop_App.Model
 {
 
     public class Playlist : SongList

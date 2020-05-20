@@ -16,6 +16,8 @@ namespace Musify_Desktop_App.Service
     {
         List<Playlist> GetFollowedPlaylistsByUserId(long userId);
 
+        List<Playlist> GetPublicCreatedPlaylistsByUserId(long userId);
+
         void AddSongsToPlaylist(Playlist playlist, List<Song> song);
 
         bool CheckSongsInPlaylist(Playlist playlist, List<Song> song);
@@ -27,6 +29,9 @@ namespace Musify_Desktop_App.Service
         private const string GatewayApi = "https://localhost:44389/api/";
 
         private List<Playlist> _followedPlaylistsByUser;
+
+
+        private Dictionary<long, List<Playlist>> _createdPlaylistsByUser = new Dictionary<long, List<Playlist>>();
 
         public List<Playlist> GetFollowedPlaylistsByUserId(long userId)
         {
@@ -59,6 +64,40 @@ namespace Musify_Desktop_App.Service
             }
 
         }
+
+
+        public List<Playlist> GetPublicCreatedPlaylistsByUserId(long userId)
+        {
+            return _createdPlaylistsByUser.GetValueOrDefault(userId) ?? GetPublicCreatedPlaylistsByUserIdTask(userId).Result;
+        }
+
+        private async Task<List<Playlist>> GetPublicCreatedPlaylistsByUserIdTask(long userId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+            var stringTask = client.GetAsync(GatewayApi + $"playlists/getPublicCreatedPlaylistsByUserId?id={userId}");
+
+            try
+            {
+                var msg = stringTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+
+                var playlists = JsonConvert.DeserializeObject<List<Playlist>>(content);
+                Debug.Write(content);
+                _followedPlaylistsByUser = playlists;
+                return playlists;
+            }
+            catch (Exception ex)
+            {
+                return new List<Playlist>();
+            }
+
+        }
+
 
 
         public void AddSongsToPlaylist(Playlist playlist, List<Song> songs)

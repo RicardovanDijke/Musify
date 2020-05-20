@@ -17,4 +17,10 @@
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Panels\PlaylistList\PlaylistListControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

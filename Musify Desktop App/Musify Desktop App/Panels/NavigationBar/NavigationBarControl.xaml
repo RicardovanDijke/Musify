@@ -11,10 +11,11 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <Button Grid.Row="0" Content="Profile" Command="{Binding GoToProfilePageCommand}"/>
         <Button Grid.Row="2" Content="Home" Command="{Binding GotoHomePageCommand}"/>
 
         <ListView Grid.Row="4" ItemsSource="{Binding UserPlaylists}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPlaylist}" />

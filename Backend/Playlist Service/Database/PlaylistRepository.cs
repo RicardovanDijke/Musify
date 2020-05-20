@@ -10,6 +10,7 @@ namespace Playlist_Service.Database
         public Playlist FindByName(string name);
         List<Playlist> GetFollowedPlaylistsByUserId(long id);
         void AddSongsToPlaylist(Playlist playlist, List<long> songIds);
+        List<Playlist> GetPublicCreatedPlaylistsByUserId(long id);
     }
 
     public class PlaylistRepository : IPlaylistRepository
@@ -60,6 +61,7 @@ namespace Playlist_Service.Database
 
         public List<Playlist> GetFollowedPlaylistsByUserId(long id)
         {
+            //todo add followed playlists instead of just created
             return table.Where(p => p.CreatorUserID == id).ToList();
         }
 
@@ -67,7 +69,12 @@ namespace Playlist_Service.Database
         {
            
         }
-        
+
+        public List<Playlist> GetPublicCreatedPlaylistsByUserId(long id)
+        {
+            return table.Where(p => p.CreatorUserID == id && p.Private == false).ToList();
+        }
+
         public void Save()
         {
             context.SaveChanges();

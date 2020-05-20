@@ -43,6 +43,18 @@ namespace Playlist_Service.Controllers
 
             Debug.WriteLine($"returning {playlists.Count} playlists");
             return new ActionResult<List<Playlist>>(playlists);
+        }   
+        
+        [HttpGet]
+        [Route("getPublicCreatedPlaylistsByUserId")]
+        public ActionResult<List<Playlist>> GetPublicCreatedPlaylistsByUserId(int id)
+        {
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+
+            var playlists = _playlistService.GetPublicCreatedPlaylistsByUserId(id);
+
+            Debug.WriteLine($"returning {playlists.Count} playlists");
+            return new ActionResult<List<Playlist>>(playlists);
         }
 
         [HttpPost]

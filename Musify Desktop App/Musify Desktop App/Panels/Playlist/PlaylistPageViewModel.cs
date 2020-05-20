@@ -18,8 +18,6 @@ namespace Musify_Desktop_App.Panels.Playlist
         private readonly IPlaylistService _playlistService;
 
         private ObservableCollection<Song> _songs = new ObservableCollection<Song>();
-        private Song _selectedSong;
-        private IList _selectedSongs;
 
         public ObservableCollection<Song> Songs
         {
@@ -35,17 +33,9 @@ namespace Musify_Desktop_App.Panels.Playlist
 
         public string ListName { get; set; }
 
-        public Song SelectedSong
-        {
-            get => _selectedSong;
-            set => _selectedSong = value;
-        }
+        public Song SelectedSong { get; set; }
 
-        public IList SelectedSongs
-        {
-            get => _selectedSongs;
-            set => _selectedSongs = value;
-        }
+        public IList SelectedSongs { get; set; }
 
         public RelayCommand SongSelectedCommand { get; set; }
         public RelayCommand PlaySongCommand { get; set; }
@@ -121,6 +111,7 @@ namespace Musify_Desktop_App.Panels.Playlist
         private void AddSelectedSongsToPlaylist(Model.Playlist playlist)
         {
             var songs = SelectedSongs.Cast<Song>().ToList();
+            //check whether songs already exist in the playlist
             if (_playlistService.CheckSongsInPlaylist(playlist, songs))
             {
                 var dialogvm = new DialogViewModel("Duplicate songs", "Some of these songs are already in this playlist");

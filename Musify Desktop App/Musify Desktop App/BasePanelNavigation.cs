@@ -8,6 +8,7 @@ namespace Musify_Desktop_App
     {
         public event EventHandler QueuePageRequested;
         public event EventHandler HomePageRequested;
+        public event EventHandler ProfilePageRequested;
         public event EventHandler AlbumPageRequested;
         public event EventHandler PlaylistPageRequested;
 
@@ -15,7 +16,10 @@ namespace Musify_Desktop_App
         {
             QueuePageRequested?.Invoke(this, null);
         }
-
+        protected virtual void OnProfilePageRequested(User user)
+        {  
+            ProfilePageRequested?.Invoke(user, null);
+        }
         protected virtual void OnHomePageRequested()
         {
             HomePageRequested?.Invoke(this, null);

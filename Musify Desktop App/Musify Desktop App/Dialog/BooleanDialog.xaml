@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:Musify_Desktop_App.Dialog"
         xmlns:z="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="{Binding DialogTitle}">
+        Title="{Binding DialogTitle}"
+        Width="200"
+        Height="100">
     <z:Interaction.Triggers>
         <z:EventTrigger EventName="Closing">
             <z:InvokeCommandAction Command="{Binding CloseCommand}" />
         </z:EventTrigger>
     </z:Interaction.Triggers>
-    <Grid Margin="15">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -23,10 +25,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label  Grid.Column="1" Content="{Binding DialogText}"/>
+        <Label  Grid.Column="0" Grid.Row="0" Content="{Binding DialogText, FallbackValue='Question TextInput'}"/>
 
-        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,15,0,0">
-            <Button IsDefault="True" Command="{Binding OkCommand}" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+        <WrapPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <Button IsDefault="True" Command="{Binding OkCommand}" MinWidth="60" Margin="-40,0,10,0">_Ok</Button>
             <Button IsCancel="True" Command="{Binding CancelCommand}" MinWidth="60">_Cancel</Button>
         </WrapPanel>
     </Grid>

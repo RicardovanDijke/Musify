@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Musify_Desktop_App.Panels.Profile"
+             xmlns:playlist="clr-namespace:Musify_Desktop_App.Panels.Playlist"
+             xmlns:songQueue="clr-namespace:Musify_Desktop_App.Panels.SongQueue"
+             xmlns:playlistList="clr-namespace:Musify_Desktop_App.Panels.PlaylistList"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="590" d:DesignWidth="700">
+<UserControl.Resources>
+        <DataTemplate DataType="{x:Type playlistList:PlaylistListViewModel}">
+            <playlistList:PlaylistListControl/>
+    </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="170"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <playlist:PlaylistPageControl Grid.Column="0" Grid.Row="1" Content="{Binding PublicPlaylistsViewModel}"/>
     </Grid>
 </UserControl>

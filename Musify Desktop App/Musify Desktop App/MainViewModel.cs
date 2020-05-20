@@ -6,6 +6,7 @@ using Musify_Desktop_App.Panels.CurrentSong;
 using Musify_Desktop_App.Panels.Home;
 using Musify_Desktop_App.Panels.NavigationBar;
 using Musify_Desktop_App.Panels.Playlist;
+using Musify_Desktop_App.Panels.Profile;
 using Musify_Desktop_App.Panels.SongQueue;
 using Musify_Desktop_App.Service;
 
@@ -51,8 +52,16 @@ namespace Musify_Desktop_App
             CurrentSongView.QueuePageRequested += GoToQueuePage;
             NavigationBarViewModel.HomePageRequested += GoToHomePage;
             NavigationBarViewModel.PlaylistPageRequested += GoToPlaylistPage;
+            NavigationBarViewModel.ProfilePageRequested += GoToProfilePage;
             HomePageView.AlbumPageRequested += GoToAlbumPage;
             MainView = HomePageView;
+        }
+
+        private void GoToProfilePage(object? sender, EventArgs e)
+        {
+            var user = (User)sender;
+
+            MainView = new ProfilePageViewModel(_playlistService, user);
         }
 
 

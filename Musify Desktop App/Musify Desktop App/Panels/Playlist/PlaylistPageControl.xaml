@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="24"/>
-        <!--<controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}" 
+        <!--<controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}"  todo: check which version of list is needed
                                         Grid.Row="1" Grid.Column="0" 
                                         SelectedItem="{Binding SelectedSong}"
                                         SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay}"

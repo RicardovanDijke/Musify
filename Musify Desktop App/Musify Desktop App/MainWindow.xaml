@@ -10,6 +10,7 @@
         xmlns:home="clr-namespace:Musify_Desktop_App.Panels.Home"
         xmlns:songQueue="clr-namespace:Musify_Desktop_App.Panels.SongQueue"
         xmlns:playlist="clr-namespace:Musify_Desktop_App.Panels.Playlist"
+        xmlns:profile="clr-namespace:Musify_Desktop_App.Panels.Profile"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
     <Window.Resources>
@@ -18,6 +19,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type home:HomePageViewModel}">
             <home:HomePageControl/>
+        </DataTemplate>    
+        <DataTemplate DataType="{x:Type profile:ProfilePageViewModel}">
+            <profile:ProfilePageControl/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type playlist:PlaylistPageViewModel}">
             <playlist:PlaylistPageControl/>

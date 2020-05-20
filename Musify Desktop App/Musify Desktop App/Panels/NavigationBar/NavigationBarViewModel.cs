@@ -12,6 +12,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 
         private Model.Playlist _selectedPlaylist;
         private ObservableCollection<Model.Playlist> _playlists;
+        public RelayCommand GoToProfilePageCommand { get; set; }
         public RelayCommand GotoHomePageCommand { get; set; }
 
         public Model.Playlist SelectedPlaylist
@@ -45,9 +46,15 @@ namespace Musify_Desktop_App.Panels.NavigationBar
             _songService = songService;
             _playlistService = playlistService;
 
+            GoToProfilePageCommand = new RelayCommand(OnProfilePageRequested);
             GotoHomePageCommand = new RelayCommand(OnHomePageRequested);
 
             UserPlaylists = new ObservableCollection<Model.Playlist>(_playlistService.GetFollowedPlaylistsByUserId(Session.User.UserId));
+        }
+
+        private void OnProfilePageRequested()
+        {
+            OnProfilePageRequested(Session.User);
         }
 
         private void OpenPlaylistPage()

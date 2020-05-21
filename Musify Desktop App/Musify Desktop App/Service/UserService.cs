@@ -1,8 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -16,8 +19,13 @@ namespace Musify_Desktop_App.Service
 
         public User Login(string username, string password)
         {
-            return LoginTask(username, password).Result;
+            var user = LoginTask(username, password).Result;
+
+            user.Followers = GetFollowersByUser(user.UserId);
+            user.Following = GetFollowingByUser(user.UserId);
+            return user;
         }
+
         private async Task<User> LoginTask(string username, string password)
         {
             var client = new HttpClient();
@@ -32,7 +40,8 @@ namespace Musify_Desktop_App.Service
                 password,
             });
 
-            var stringTask = client.PostAsync(GatewayApi + "auth/login", new StringContent(payload, Encoding.UTF8, "application/json"));
+            var stringTask = client.PostAsync(GatewayApi + "auth/login",
+                new StringContent(payload, Encoding.UTF8, "application/json"));
 
             try
             {
@@ -49,6 +58,68 @@ namespace Musify_Desktop_App.Service
                 return null;
             }
 
+        }
+
+        public List<User> GetFollowersByUser(long userId)
+        {
+            return GetFollowersByUserTask(userId).Result;
+
+        }
+
+        private async Task<List<User>> GetFollowersByUserTask(long userId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+            var stringTask = client.GetAsync(GatewayApi + $"userfollows/getFollowersByUserId/{userId}");
+
+            try
+            {
+                var msg = stringTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+
+                var followers = JsonConvert.DeserializeObject<List<User>>(content);
+                Debug.Write(content);
+                return followers;
+            }
+            catch (Exception ex)
+            {
+                return new List<User>();
+            }
+        }
+
+        public List<User> GetFollowingByUser(long userId)
+        {
+            return GetFollowingByUserTask(userId).Result;
+
+        }
+
+        private async Task<List<User>> GetFollowingByUserTask(long userId)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+            var stringTask = client.GetAsync(GatewayApi + $"userfollows/getFollowingByUserId/{userId}");
+
+            try
+            {
+                var msg = stringTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+
+                var followers = JsonConvert.DeserializeObject<List<User>>(content);
+                Debug.Write(content);
+                return followers;
+            }
+            catch (Exception ex)
+            {
+                return new List<User>();
+            }
         }
     }
 }

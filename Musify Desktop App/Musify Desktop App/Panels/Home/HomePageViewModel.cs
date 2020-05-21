@@ -26,13 +26,13 @@ namespace Musify_Desktop_App.Panels.Home
         {
             AllSongsListViewModel = new PlaylistPageViewModel(songService, playlistService, songService.GetAllSongs(), "Recently Added");
 
-            AllSongsListViewModel.AlbumPageRequested += OnAlbumPageRequested;
+            AllSongsListViewModel.SongListPageRequested += OnSongListPageRequested;
             WelcomeText = $"Welcome, {Session.User.DisplayName}";
         }
 
-        protected virtual void OnAlbumPageRequested(object sender, EventArgs e)
+        protected virtual void OnSongListPageRequested(object sender, EventArgs e)
         {
-            OnAlbumPageRequested((Album)sender);
+            OnSongListPageRequested((Album)sender);
         }
     }
 }

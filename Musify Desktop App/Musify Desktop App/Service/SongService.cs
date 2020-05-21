@@ -12,10 +12,20 @@ using Newtonsoft.Json;
 
 namespace Musify_Desktop_App.Service
 {
+    public interface ISongService
+    {
+        public SongList GetSongsInSongList(SongList songList);
+        public Song GetSongById(int songId);
+        public List<Song> GetSongsByIds(List<int> songIds);
+
+
+    }
+
     public class SongService
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 
+        //todo fix this method being called twice
         public SongList GetSongsInSongList(SongList songList)
         {
             var ids = songList.Songs.Select(song => song.SongId).ToList();
@@ -143,21 +153,6 @@ namespace Musify_Desktop_App.Service
             return songs;
         }
 
-
-        public Album GetSongsInAlbum(Album album)
-        {
-            foreach (var playlistSong in album.Songs)
-            {
-                playlistSong.Song = GetSongById(playlistSong.SongId);
-            }
-
-            return album;
-        }
-
-        public Album GetAlbumBySong(Song selectedSong)
-        {
-            return GetAlbumBySongTask(selectedSong.SongId).Result;
-        }
 
         private async Task<Album> GetAlbumBySongTask(int songId)
         {

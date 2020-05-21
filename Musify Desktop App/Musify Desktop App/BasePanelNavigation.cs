@@ -9,8 +9,7 @@ namespace Musify_Desktop_App
         public event EventHandler QueuePageRequested;
         public event EventHandler HomePageRequested;
         public event EventHandler ProfilePageRequested;
-        public event EventHandler AlbumPageRequested;
-        public event EventHandler PlaylistPageRequested;
+        public event EventHandler SongListPageRequested;
 
         protected virtual void OnQueuePageRequested()
         {
@@ -24,13 +23,9 @@ namespace Musify_Desktop_App
         {
             HomePageRequested?.Invoke(this, null);
         }
-        protected virtual void OnAlbumPageRequested(Album album)
+        protected virtual void OnSongListPageRequested(SongList album)
         {
-            AlbumPageRequested?.Invoke(album, null);
-        }
-        protected virtual void OnPlaylistPageRequested(SongList songList)
-        {
-            PlaylistPageRequested?.Invoke(songList, null);
+            SongListPageRequested?.Invoke(album, null);
         }
     }
 }

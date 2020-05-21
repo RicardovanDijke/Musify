@@ -5,14 +5,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Musify_Desktop_App.Service
 {
-    internal class UserService
+    public interface IUserService
+    {
+        public User Login(string username, string password);
+        public List<User> GetFollowersByUser(long userId);
+        public List<User> GetFollowingByUser(long userId);
+
+
+    }
+    internal class UserService : IUserService
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 

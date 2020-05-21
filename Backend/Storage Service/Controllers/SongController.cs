@@ -39,7 +39,7 @@ namespace Song_Service.Controllers
         [Route("many")]
         public ActionResult<List<Song>> GetMany([FromBody]int[] ids)
         {
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested with ids {ids}");
+            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested with ids {string.Join("", ids)}");
 
             var songs = ids.Select(id =>
             {

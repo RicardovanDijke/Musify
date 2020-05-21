@@ -12,40 +12,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="24"/>
-        <!--<controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}"  todo: check which version of list is needed
-                                        Grid.Row="1" Grid.Column="0" 
-                                        SelectedItem="{Binding SelectedSong}"
-                                        SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay}"
-                                        SelectionMode="Extended"
-                                        IsReadOnly="True"
-                                        AutoGenerateColumns="False">
-            <controls:MultiSelectedDataGrid.InputBindings>
-                <MouseBinding
-                    MouseAction="LeftDoubleClick"
-                    Command="{Binding PlaySongCommand}"/>
-            </controls:MultiSelectedDataGrid.InputBindings>
-            <controls:MultiSelectedDataGrid.ContextMenu>
-                <ContextMenu StaysOpen="true">
-                    <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
-                    <MenuItem Header="Add to queue" Command="{Binding AddSongsToQueueCommand}"/>
-                    <MenuItem Header="View Album" Command="{Binding OpenAlbumPageCommand}"/>
-                    <MenuItem ItemsSource="{Binding SubMenuPlaylistItems}" Header="Add to Playlist"/>
-                </ContextMenu>
-            </controls:MultiSelectedDataGrid.ContextMenu>
-            <controls:MultiSelectedDataGrid.Columns>
-                <DataGridTextColumn  Header="Title" Binding="{Binding Title}"  />
-                <DataGridTextColumn  Header="Artist" Binding="{Binding Artist.Name}"/>
-                <DataGridTextColumn  Header="Album" Binding="{Binding Album.Name}"/>
-            </controls:MultiSelectedDataGrid.Columns>
-        </controls:MultiSelectedDataGrid>-->
+      
         <controls:BindableMultiSelectDataGrid ItemsSource="{Binding Songs}" 
-                                     Grid.Row="1" Grid.Column="0" 
-                                     SelectedItem="{Binding SelectedSong}"
-
-                                     SelectedItems="{Binding SelectedSongs}"
-                                     SelectionMode="Extended"
-                                     IsReadOnly="True"
-                                     AutoGenerateColumns="False">
+                                              Grid.Row="1" Grid.Column="0" 
+                                              SelectedItem="{Binding SelectedSong}"
+                                              SelectedItems="{Binding SelectedSongs}"
+                                              SelectionMode="Extended"
+                                              IsReadOnly="True"
+                                              AutoGenerateColumns="False">
             <controls:BindableMultiSelectDataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"

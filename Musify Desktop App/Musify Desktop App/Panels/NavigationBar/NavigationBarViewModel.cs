@@ -60,7 +60,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
         private void OpenPlaylistPage()
         {
             var playlist = _songService.GetSongsInSongList(SelectedPlaylist);
-            OnPlaylistPageRequested(playlist);
+            OnSongListPageRequested(playlist);
         }
     }
 }

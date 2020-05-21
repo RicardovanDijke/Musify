@@ -1,14 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using GalaSoft.MvvmLight.Command;
-using Musify_Desktop_App.Dialog;
-using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Service;
-using Musify_Desktop_App.Socket;
 
 namespace Musify_Desktop_App.Panels.PlaylistList
 {
@@ -27,10 +20,12 @@ namespace Musify_Desktop_App.Panels.PlaylistList
                 RaisePropertyChanged(nameof(Playlists));
             }
         }
-        
+
+        public Model.Playlist SelectedPlaylist { get; set; }
+
         public string ListName { get; set; }
 
-        public RelayCommand OpenAlbumPageCommand
+        public RelayCommand OpenPlaylistPageCommand
         {
             get;
             set;
@@ -38,7 +33,7 @@ namespace Musify_Desktop_App.Panels.PlaylistList
 
         public PlaylistListViewModel()
         {
-            OpenAlbumPageCommand = new RelayCommand(DoOpenAlbumPage);
+            OpenPlaylistPageCommand = new RelayCommand(DoOpenPlaylistPage);
         }
 
         public PlaylistListViewModel(IPlaylistService playlistService, List<Model.Playlist> playlistList,
@@ -49,10 +44,10 @@ namespace Musify_Desktop_App.Panels.PlaylistList
             Playlists = new ObservableCollection<Model.Playlist>(playlistList);
             ListName = listName;
         }
-     
-        private void DoOpenAlbumPage()
+
+        private void DoOpenPlaylistPage()
         {
-            //OnAlbumPageRequested(SelectedSong.Album);
+            OnSongListPageRequested(SelectedPlaylist);
         }
     }
 }

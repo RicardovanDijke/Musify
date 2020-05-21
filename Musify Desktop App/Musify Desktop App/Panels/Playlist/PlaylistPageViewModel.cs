@@ -40,11 +40,7 @@ namespace Musify_Desktop_App.Panels.Playlist
         public RelayCommand SongSelectedCommand { get; set; }
         public RelayCommand PlaySongCommand { get; set; }
         public RelayCommand AddSongsToQueueCommand { get; set; }
-        public RelayCommand OpenAlbumPageCommand
-        {
-            get;
-            set;
-        }
+        public RelayCommand OpenAlbumPageCommand { get; set; }
         public RelayCommand<Model.Playlist> AddSongToPlaylistCommand { get; set; }
 
         public PlaylistPageViewModel()
@@ -82,7 +78,7 @@ namespace Musify_Desktop_App.Panels.Playlist
 
         private void DoOpenAlbumPage()
         {
-            OnAlbumPageRequested(SelectedSong.Album);
+            OnSongListPageRequested(SelectedSong.Album);
         }
 
         private void CreateAddToPlaylistSubMenu()

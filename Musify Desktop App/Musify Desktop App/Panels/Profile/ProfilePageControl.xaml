@@ -3,16 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Musify_Desktop_App.Panels.Profile"
              xmlns:playlist="clr-namespace:Musify_Desktop_App.Panels.Playlist"
-             xmlns:songQueue="clr-namespace:Musify_Desktop_App.Panels.SongQueue"
              xmlns:playlistList="clr-namespace:Musify_Desktop_App.Panels.PlaylistList"
+             xmlns:userList="clr-namespace:Musify_Desktop_App.Panels.UserList"
              mc:Ignorable="d" 
              d:DesignHeight="590" d:DesignWidth="700">
-<UserControl.Resources>
+    <UserControl.Resources>
         <DataTemplate DataType="{x:Type playlistList:PlaylistListViewModel}">
             <playlistList:PlaylistListControl/>
-    </DataTemplate>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type userList:UserListViewModel}">
+            <userList:UserListControl/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
@@ -31,6 +33,8 @@
         <Button  Grid.Column="1" Grid.Row="0" Width="56" Height="56" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" 
                  Content="{Binding FollowButtonText}" Command="{Binding FollowUserCommand}"/>
 
-        <playlist:PlaylistPageControl Grid.Column="0" Grid.Row="1" Content="{Binding PublicPlaylistsViewModel}"/>
+        <playlist:PlaylistPageControl Grid.Column="0" Grid.Row="1" Content="{Binding PublicPlaylistsViewModel}" Margin="5"/>
+
+        <userList:UserListControl Grid.Column="1" Grid.Row="1" Content="{Binding FollowedUsersViewModel}" Margin="5"/>
     </Grid>
 </UserControl>

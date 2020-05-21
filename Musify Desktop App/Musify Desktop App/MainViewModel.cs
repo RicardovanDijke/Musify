@@ -3,6 +3,7 @@ using System.Linq;
 using GalaSoft.MvvmLight;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.CurrentSong;
+using Musify_Desktop_App.Panels.FriendsActivity;
 using Musify_Desktop_App.Panels.Home;
 using Musify_Desktop_App.Panels.NavigationBar;
 using Musify_Desktop_App.Panels.Playlist;
@@ -36,11 +37,13 @@ namespace Musify_Desktop_App
 
         private readonly SongService _songService;
         private readonly PlaylistService _playlistService;
+        private readonly UserService _userService;
 
         public MainViewModel()
         {
             _songService = new SongService();
             _playlistService = new PlaylistService();
+            _userService = new UserService();
 
             HomePageView = new HomePageViewModel(_songService, _playlistService);
             CurrentSongView = CurrentSongViewModel.Instance();
@@ -51,19 +54,21 @@ namespace Musify_Desktop_App
 
             CurrentSongView.QueuePageRequested += GoToQueuePage;
             NavigationBarViewModel.HomePageRequested += GoToHomePage;
-            NavigationBarViewModel.PlaylistPageRequested += GoToPlaylistPage;
+            NavigationBarViewModel.SongListPageRequested += GoToSongListPage;
             NavigationBarViewModel.ProfilePageRequested += GoToProfilePage;
-            HomePageView.AlbumPageRequested += GoToAlbumPage;
+            HomePageView.SongListPageRequested += GoToSongListPage;
             MainView = HomePageView;
         }
 
-        private void GoToProfilePage(object? sender, EventArgs e)
+        private void GoToProfilePage(object sender, EventArgs e)
         {
             var user = (User)sender;
 
-            MainView = new ProfilePageViewModel(_playlistService, user);
+            var profileViewModel = new ProfilePageViewModel(_playlistService, _userService, user);
+            profileViewModel.ProfilePageRequested += GoToProfilePage;
+            profileViewModel.SongListPageRequested += GoToSongListPage;
+            MainView = profileViewModel;
         }
-
 
         private void GoToQueuePage(object sender, EventArgs e)
         {
@@ -75,20 +80,13 @@ namespace Musify_Desktop_App
             MainView = HomePageView;
         }
 
-        private void GoToAlbumPage(object sender, EventArgs e)
+        private void GoToSongListPage(object sender, EventArgs e)
         {
-            var album = (Album)_songService.GetSongsInSongList((Album)sender);
+            var songList = _songService.GetSongsInSongList((SongList)sender);
 
-            var songsInAlbum = album.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
+            var songsInAlbum = songList.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
 
-            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInAlbum, album.Name);
-        }
-        private void GoToPlaylistPage(object sender, EventArgs e)
-        {
-            var playlist = (Playlist)sender;
-            var songsInPlaylist = playlist.Songs.OrderBy(x => x.Number).Select(playlistItem => playlistItem.Song).ToList();
-
-            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInPlaylist, playlist.Name);
+            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInAlbum, songList.Name);
         }
     }
 }

@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Panels\UserList\UserListControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Panels\PlaylistList\PlaylistListControl.xaml">
       <SubType>Designer</SubType>
     </Page>

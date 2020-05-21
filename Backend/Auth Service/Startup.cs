@@ -1,7 +1,4 @@
 using System.Text;
-using Auth_Service.Database;
-using Auth_Service.Helpers;
-using Auth_Service.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using User_Service.Database;
+using User_Service.Helpers;
+using User_Service.Service;
 
-namespace Auth_Service
+namespace User_Service
 {
     public class Startup
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Auth_Service.Entities;
 using Microsoft.EntityFrameworkCore;
+using User_Service.Entities;
 
-namespace Auth_Service.Database
+namespace User_Service.Database
 {
     public interface IUserRepository : IRepository<User>
     {

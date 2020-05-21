@@ -1,11 +1,11 @@
 using System;
-using Auth_Service.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using User_Service.Entities;
 
-namespace Auth_Service
+namespace User_Service
 {
     public class Program
     {

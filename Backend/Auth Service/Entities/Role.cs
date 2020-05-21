@@ -1,4 +1,4 @@
-﻿namespace Auth_Service.Entities
+﻿namespace User_Service.Entities
 {
     public static class Role
     {

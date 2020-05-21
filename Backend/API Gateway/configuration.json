@@ -68,7 +68,7 @@
     },
     //authService api config
     {
-      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamPathTemplate": "/api/user/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -76,7 +76,7 @@
           "Port": 44321
         }
       ],
-      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamPathTemplate": "/api/user/{everything}",
       "UpstreamHttpMethod": [
         "GET",
         "POST",
@@ -96,7 +96,7 @@
       },
       "FileCacheOptions": {
         "TtlSeconds": 15,
-        "Region": "authcaching"
+        "Region": "usercaching"
       }
     }
   ],

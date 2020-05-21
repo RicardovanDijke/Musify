@@ -25,7 +25,7 @@ namespace Song_Service.Controllers
         }
 
         [HttpGet]
-        [Route("id")]
+        [Route("/{id}")]
         public ActionResult<Song> GetOne(long id)
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");

@@ -1,7 +1,7 @@
-﻿using Auth_Service.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using User_Service.Entities;
 
-namespace Auth_Service.Database
+namespace User_Service.Database
 {
     /// <summary>
     ///  add-migration Auth_Service.DatabaseContext -Project "Auth Service" -Context "Auth_Service.Database.DatabaseContext"

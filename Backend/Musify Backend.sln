@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth Service", "Auth Service\Auth Service.csproj", "{8B84738B-618A-4564-8553-DFC95438887D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User Service", "Auth Service\User Service.csproj", "{8B84738B-618A-4564-8553-DFC95438887D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Song Service", "Storage Service\Song Service.csproj", "{B1917CB1-F71B-4622-B6A1-815A47EC5E0D}"
 EndProject

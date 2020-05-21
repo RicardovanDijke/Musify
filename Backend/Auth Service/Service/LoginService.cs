@@ -4,13 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using Auth_Service.Database;
-using Auth_Service.Entities;
-using Auth_Service.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using User_Service.Database;
+using User_Service.Entities;
+using User_Service.Helpers;
 
-namespace Auth_Service.Service
+namespace User_Service.Service
 {
     public interface IUserService
     {

@@ -1,16 +1,16 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using Auth_Service.Entities;
-using Auth_Service.Helpers;
-using Auth_Service.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using User_Service.Entities;
+using User_Service.Helpers;
+using User_Service.Service;
 
-namespace Auth_Service.Controllers
+namespace User_Service.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/user/auth")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

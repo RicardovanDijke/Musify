@@ -4,13 +4,13 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Auth_Service.Entities;
-using Auth_Service.Service;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using User_Service.Entities;
+using User_Service.Service;
 
-namespace Auth_Service.Helpers
+namespace User_Service.Helpers
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {

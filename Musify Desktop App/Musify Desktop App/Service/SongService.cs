@@ -45,7 +45,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(GatewayApi + $"songs/id?id={songId}");
+            var httpTask = client.GetAsync(GatewayApi + $"songs/id/{songId}");
 
             Song song;
             try

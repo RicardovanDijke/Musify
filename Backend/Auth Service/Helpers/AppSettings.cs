@@ -1,4 +1,4 @@
-﻿namespace Auth_Service.Helpers
+﻿namespace User_Service.Helpers
 {
     public class AppSettings
     {

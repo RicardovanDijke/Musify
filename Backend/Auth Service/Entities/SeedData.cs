@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Auth_Service.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using User_Service.Database;
 
-namespace Auth_Service.Entities
+namespace User_Service.Entities
 {
     public static class SeedData
     {

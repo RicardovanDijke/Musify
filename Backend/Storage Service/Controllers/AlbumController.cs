@@ -4,7 +4,7 @@ using Song_Service.Service;
 
 namespace Song_Service.Controllers
 {
-    [Route("api/albums")]
+    [Route("api/songs/albums")]
     [ApiController]
     public class AlbumController : ControllerBase
     {

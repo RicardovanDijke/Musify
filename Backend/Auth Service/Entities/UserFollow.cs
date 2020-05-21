@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace Auth_Service.Entities
+namespace User_Service.Entities
 {
     [Table("userfollow")]
     public class UserFollow

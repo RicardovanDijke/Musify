@@ -77,8 +77,8 @@ namespace Musify_Desktop_App
 
         private void GoToAlbumPage(object sender, EventArgs e)
         {
-            var album = (Album)sender;
-            album = _songService.GetSongsInAlbum(album);
+            var album = (Album)_songService.GetSongsInSongList((Album)sender);
+
             var songsInAlbum = album.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
 
             MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInAlbum, album.Name);

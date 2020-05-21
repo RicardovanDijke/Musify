@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Auth_Service.Entities;
+using User_Service.Entities;
 
-namespace Auth_Service.Helpers
+namespace User_Service.Helpers
 {
     public static class UserExtensionMethods
     {

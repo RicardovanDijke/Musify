@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Auth_Service.Entities;
-using Auth_Service.Service;
 using Microsoft.AspNetCore.Mvc;
+using User_Service.Entities;
+using User_Service.Service;
 
-namespace Auth_Service.Controllers
+namespace User_Service.Controllers
 {
     [ApiController]
-    [Route("api/userfollows")]
+    [Route("api/user/follows")]
     public class FollowerController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -8,7 +8,7 @@ using Song_Service.Service;
 namespace Song_Service.Controllers
 {
     [ApiController]
-    [Route("api/storage/")]
+    [Route("api/songs/storage/")]
     public class StorageController : ControllerBase
     {
         private readonly SongService _songManager;

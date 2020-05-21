@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Auth_Service.Entities
+namespace User_Service.Entities
 {
     [Table("User")]
     public class User

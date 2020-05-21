@@ -35,6 +35,9 @@ namespace Auth_Service.Service
         }
         public User Authenticate(string username, string password)
         {
+            username = username.ToLower();
+            password = password.ToLower();
+
             var user = _userRepository.GetAll().SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             // return null if user not found

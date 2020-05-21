@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playlist Service", "Playlist Service\Playlist Service.csproj", "{5939DAD2-6174-4734-BF82-9644E4C2E661}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{A579FE51-C06D-41BB-BD89-765FB991D319}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streaming Service", "Streaming Service\Streaming Service.csproj", "{06E000BE-19B9-49E1-8A98-9946E7A473E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API Gateway", "API Gateway\API Gateway.csproj", "{106284A6-F7E8-41D8-BE54-F6CDCA6E241D}"
@@ -38,10 +36,6 @@ Global
 		{5939DAD2-6174-4734-BF82-9644E4C2E661}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5939DAD2-6174-4734-BF82-9644E4C2E661}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5939DAD2-6174-4734-BF82-9644E4C2E661}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A579FE51-C06D-41BB-BD89-765FB991D319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A579FE51-C06D-41BB-BD89-765FB991D319}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A579FE51-C06D-41BB-BD89-765FB991D319}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A579FE51-C06D-41BB-BD89-765FB991D319}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06E000BE-19B9-49E1-8A98-9946E7A473E5}.Release|Any CPU.ActiveCfg = Release|Any CPU

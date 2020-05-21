@@ -1,5 +1,5 @@
-﻿using Core.Model;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Song_Service.Entities;
 using Song_Service.Service;
 
 namespace Song_Service.Controllers
@@ -12,7 +12,7 @@ namespace Song_Service.Controllers
 
         public AlbumController(AlbumService albumService)
         {
-            this._albumService = albumService;
+            _albumService = albumService;
         }
 
 

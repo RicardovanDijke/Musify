@@ -18,7 +18,7 @@ namespace Auth_Service.Database
 
         public UserRepository(DatabaseContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public IEnumerable<User> GetAll()

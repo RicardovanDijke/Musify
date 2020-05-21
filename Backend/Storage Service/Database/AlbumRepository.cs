@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Model;
 using Microsoft.EntityFrameworkCore;
+using Song_Service.Entities;
 
 namespace Song_Service.Database
 {
@@ -18,7 +18,7 @@ namespace Song_Service.Database
 
         public AlbumRepository(DatabaseContext context)
         {
-            this._context = context;
+            _context = context;
             _table = context.Set<Album>();
         }
 

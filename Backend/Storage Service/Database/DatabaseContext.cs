@@ -1,5 +1,5 @@
-﻿using Core.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Song_Service.Entities;
 
 namespace Song_Service.Database
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using Core.Model;
 using Song_Service.Database;
+using Song_Service.Entities;
 using TagLibFile = TagLib.File;
 
 namespace Song_Service.Service

@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Song_Service.Database;
+using Song_Service.Entities;
 using TagLibFile = TagLib.File;
 
 namespace Song_Service.Service

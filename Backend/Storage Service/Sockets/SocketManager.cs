@@ -1,4 +1,4 @@
-﻿using Core.Model;
+﻿using Song_Service.Entities;
 
 namespace Song_Service.Sockets
 {

@@ -3,8 +3,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Castle.DynamicProxy;
-using Core.Model;
 using Microsoft.CSharp.RuntimeBinder;
+using Song_Service.Entities;
 
 namespace Song_Service.Sockets
 {
@@ -22,7 +22,7 @@ namespace Song_Service.Sockets
 
             // var type = (song as IProxyTargetAccessor)?.DynProxyGetTarget().GetType();
 
-            byte[] bytes = System.IO.File.ReadAllBytes(song.FilePath);
+            byte[] bytes = File.ReadAllBytes(song.FilePath);
 
             //this is actually needed
             // ReSharper disable once UnusedVariable

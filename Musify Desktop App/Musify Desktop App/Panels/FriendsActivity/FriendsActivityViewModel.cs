@@ -8,7 +8,7 @@ namespace Musify_Desktop_App.Panels.FriendsActivity
 
         public FriendsActivityViewModel() { }
 
-        public FriendsActivityViewModel(SongService songService)
+        public FriendsActivityViewModel(ISongService songService)
         {
 
         }

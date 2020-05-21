@@ -14,7 +14,7 @@ namespace Musify_Desktop_App.Panels.Playlist
 {
     internal class PlaylistPageViewModel : BasePanelNavigation
     {
-        private readonly SongService _songService;
+        private readonly ISongService _songService;
         private readonly IPlaylistService _playlistService;
 
         private ObservableCollection<Song> _songs = new ObservableCollection<Song>();
@@ -35,7 +35,11 @@ namespace Musify_Desktop_App.Panels.Playlist
 
         public Song SelectedSong { get; set; }
 
-        public IList SelectedSongs { get; set; }
+        public IList SelectedSongs
+        {
+            get;
+            set;
+        }
 
         public RelayCommand SongSelectedCommand { get; set; }
         public RelayCommand PlaySongCommand { get; set; }
@@ -52,7 +56,7 @@ namespace Musify_Desktop_App.Panels.Playlist
             AddSongToPlaylistCommand = new RelayCommand<Model.Playlist>(AddSelectedSongsToPlaylist);
         }
 
-        public PlaylistPageViewModel(SongService songService, IPlaylistService playlistService, List<Song> songList,
+        public PlaylistPageViewModel(ISongService songService, IPlaylistService playlistService, List<Song> songList,
             string listName) : this()
         {
             _songService = songService;
@@ -63,7 +67,7 @@ namespace Musify_Desktop_App.Panels.Playlist
 
             CreateAddToPlaylistSubMenu();
         }
-        public PlaylistPageViewModel(SongService songService, IPlaylistService playlistService, ObservableCollection<Song> songList,
+        public PlaylistPageViewModel(ISongService songService, IPlaylistService playlistService, ObservableCollection<Song> songList,
             string listName) : this()
         {
             _songService = songService;

@@ -7,8 +7,8 @@ namespace Musify_Desktop_App.Panels.NavigationBar
 {
     internal class NavigationBarViewModel : BasePanelNavigation
     {
-        private SongService _songService;
-        private PlaylistService _playlistService;
+        private readonly ISongService _songService;
+        private readonly IPlaylistService _playlistService;
 
         private Model.Playlist _selectedPlaylist;
         private ObservableCollection<Model.Playlist> _playlists;
@@ -41,7 +41,7 @@ namespace Musify_Desktop_App.Panels.NavigationBar
         // ReSharper disable once UnusedMember.Global
         public NavigationBarViewModel() { }
 
-        public NavigationBarViewModel(SongService songService, PlaylistService playlistService)
+        public NavigationBarViewModel(ISongService songService, IPlaylistService playlistService)
         {
             _songService = songService;
             _playlistService = playlistService;

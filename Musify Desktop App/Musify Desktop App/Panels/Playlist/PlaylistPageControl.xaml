@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Musify_Desktop_App.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="MediumPurple" >
     <Grid>
@@ -12,32 +13,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="24"/>
-      
-        <controls:BindableMultiSelectDataGrid ItemsSource="{Binding Songs}" 
-                                              Grid.Row="1" Grid.Column="0" 
-                                              SelectedItem="{Binding SelectedSong}"
-                                              SelectedItems="{Binding SelectedSongs}"
-                                              SelectionMode="Extended"
-                                              IsReadOnly="True"
-                                              AutoGenerateColumns="False">
-            <controls:BindableMultiSelectDataGrid.InputBindings>
+
+        <controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}" 
+                               Grid.Row="1" Grid.Column="0" 
+                               SelectedItem="{Binding SelectedSong}"
+                               SelectedItemsList="{Binding SelectedSongs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               SelectionMode="Extended"
+                               IsReadOnly="True"
+                               AutoGenerateColumns="False">
+            <controls:MultiSelectedDataGrid.InputBindings>
                 <MouseBinding
                     MouseAction="LeftDoubleClick"
                     Command="{Binding PlaySongCommand}"/>
-            </controls:BindableMultiSelectDataGrid.InputBindings>
-            <controls:BindableMultiSelectDataGrid.ContextMenu>
+            </controls:MultiSelectedDataGrid.InputBindings>
+            <controls:MultiSelectedDataGrid.ContextMenu>
                 <ContextMenu StaysOpen="true">
                     <MenuItem Header="Play" Command="{Binding PlaySongCommand}"/>
                     <MenuItem Header="Add to queue" Command="{Binding AddSongsToQueueCommand}"/>
                     <MenuItem Header="View Album" Command="{Binding OpenAlbumPageCommand}"/>
                     <MenuItem ItemsSource="{Binding SubMenuPlaylistItems}" Header="Add to Playlist"/>
                 </ContextMenu>
-            </controls:BindableMultiSelectDataGrid.ContextMenu>
-            <controls:BindableMultiSelectDataGrid.Columns>
+            </controls:MultiSelectedDataGrid.ContextMenu>
+            <controls:MultiSelectedDataGrid.Columns>
                 <DataGridTextColumn  Header="Title" Binding="{Binding Title}"  />
                 <DataGridTextColumn  Header="Artist" Binding="{Binding Artist.Name}"/>
                 <DataGridTextColumn  Header="Album" Binding="{Binding Album.Name}"/>
-            </controls:BindableMultiSelectDataGrid.Columns>
-        </controls:BindableMultiSelectDataGrid>
+            </controls:MultiSelectedDataGrid.Columns>
+        </controls:MultiSelectedDataGrid>
     </Grid>
 </UserControl>

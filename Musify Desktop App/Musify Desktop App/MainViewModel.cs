@@ -35,9 +35,9 @@ namespace Musify_Desktop_App
         public SongQueueViewModel SongQueueViewModel { get; set; }
 
 
-        private readonly SongService _songService;
-        private readonly PlaylistService _playlistService;
-        private readonly UserService _userService;
+        private readonly ISongService _songService;
+        private readonly IPlaylistService _playlistService;
+        private readonly IUserService _userService;
 
         public MainViewModel()
         {

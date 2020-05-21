@@ -22,7 +22,7 @@ namespace Musify_Desktop_App.Panels.Home
         }
 
         public HomePageViewModel() { }
-        public HomePageViewModel(SongService songService, PlaylistService playlistService)
+        public HomePageViewModel(ISongService songService, IPlaylistService playlistService)
         {
             AllSongsListViewModel = new PlaylistPageViewModel(songService, playlistService, songService.GetAllSongs(), "Recently Added");
 

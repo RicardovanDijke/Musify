@@ -17,11 +17,13 @@ namespace Musify_Desktop_App.Service
         public SongList GetSongsInSongList(SongList songList);
         public Song GetSongById(int songId);
         public List<Song> GetSongsByIds(List<int> songIds);
+        public List<Song> GetAllSongs();
+        public void RequestSocket(long songId);
 
 
     }
 
-    public class SongService
+    public class SongService : ISongService
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 

@@ -27,7 +27,6 @@ namespace Musify_Desktop_App.Service
     {
         private const string GatewayApi = "https://localhost:44389/api/";
 
-        //todo fix this method being called twice
         public SongList GetSongsInSongList(SongList songList)
         {
             var ids = songList.Songs.Select(song => song.SongId).ToList();
@@ -54,9 +53,7 @@ namespace Musify_Desktop_App.Service
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-
-
+            
             var httpTask = client.GetAsync(GatewayApi + $"songs/id/{songId}");
 
             Song song;

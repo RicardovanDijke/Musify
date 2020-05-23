@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ namespace API_Gateway
             var builder = new StringBuilder();
             var request = await FormatRequest(context.Request);
             builder.Append("Request: ").AppendLine(request);
+            Debug.WriteLine("| Request: " +request);
             builder.AppendLine("Request headers:");
             foreach (var header in context.Request.Headers)
             {
@@ -37,6 +39,7 @@ namespace API_Gateway
             //Format the response from the server
             var response = await FormatResponse(context.Response);
             builder.Append("Response: ").AppendLine(response);
+            Debug.WriteLine("| Response: "+ response);
             builder.AppendLine("Response headers: ");
             foreach (var header in context.Response.Headers)
             {

@@ -20,6 +20,7 @@ namespace User_Service.Service
         void Add(User user);
         List<User> GetFollowersByUser(long userId);
         List<User> GetFollowingByUser(long userId);
+        void AddFollower(long followeeId, long followerId);
     }
 
     public class UserService : IUserService
@@ -86,6 +87,18 @@ namespace User_Service.Service
         public List<User> GetFollowingByUser(long userId)
         {
             return _userRepository.GetFollowingByUser(userId);
+        }
+
+        public void AddFollower(long followeeId, long followerId)
+        {
+            var followee = GetById(followeeId);
+            var follower = GetById(followerId);
+
+            followee.AddFollower(follower);
+            //follower.AddFollowing(followee);
+
+            _userRepository.Update(followee);
+            //_userRepository.Update(follower);
         }
     }
 }

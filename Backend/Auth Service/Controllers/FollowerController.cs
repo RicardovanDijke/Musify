@@ -33,5 +33,13 @@ namespace User_Service.Controllers
 
             return followers;
         }
+
+        [HttpPost]
+        [Route("addFollower/{followeeId}/{followerId}")]
+        public ActionResult AddFollower(long followeeId, long followerId)
+        {
+            _userService.AddFollower(followeeId, followerId);
+            return Ok();
+        }
     }
 }

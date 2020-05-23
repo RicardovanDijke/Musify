@@ -64,6 +64,11 @@ namespace Musify_Desktop_App
         {
             var user = (User)sender;
 
+
+            user.Followers = _userService.GetFollowersByUser(user.UserId);
+            user.Following = _userService.GetFollowingByUser(user.UserId);
+
+
             var profileViewModel = new ProfilePageViewModel(_playlistService, _userService, user);
             profileViewModel.ProfilePageRequested += GoToProfilePage;
             profileViewModel.SongListPageRequested += GoToSongListPage;

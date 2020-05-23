@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.PlaylistList;
@@ -11,46 +13,76 @@ namespace Musify_Desktop_App.Panels.Profile
     {
         private readonly IPlaylistService _playlistService;
         public User User { get; set; }
-        public bool OnOwnProfile { get; set; }
+
+        private bool _onOtherProfile;
+        public bool OnOtherProfile
+        {
+            get => _onOtherProfile;
+            set
+            {
+                _onOtherProfile = value;
+                RaisePropertyChanged(nameof(OnOtherProfile));
+            }
+        }
 
 
         public RelayCommand FollowUserCommand { get; set; }
+        public string FollowButtonText { get; set; }
 
         public PlaylistListViewModel PublicPlaylistsViewModel { get; set; }
         public UserListViewModel FollowedUsersViewModel { get; set; }
+        public UserListViewModel FollowingUsersViewModel { get; set; }
 
         public ProfilePageViewModel() { }
         public ProfilePageViewModel(IPlaylistService playlistService, IUserService userService, User user)
         {
             _playlistService = playlistService;
             User = user;
-            if (user.UserId == Session.User.UserId)
+            OnOtherProfile = false;
+            if (user.UserId != Session.User.UserId)
             {
-                OnOwnProfile = true;
+                OnOtherProfile = true;
+                if (user.Followers.Any(follower => follower.UserId == Session.User.UserId))
+                {
+                    FollowButtonText = "Unfollow";
+                    FollowUserCommand = new RelayCommand(DoUnFollowUser);
+                }
+                else
+                {
+                    FollowButtonText = "Follow";
+                    FollowUserCommand = new RelayCommand(DoFollowUser);
+                }
             }
+
 
             PublicPlaylistsViewModel = new PlaylistListViewModel(_playlistService, _playlistService.GetPublicCreatedPlaylistsByUserId(user.UserId), "Public Playlists");
             PublicPlaylistsViewModel.SongListPageRequested += OnSongListPageRequested;
 
-            FollowedUsersViewModel = new UserListViewModel(userService, user.Followers, "Following");
+            FollowedUsersViewModel = new UserListViewModel(userService, user.Followers, "Followers");
             FollowedUsersViewModel.ProfilePageRequested += OnProfilePageRequested;
 
-            FollowUserCommand = new RelayCommand(DoFollowUnfollowUser);
+            FollowingUsersViewModel = new UserListViewModel(userService, user.Following, "Following");
+            FollowingUsersViewModel.ProfilePageRequested += OnProfilePageRequested;
+        }
+
+        private void DoUnFollowUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DoFollowUser()
+        {
+            throw new NotImplementedException();
         }
 
         private void OnSongListPageRequested(object? sender, EventArgs e)
         {
-            OnSongListPageRequested((SongList) sender);
+            OnSongListPageRequested((SongList)sender);
         }
 
         private void OnProfilePageRequested(object? sender, EventArgs e)
         {
             OnProfilePageRequested((User)sender);
-        }
-
-        private void DoFollowUnfollowUser()
-        {
-            //todo follow/unfollow user
         }
     }
 }

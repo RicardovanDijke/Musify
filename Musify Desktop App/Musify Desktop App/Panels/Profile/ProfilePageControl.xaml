@@ -15,10 +15,13 @@
         <DataTemplate DataType="{x:Type userList:UserListViewModel}">
             <userList:UserListControl/>
         </DataTemplate>
+
+        <BooleanToVisibilityConverter x:Key="Converter" />
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -28,13 +31,14 @@
         </Grid.RowDefinitions>
 
         <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" HorizontalAlignment="Left" Margin="15"/>
-        <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="{Binding User.DisplayName,FallbackValue='Profile Name'}" FontSize="24"/>
+        <Label Grid.Column="1" Grid.Row="0" Content="{Binding User.DisplayName,FallbackValue='Profile Name'}" FontSize="24"/>
 
-        <Button  Grid.Column="1" Grid.Row="0" Width="56" Height="56" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" 
-                 Content="{Binding FollowButtonText}" Command="{Binding FollowUserCommand}"/>
+        <Button  Grid.Column="2" Grid.Row="0" Width="56" Height="56" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" 
+                 Content="{Binding FollowButtonText}" Visibility ="{Binding OnOtherProfile, Converter={StaticResource Converter}}"  Command="{Binding FollowUserCommand}"/>
 
         <playlist:PlaylistPageControl Grid.Column="0" Grid.Row="1" Content="{Binding PublicPlaylistsViewModel}" Margin="5"/>
 
         <userList:UserListControl Grid.Column="1" Grid.Row="1" Content="{Binding FollowedUsersViewModel}" Margin="5"/>
+        <userList:UserListControl Grid.Column="2" Grid.Row="1" Content="{Binding FollowingUsersViewModel}" Margin="5"/>
     </Grid>
 </UserControl>

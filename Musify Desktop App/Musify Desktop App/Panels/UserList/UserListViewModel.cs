@@ -20,7 +20,7 @@ namespace Musify_Desktop_App.Panels.UserList
                 RaisePropertyChanged(nameof(Users));
             }
         }
-        
+
         public User SelectedUser { get; set; }
 
         public string ListName { get; set; }
@@ -44,7 +44,10 @@ namespace Musify_Desktop_App.Panels.UserList
 
         private void OnProfilePageRequested()
         {
-            OnProfilePageRequested(SelectedUser);
+            if (SelectedUser != null)
+            {
+                OnProfilePageRequested(SelectedUser);
+            }
         }
     }
 }

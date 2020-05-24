@@ -54,7 +54,7 @@ namespace Musify_Desktop_App.Service
                 var content = await msg.Content.ReadAsStringAsync();
 
                 var playlists = JsonConvert.DeserializeObject<List<Playlist>>(content);
-                Debug.Write(content);
+                //Debug.Write(content);
                 _followedPlaylistsByUser = playlists;
                 return playlists;
             }
@@ -87,7 +87,7 @@ namespace Musify_Desktop_App.Service
                 var content = await msg.Content.ReadAsStringAsync();
 
                 var playlists = JsonConvert.DeserializeObject<List<Playlist>>(content);
-                Debug.Write(content);
+                //Debug.Write(content);
                 _followedPlaylistsByUser = playlists;
                 return playlists;
             }

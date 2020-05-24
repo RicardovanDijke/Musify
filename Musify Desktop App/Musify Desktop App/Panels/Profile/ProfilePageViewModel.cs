@@ -11,10 +11,13 @@ namespace Musify_Desktop_App.Panels.Profile
 {
     class ProfilePageViewModel : BasePanelNavigation
     {
-        private readonly IPlaylistService _playlistService;
+        private readonly IPlaylistService _playlistService; 
+        private readonly IUserService _userService;
+
         public User User { get; set; }
 
         private bool _onOtherProfile;
+
         public bool OnOtherProfile
         {
             get => _onOtherProfile;
@@ -37,6 +40,7 @@ namespace Musify_Desktop_App.Panels.Profile
         public ProfilePageViewModel(IPlaylistService playlistService, IUserService userService, User user)
         {
             _playlistService = playlistService;
+            _userService = userService;
             User = user;
             OnOtherProfile = false;
             if (user.UserId != Session.User.UserId)
@@ -67,12 +71,15 @@ namespace Musify_Desktop_App.Panels.Profile
 
         private void DoUnFollowUser()
         {
-            throw new NotImplementedException();
+            _userService.RemoveFollowing(User.UserId, Session.User.UserId);
+            OnProfilePageRequested(User);
+
         }
 
         private void DoFollowUser()
         {
-            throw new NotImplementedException();
+            _userService.AddFollowing(User.UserId, Session.User.UserId);
+            OnProfilePageRequested(User);
         }
 
         private void OnSongListPageRequested(object? sender, EventArgs e)

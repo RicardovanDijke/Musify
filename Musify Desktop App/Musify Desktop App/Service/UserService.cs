@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Musify_Desktop_App.Service
@@ -16,13 +18,13 @@ namespace Musify_Desktop_App.Service
         public User Login(string username, string password);
         public List<User> GetFollowersByUser(long userId);
         public List<User> GetFollowingByUser(long userId);
-
-
+        void AddFollowing(long followeeId, long followerId);
+        void RemoveFollowing(long followeeId, long followerId);
     }
+
     internal class UserService : IUserService
     {
         private const string GatewayApi = "https://localhost:44389/api/";
-
 
         public User Login(string username, string password)
         {
@@ -72,7 +74,6 @@ namespace Musify_Desktop_App.Service
         public List<User> GetFollowersByUser(long userId)
         {
             return GetFollowersByUserTask(userId).Result;
-
         }
 
         private async Task<List<User>> GetFollowersByUserTask(long userId)
@@ -105,6 +106,42 @@ namespace Musify_Desktop_App.Service
             return GetFollowingByUserTask(userId).Result;
 
         }
+        public void AddFollowing(long followeeId, long followerId)
+        {
+            AddFollowingTask(followeeId, followerId).Wait();
+        }
+
+        private async Task AddFollowingTask(long followeeId, long followerId)
+        {
+            try
+            {
+                var httpClient = new HttpClient(new HttpClientHandler());
+                HttpResponseMessage response = httpClient.PostAsync(GatewayApi + $"user/follows/addFollower/{followeeId}/{followerId}", null).Result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void RemoveFollowing(long followeeId, long followerId)
+        {
+            RemoveFollowingTask(followeeId, followerId).Wait();
+        }
+
+        private async Task RemoveFollowingTask(long followeeId, long followerId)
+        {
+            try
+            {
+                var httpClient = new HttpClient(new HttpClientHandler());
+                HttpResponseMessage response = httpClient.PostAsync(GatewayApi + $"user/follows/removeFollower/{followeeId}/{followerId}", null).Result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
 
         private async Task<List<User>> GetFollowingByUserTask(long userId)
         {

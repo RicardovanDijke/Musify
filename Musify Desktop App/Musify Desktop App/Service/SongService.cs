@@ -61,7 +61,7 @@ namespace Musify_Desktop_App.Service
             {
                 var msg = httpTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
-                Debug.Write(content);
+                //Debug.Write(content);
 
                 song = JsonConvert.DeserializeObject<Song>(content);
             }
@@ -102,7 +102,7 @@ namespace Musify_Desktop_App.Service
             {
                 var msg = httpTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
-                Debug.Write(content);
+                //Debug.Write(content);
 
                 songs = JsonConvert.DeserializeObject<List<Song>>(content);
             }
@@ -170,7 +170,7 @@ namespace Musify_Desktop_App.Service
             {
                 var msg = httpTask.Result;
                 var content = await msg.Content.ReadAsStringAsync();
-                Debug.Write(content);
+                //Debug.Write(content);
 
                 album = JsonConvert.DeserializeObject<Album>(content);
 

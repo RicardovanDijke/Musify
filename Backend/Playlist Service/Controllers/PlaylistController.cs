@@ -26,7 +26,7 @@ namespace Playlist_Service.Controllers
         [Route("/id")]
         public ActionResult<Playlist> GetOne(int id)
         {
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+            //Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
             var playlist = _playlistService.GetById(id);
 
@@ -37,11 +37,11 @@ namespace Playlist_Service.Controllers
         [Route("getFollowedPlaylistsByUserId")]
         public ActionResult<List<Playlist>> GetAllFollowedPlaylistsByUserId(int id)
         {
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+            //Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
             var playlists = _playlistService.GetFollowedPlaylistsByUserId(id);
 
-            Debug.WriteLine($"returning {playlists.Count} playlists");
+            //Debug.WriteLine($"returning {playlists.Count} playlists");
             return new ActionResult<List<Playlist>>(playlists);
         }   
         
@@ -49,11 +49,11 @@ namespace Playlist_Service.Controllers
         [Route("getPublicCreatedPlaylistsByUserId")]
         public ActionResult<List<Playlist>> GetPublicCreatedPlaylistsByUserId(int id)
         {
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+            //Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
             var playlists = _playlistService.GetPublicCreatedPlaylistsByUserId(id);
 
-            Debug.WriteLine($"returning {playlists.Count} playlists");
+            //Debug.WriteLine($"returning {playlists.Count} playlists");
             return new ActionResult<List<Playlist>>(playlists);
         }
 
@@ -83,11 +83,11 @@ namespace Playlist_Service.Controllers
         [Route("all")]
         public ActionResult<List<Playlist>> GetAllPlaylists()
         {
-            Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
+            //Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
             var playlists = _playlistService.GetAll().ToList();
 
-            Debug.WriteLine($"returning {playlists.Count} playlists");
+            //Debug.WriteLine($"returning {playlists.Count} playlists");
             return new ActionResult<List<Playlist>>(playlists);
         }
 

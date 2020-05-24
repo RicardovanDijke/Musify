@@ -21,16 +21,19 @@ namespace User_Service.Service
         List<User> GetFollowersByUser(long userId);
         List<User> GetFollowingByUser(long userId);
         void AddFollower(long followeeId, long followerId);
+        void RemoveFollower(long followeeId, long followerId);
     }
 
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IFollowsRepository _followsRepository;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
+        public UserService(IUserRepository userRepository, IFollowsRepository followsRepository, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;
+            _followsRepository = followsRepository;
             _appSettings = appSettings.Value;
 
         }
@@ -94,11 +97,23 @@ namespace User_Service.Service
             var followee = GetById(followeeId);
             var follower = GetById(followerId);
 
-            followee.AddFollower(follower);
+            //followee.AddFollower(follower);
             //follower.AddFollowing(followee);
 
-            _userRepository.Update(followee);
+            UserFollow f = new UserFollow()
+            {
+                Followee = followee,
+                FolloweeId = followeeId,
+                Follower = follower,
+                FollowerId = followerId
+            };
+            _followsRepository.Add(f);
             //_userRepository.Update(follower);
+        }
+
+        public void RemoveFollower(long followeeId, long followerId)
+        {
+            _followsRepository.RemoveByIds(followeeId, followerId);
         }
     }
 }

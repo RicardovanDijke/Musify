@@ -41,5 +41,13 @@ namespace User_Service.Controllers
             _userService.AddFollower(followeeId, followerId);
             return Ok();
         }
+
+        [HttpPost]
+        [Route("removeFollower/{followeeId}/{followerId}")]
+        public ActionResult RemoveFollower(long followeeId, long followerId)
+        {
+            _userService.RemoveFollower(followeeId, followerId);
+            return Ok();
+        }
     }
 }

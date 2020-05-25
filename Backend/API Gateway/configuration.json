@@ -93,10 +93,6 @@
         "Period": "1s",
         "PeriodTimespan": 1,
         "Limit": 5
-      },
-      "FileCacheOptions": {
-        "TtlSeconds": 15,
-        "Region": "usercaching"
       }
     }
   ],

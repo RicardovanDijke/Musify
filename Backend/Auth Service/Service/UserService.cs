@@ -27,13 +27,11 @@ namespace User_Service.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IFollowsRepository _followsRepository;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IFollowsRepository followsRepository, IOptions<AppSettings> appSettings)
+        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;
-            _followsRepository = followsRepository;
             _appSettings = appSettings.Value;
 
         }
@@ -97,23 +95,16 @@ namespace User_Service.Service
             var followee = GetById(followeeId);
             var follower = GetById(followerId);
 
-            //followee.AddFollower(follower);
-            //follower.AddFollowing(followee);
-
-            UserFollow f = new UserFollow()
-            {
-                Followee = followee,
-                FolloweeId = followeeId,
-                Follower = follower,
-                FollowerId = followerId
-            };
-            _followsRepository.Add(f);
-            //_userRepository.Update(follower);
+            followee.AddFollower(follower);
+            _userRepository.Update(followee);
         }
 
         public void RemoveFollower(long followeeId, long followerId)
         {
-            _followsRepository.RemoveByIds(followeeId, followerId);
+            var followee = GetById(followeeId);
+
+            followee.Followers.RemoveAll(x => x.FollowerId == followerId);
+            _userRepository.Update(followee);
         }
     }
 }

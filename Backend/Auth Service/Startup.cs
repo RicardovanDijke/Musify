@@ -66,7 +66,6 @@ namespace User_Service
 
             // configure Dependency Injection
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IFollowsRepository, FollowsRepository>();
             services.AddScoped<IUserService, UserService>();
         }
 

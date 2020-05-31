@@ -4,7 +4,7 @@ using User_Service.Entities;
 namespace User_Service.Database
 {
     /// <summary>
-    ///  add-migration Auth_Service.DatabaseContext -Project "Auth Service" -Context "Auth_Service.Database.DatabaseContext"
+    ///  add-migration User_Service.DatabaseContext -Project "User Service" -Context "User_Service.Database.DatabaseContext"
     /// </summary>
     public class DatabaseContext : DbContext
     {

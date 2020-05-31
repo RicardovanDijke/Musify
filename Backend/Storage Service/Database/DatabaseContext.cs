@@ -4,7 +4,7 @@ using Song_Service.Entities;
 namespace Song_Service.Database
 {
     /// <summary>
-    ///  add-migration Song_Service.DatabaseContext -Project "Song Service" -Context "Song_Service.DatabaseContext"
+    ///  add-migration Song_Service.Database.DatabaseContext -Project "Song Service" -Context "Song_Service.Database.DatabaseContext"
     /// </summary>
     public class DatabaseContext : DbContext
     {

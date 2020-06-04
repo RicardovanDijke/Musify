@@ -22,6 +22,7 @@ namespace User_Service.Service
         List<User> GetFollowingByUser(long userId);
         void AddFollower(long followeeId, long followerId);
         void RemoveFollower(long followeeId, long followerId);
+        void Update(User user);
     }
 
     public class UserService : IUserService
@@ -105,6 +106,12 @@ namespace User_Service.Service
 
             followee.Followers.RemoveAll(x => x.FollowerId == followerId);
             _userRepository.Update(followee);
+        }
+
+        public void Update(User user)
+        {
+            //TODO add sendMessage here
+            _userRepository.Update(user);
         }
     }
 }

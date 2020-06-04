@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using User_Service.Entities;
 using User_Service.Helpers;
@@ -79,6 +80,15 @@ namespace User_Service.Controllers
         {
             _userService.Add(user);
             return Ok();
+        }
+
+        [HttpPatch("update/{id}")]
+        public ActionResult<User> Patch(long id, [FromBody]JsonPatchDocument<User> userPatch)
+        {
+            var user = _userService.GetById(id);
+            userPatch.ApplyTo(user);
+            _userService.Update(user);
+            return Ok(user);
         }
     }
 }

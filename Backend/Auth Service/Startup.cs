@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using User_Service.Database;
 using User_Service.Helpers;
+using User_Service.Message;
 using User_Service.Service;
 
 namespace User_Service
@@ -68,6 +69,10 @@ namespace User_Service
             // configure Dependency Injection
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
+            // configure Messaging
+            services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
+            services.AddTransient<IUserUpdateSender, UserUpdateSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

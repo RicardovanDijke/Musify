@@ -213,6 +213,11 @@ namespace Musify_Desktop_App.Service
             _songFileReader.CurrentTime = _songFileReader.CurrentTime.Add(new TimeSpan(0, 0, 0, relativeDuration, 0));
 
             //songFileReader.Position = 10L;
+            if (_output.PlaybackState != PlaybackState.Stopped)
+            {
+                //stop again cause it sometimes doesnt work?
+                _output.Stop();
+            }
             _output.Init(_songFileReader);
             //output.GetPosition()
             _output.Play();

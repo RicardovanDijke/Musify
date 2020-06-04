@@ -11,7 +11,7 @@ namespace Musify_Desktop_App.Panels.Profile
 {
     class ProfilePageViewModel : BasePanelNavigation
     {
-        private readonly IPlaylistService _playlistService; 
+        private readonly IPlaylistService _playlistService;
         private readonly IUserService _userService;
 
         public User User { get; set; }
@@ -28,8 +28,19 @@ namespace Musify_Desktop_App.Panels.Profile
             }
         }
 
+        private bool _onOwnProfile;
+        public bool OnOwnProfile
+        {
+            get => _onOwnProfile;
+            set
+            {
+                _onOwnProfile = value;
+                RaisePropertyChanged(nameof(OnOwnProfile));
+            }
+        }
 
         public RelayCommand FollowUserCommand { get; set; }
+        public RelayCommand UpdateDisplayNameCommand { get; set; }
         public string FollowButtonText { get; set; }
 
         public PlaylistListViewModel PublicPlaylistsViewModel { get; set; }
@@ -43,9 +54,11 @@ namespace Musify_Desktop_App.Panels.Profile
             _userService = userService;
             User = user;
             OnOtherProfile = false;
+            OnOwnProfile = true;
             if (user.UserId != Session.User.UserId)
             {
                 OnOtherProfile = true;
+                OnOwnProfile = false;
                 if (user.Followers.Any(follower => follower.UserId == Session.User.UserId))
                 {
                     FollowButtonText = "Unfollow";
@@ -58,8 +71,9 @@ namespace Musify_Desktop_App.Panels.Profile
                 }
             }
 
+            UpdateDisplayNameCommand = new RelayCommand(DoUpdateDisplayName);
 
-            PublicPlaylistsViewModel = new PlaylistListViewModel(_playlistService, _playlistService.GetPublicCreatedPlaylistsByUserId(user.UserId), "Public Playlists");
+                        PublicPlaylistsViewModel = new PlaylistListViewModel(_playlistService, _playlistService.GetPublicCreatedPlaylistsByUserId(user.UserId), "Public Playlists");
             PublicPlaylistsViewModel.SongListPageRequested += OnSongListPageRequested;
 
             FollowedUsersViewModel = new UserListViewModel(userService, user.Followers, "Followers");
@@ -67,6 +81,11 @@ namespace Musify_Desktop_App.Panels.Profile
 
             FollowingUsersViewModel = new UserListViewModel(userService, user.Following, "Following");
             FollowingUsersViewModel.ProfilePageRequested += OnProfilePageRequested;
+        }
+
+        private void DoUpdateDisplayName()
+        {
+            _userService.UpdateUser(nameof(User.DisplayName), Session.User);
         }
 
         private void DoUnFollowUser()

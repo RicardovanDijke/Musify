@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Musify_Desktop_App.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,6 +21,7 @@ namespace Musify_Desktop_App.Service
         public List<User> GetFollowingByUser(long userId);
         void AddFollowing(long followeeId, long followerId);
         void RemoveFollowing(long followeeId, long followerId);
+        User UpdateUser(string propertyName, User user);
     }
 
     internal class UserService : IUserService
@@ -70,6 +72,45 @@ namespace Musify_Desktop_App.Service
             }
 
         }
+
+
+        public User UpdateUser(string propertyName, User user)
+        {
+            return UpdateUserTask(propertyName, user).Result;
+        }
+
+        private async Task<User> UpdateUserTask(string propertyName, User user)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+            var patch = new JsonPatchDocument();
+
+            var propertyValue = user.GetType().GetProperty(propertyName).GetValue(user);
+            patch.Add(propertyName, propertyValue);
+
+            var payload = JsonConvert.SerializeObject(patch);
+
+            var stringTask = client.PatchAsync(GatewayApi + $"user/auth/update/{user.UserId}", new StringContent(payload, Encoding.UTF8, "application/json"));
+
+            try
+            {
+                var msg = stringTask.Result;
+                var content = await msg.Content.ReadAsStringAsync();
+
+                var updatedUser = JsonConvert.DeserializeObject<User>(content);
+                Debug.Write(content);
+                return updatedUser;
+            }
+            catch
+            {
+                return user;
+            }
+        }
+
 
         public List<User> GetFollowersByUser(long userId)
         {
@@ -141,7 +182,6 @@ namespace Musify_Desktop_App.Service
 
             }
         }
-
 
         private async Task<List<User>> GetFollowingByUserTask(long userId)
         {

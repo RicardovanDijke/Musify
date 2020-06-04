@@ -83,6 +83,7 @@ namespace User_Service.Controllers
         }
 
         [HttpPatch("update/{id}")]
+        [AllowAnonymous]
         public ActionResult<User> Patch(long id, [FromBody]JsonPatchDocument<User> userPatch)
         {
             var user = _userService.GetById(id);

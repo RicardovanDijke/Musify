@@ -31,7 +31,19 @@
         </Grid.RowDefinitions>
 
         <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" HorizontalAlignment="Left" Margin="15"/>
-        <Label Grid.Column="1" Grid.Row="0" Content="{Binding User.DisplayName,FallbackValue='Profile Name'}" FontSize="24"/>
+
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="{Binding User.DisplayName,FallbackValue='Profile Name'}" FontSize="24"/>
+
+            <!-- update DisplayName -->
+            <TextBox  Grid.Row="1" Text="{Binding User.DisplayName}" Visibility ="{Binding OnOwnProfile, Converter={StaticResource Converter}}"/>
+            <Button  Grid.Row="2" Content="Update Username" Visibility ="{Binding OnOwnProfile, Converter={StaticResource Converter}}" Command="{Binding UpdateDisplayNameCommand}"/>
+        </Grid>
 
         <Button  Grid.Column="2" Grid.Row="0" Width="56" Height="56" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15" 
                  Content="{Binding FollowButtonText}" Visibility ="{Binding OnOtherProfile, Converter={StaticResource Converter}}"  Command="{Binding FollowUserCommand}"/>

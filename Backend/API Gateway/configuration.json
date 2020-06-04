@@ -81,7 +81,8 @@
         "GET",
         "POST",
         "PUT",
-        "DELETE"
+        "DELETE",
+        "PATCH"
       ],
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "TestKey",

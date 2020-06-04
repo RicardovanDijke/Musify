@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>User_Service</RootNamespace>
+    <AssemblyName>UserService</AssemblyName>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

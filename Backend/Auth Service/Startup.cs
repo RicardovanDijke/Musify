@@ -25,6 +25,7 @@ namespace User_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -56,11 +57,11 @@ namespace User_Service
                     };
                 });
 
-
             services.AddDbContext<DatabaseContext>(opts =>
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"], 
+                    opts => opts.EnableRetryOnFailure());
                 opts.EnableSensitiveDataLogging();
             });
 
@@ -93,6 +94,7 @@ namespace User_Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -64,7 +64,7 @@ namespace User_Service.Controllers
             return Ok(user);
         }
 
-        //https://localhost:44321/api/
+        //https://localhost:44321/api/user/auth
         //body:
         /*
          {

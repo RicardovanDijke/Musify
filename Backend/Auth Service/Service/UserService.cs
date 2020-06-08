@@ -114,7 +114,7 @@ namespace User_Service.Service
         public void Update(User user)
         {
             _userRepository.Update(user);
-            _userUpdateSender.SendUpdate("User.DisplayName", user.WithoutPassword());
+            _userUpdateSender.SendUpdate("User.DisplayName", new User{ UserId = user.UserId, DisplayName = user.DisplayName });
         }
     }
 }

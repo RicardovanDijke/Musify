@@ -88,10 +88,8 @@ namespace Musify_Desktop_App
         private void GoToSongListPage(object sender, EventArgs e)
         {
             var songList = _songService.GetSongsInSongList((SongList)sender);
-
-            var songsInAlbum = songList.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
-
-            MainView = new PlaylistPageViewModel(_songService, _playlistService, songsInAlbum, songList.Name);
+            
+            MainView = new PlaylistPageViewModel(_songService, _playlistService, songList, songList.Name);
         }
     }
 }

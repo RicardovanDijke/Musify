@@ -12,7 +12,8 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="24"/>
+        <Label Grid.Row="0" Content="{Binding ListName,FallbackValue=PlayList}" FontSize="24" HorizontalAlignment="Left"/>
+        <Label Grid.Row="0" Content="{Binding CreatorName,FallbackValue=Creator}" FontSize="18" HorizontalAlignment="Right"/>
 
         <controls:MultiSelectedDataGrid ItemsSource="{Binding Songs}" 
                                Grid.Row="1" Grid.Column="0" 

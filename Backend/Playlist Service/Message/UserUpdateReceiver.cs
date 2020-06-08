@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Playlist_Service.Entities;
 using Playlist_Service.Service;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -55,9 +56,9 @@ namespace Playlist_Service.Message
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
                 Console.WriteLine(content);
 
-                // var updateCustomerFullNameModel = JsonConvert.DeserializeObject<UpdateCustomerFullNameModel>(content);
-                //todo handle message
-                // HandleMessage(updateCustomerFullNameModel);
+                var userDisplayNameUpdate = JsonConvert.DeserializeObject<UserDisplayNameUpdate>(content);
+
+                _playlistService.UpdateCreatorName(userDisplayNameUpdate);
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };

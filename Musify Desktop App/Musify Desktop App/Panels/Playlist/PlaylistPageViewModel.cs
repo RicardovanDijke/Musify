@@ -32,6 +32,7 @@ namespace Musify_Desktop_App.Panels.Playlist
         public List<MenuItem> SubMenuPlaylistItems { get; } = new List<MenuItem>();
 
         public string ListName { get; set; }
+        public string CreatorName { get; set; }
 
         public Song SelectedSong { get; set; }
 
@@ -56,14 +57,18 @@ namespace Musify_Desktop_App.Panels.Playlist
             AddSongToPlaylistCommand = new RelayCommand<Model.Playlist>(AddSelectedSongsToPlaylist);
         }
 
-        public PlaylistPageViewModel(ISongService songService, IPlaylistService playlistService, List<Song> songList,
+        public PlaylistPageViewModel(ISongService songService, IPlaylistService playlistService,SongList songList,
             string listName) : this()
         {
             _songService = songService;
             _playlistService = playlistService;
 
-            Songs = new ObservableCollection<Song>(songList);
+            var songsInAlbum = songList.Songs.OrderBy(x => x.Number).Select(albumSong => albumSong.Song).ToList();
+
+            Songs = new ObservableCollection<Song>(songsInAlbum);
             ListName = listName;
+            CreatorName = songList.CreatorName;
+
 
             CreateAddToPlaylistSubMenu();
         }

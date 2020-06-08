@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Musify_Desktop_App.Model;
 using Musify_Desktop_App.Panels.Playlist;
 using Musify_Desktop_App.Service;
@@ -24,7 +25,7 @@ namespace Musify_Desktop_App.Panels.Home
         public HomePageViewModel() { }
         public HomePageViewModel(ISongService songService, IPlaylistService playlistService)
         {
-            AllSongsListViewModel = new PlaylistPageViewModel(songService, playlistService, songService.GetAllSongs(), "Recently Added");
+            AllSongsListViewModel = new PlaylistPageViewModel(songService, playlistService, new ObservableCollection<Song>(songService.GetAllSongs()), "Recently Added");
 
             AllSongsListViewModel.SongListPageRequested += OnSongListPageRequested;
             WelcomeText = $"Welcome, {Session.User.DisplayName}";

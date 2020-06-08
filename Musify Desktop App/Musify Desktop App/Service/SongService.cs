@@ -152,7 +152,6 @@ namespace Musify_Desktop_App.Service
             return songs;
         }
 
-
         private async Task<Album> GetAlbumBySongTask(int songId)
         {
             var client = new HttpClient();

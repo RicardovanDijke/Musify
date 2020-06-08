@@ -97,117 +97,140 @@ namespace Playlist_Service.Controllers
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested");
 
-            var playlist = new Playlist
+            var playlist1 = new Playlist
             {
                 PlaylistId = 1,
                 Name = "American Idiot Reversed",
                 Private = false,
-                CreatorUserID = 1
+                CreatorUserID = 1,
+                CreatorName="Musify"
             };
 
             var playlistSongs = new[]{
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 13,
                     Number = 0
 
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 12,
                     Number = 1
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 11,
                     Number = 2
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 10,
                     Number = 3
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 9,
                     Number = 4
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 8,
                     Number = 5
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 7,
                     Number = 6
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 6,
                     Number = 7
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 5,
                     Number = 8
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 4,
                     Number = 9
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 3,
                     Number = 10
                 },
                 new PlaylistSong()
                 {
-                    Playlist =playlist,
+                    Playlist =playlist1,
                     DateAdded = DateTime.Now,
-                    PlaylistId = playlist.PlaylistId,
+                    PlaylistId = playlist1.PlaylistId,
                     SongId = 2,
                     Number = 11
                 }
             }.ToList();
 
-            playlist.Songs = playlistSongs;
+            playlist1.Songs = playlistSongs;
 
-            _playlistService.Add(playlist);
+            var playlist2 = new Playlist
+            {
+                PlaylistId = 2,
+                Name = "Whatsername Only",
+                Private = false,
+                CreatorUserID = 1,
+                CreatorName = "Musify"
+            };
+
+            playlist2.Songs = new[]
+            {
+                new PlaylistSong()
+                {
+                    Playlist = playlist2,
+                    DateAdded = DateTime.Now,
+                    PlaylistId = playlist2.PlaylistId,
+                    SongId = 3,
+                    Number = 1
+                }
+            }.ToList();
+
+            _playlistService.Add(playlist1);
+            _playlistService.Add(playlist2);
 
             return new OkResult();
         }

@@ -15,6 +15,7 @@ namespace Playlist_Service.Service
         List<Playlist> GetFollowedPlaylistsByUserId(long id);
         void AddSongsToPlaylist(long playlistId, List<long> songIds);
         List<Playlist> GetPublicCreatedPlaylistsByUserId(long id);
+        void UpdateCreatorName(UserDisplayNameUpdate userDisplayNameUpdate);
     }
 
     public class PlaylistService : IPlaylistService
@@ -50,6 +51,18 @@ namespace Playlist_Service.Service
         public List<Playlist> GetPublicCreatedPlaylistsByUserId(long id)
         {
             return _playlistRepository.GetPublicCreatedPlaylistsByUserId(id);
+        }
+
+        public void UpdateCreatorName(UserDisplayNameUpdate userDisplayNameUpdate)
+        {
+
+            var playlists = _playlistRepository.GetAllCreatedPlaylistsByUserId(userDisplayNameUpdate.UserId);
+
+            foreach (var playlist in playlists)
+            {
+                playlist.CreatorName = userDisplayNameUpdate.DisplayName;
+                _playlistRepository.Update(playlist);
+            }
         }
 
         public void AddSongsToPlaylist(long playlistId, List<long> songIds)

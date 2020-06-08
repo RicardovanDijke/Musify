@@ -12,8 +12,8 @@ namespace Musify_Desktop_App
         public MainWindow(INotifyPropertyChanged viewModel)
         {
             InitializeComponent();
-            this.DataContext = viewModel;
-            this.Show();
+            DataContext = viewModel;
+            Show();
         }
     }
 

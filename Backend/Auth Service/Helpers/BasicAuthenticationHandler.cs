@@ -27,7 +27,9 @@ namespace User_Service.Helpers
             _userService = userService;
         }
 
+#pragma warning disable 1998
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+#pragma warning restore 1998
         {
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");

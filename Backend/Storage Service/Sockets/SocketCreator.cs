@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -45,7 +46,7 @@ namespace Song_Service.Sockets
             }
             catch (SocketException ex)
             {
-
+                Debug.WriteLine(ex);
             }
             finally
             {

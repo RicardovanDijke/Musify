@@ -42,8 +42,6 @@ namespace API_Gateway
 
             app.Use(async (context, next) =>
             {
-
-                string newPath = null;
                 var url = context.Request.Path;
                 Debug.WriteLine(url);
                 if (url == "/dan")

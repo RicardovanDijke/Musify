@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using GalaSoft.MvvmLight.Command;
 using Musify_Desktop_App.Model;

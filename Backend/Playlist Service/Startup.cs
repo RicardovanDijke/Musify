@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Playlist_Service.Database;
+using Playlist_Service.Message;
 using Playlist_Service.Service;
 
 namespace Playlist_Service
@@ -33,15 +34,22 @@ namespace Playlist_Service
                 //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
                 opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
                 opts.EnableSensitiveDataLogging();
-            });
-            services.AddScoped<DatabaseContext>();
+                
+            },ServiceLifetime.Singleton);
 
-            services.AddScoped<IPlaylistService, PlaylistService>();
-            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            //services.AddTransient<DatabaseContext>();
+
+            services.AddTransient<IPlaylistService, PlaylistService>();
+            services.AddTransient<IPlaylistRepository, PlaylistRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            //setup Messaging receiver
+            services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
+            services.AddHostedService<UserUpdateReceiver>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

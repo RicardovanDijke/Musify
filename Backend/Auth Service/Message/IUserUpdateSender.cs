@@ -8,6 +8,6 @@ namespace User_Service.Message
 {
     public interface IUserUpdateSender
     {
-        public void SendUser(User user);
+        public void SendUpdate(string queueName, User user);
     }
 }

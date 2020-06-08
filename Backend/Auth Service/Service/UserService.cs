@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using User_Service.Database;
 using User_Service.Entities;
 using User_Service.Helpers;
+using User_Service.Message;
 
 namespace User_Service.Service
 {
@@ -28,11 +29,13 @@ namespace User_Service.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private IUserUpdateSender _userUpdateSender;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings)
+        public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;
+            _userUpdateSender = userUpdateSender;
             _appSettings = appSettings.Value;
 
         }
@@ -110,8 +113,8 @@ namespace User_Service.Service
 
         public void Update(User user)
         {
-            //TODO add sendMessage here
             _userRepository.Update(user);
+            _userUpdateSender.SendUpdate("User.DisplayName", user.WithoutPassword());
         }
     }
 }

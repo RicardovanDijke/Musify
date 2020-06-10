@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using User_Service.Database;
 using User_Service.Helpers;
 using User_Service.Message;
@@ -64,21 +65,27 @@ namespace User_Service
                     };
                 });
 
-            services.AddDbContext<DatabaseContext>(opts =>
-            {
-                // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"],
-                    opts => opts.EnableRetryOnFailure());
-                opts.EnableSensitiveDataLogging();
-            });
+            //services.AddDbContext<DatabaseContext>(opts =>
+            //{
+            //    // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
+            //    opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"],
+            //        opts => opts.EnableRetryOnFailure());
+            //    opts.EnableSensitiveDataLogging();
+            //});
 
             // configure Dependency Injection
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserService, UserService>();
 
             // configure Messaging
             services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
             services.AddTransient<IUserUpdateSender, UserUpdateSender>();
+
+            //configure Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
@@ -105,7 +112,7 @@ namespace User_Service
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -117,6 +124,15 @@ namespace User_Service
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
+            //swagger
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {

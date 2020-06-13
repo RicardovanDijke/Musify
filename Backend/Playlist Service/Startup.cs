@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Playlist_Service.Database;
 using Playlist_Service.Message;
 using Playlist_Service.Service;
@@ -27,29 +28,34 @@ namespace Playlist_Service
             services.AddCors();
             services.AddControllers();
 
-            // services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
-            services.AddDbContext<DatabaseContext>(opts =>
-            {
-                // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
-                //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-                opts.EnableSensitiveDataLogging();
+            //// services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
+            //services.AddDbContext<DatabaseContext>(opts =>
+            //{
+            //    // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
+            //    //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
+            //    opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
+            //    opts.EnableSensitiveDataLogging();
                 
-            },ServiceLifetime.Singleton);
+            //},ServiceLifetime.Singleton);
 
             //services.AddTransient<DatabaseContext>();
 
-            services.AddTransient<IPlaylistService, PlaylistService>();
-            services.AddTransient<IPlaylistRepository, PlaylistRepository>();
+            //services.AddTransient<IPlaylistService, PlaylistService>();
+            //services.AddTransient<IPlaylistRepository, PlaylistRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
             //setup Messaging receiver
-            services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
-            services.AddHostedService<UserUpdateReceiver>();
+           // services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
+            //services.AddHostedService<UserUpdateReceiver>();
 
+            //configure Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +67,15 @@ namespace Playlist_Service
             }
 
             app.UseRouting();
+
+            //swagger
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {

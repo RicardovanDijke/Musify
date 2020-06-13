@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  userservice:
+    image: ${DOCKER_REGISTRY-}userservice
+    build:
+      context: .
+      dockerfile: User Service/Dockerfile
+
+  playlistservice:
+    image: ${DOCKER_REGISTRY-}playlistservice
+    build:
+      context: .
+      dockerfile: Playlist Service/Dockerfile
+

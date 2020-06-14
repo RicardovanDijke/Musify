@@ -1,15 +1,43 @@
 version: '3.4'
 
 services:
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: API Gateway/Dockerfile
+    ports:
+      - "6000:80"
+      - "7000:443"
+    container_name: apigateway
+    networks:
+      - musify-network
+
   userservice:
     image: ${DOCKER_REGISTRY-}userservice
     build:
       context: .
       dockerfile: User Service/Dockerfile
+    ports:
+      - "6001:80"
+      - "7001:443"
+    container_name: userservice
+    networks:
+      - musify-network
 
   playlistservice:
     image: ${DOCKER_REGISTRY-}playlistservice
     build:
       context: .
       dockerfile: Playlist Service/Dockerfile
+    ports:
+      - "6002:80"
+      - "7002:443"
+    container_name: playlistservice
+    networks:
+      - musify-network
+
+networks:
+  musify-network:
 

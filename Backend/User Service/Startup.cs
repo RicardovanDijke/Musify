@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,9 +34,9 @@ namespace User_Service
         {
             services.AddRazorPages();
             services.AddCors();
-            services.AddControllersWithViews(options => options.InputFormatters.Insert(0,GetJsonPatchInputFormatter())).AddNewtonsoftJson(options =>
+            services.AddControllersWithViews(options => options.InputFormatters.Insert(0, GetJsonPatchInputFormatter())).AddNewtonsoftJson(options =>
 
-                      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 
             );
 

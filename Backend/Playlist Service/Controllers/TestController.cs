@@ -5,7 +5,7 @@ using Playlist_Service.Entities;
 namespace Playlist_Service.Controllers
 {
     [ApiController]
-    [Route("api/playlist/test")]
+    [Route("api/playlists/test")]
     [AllowAnonymous]
     public class TestController : ControllerBase
     {

@@ -26,7 +26,7 @@ namespace API_Gateway
                 }).UseSerilog((_, config) =>
                 {
                     config
-                        .MinimumLevel.Information()
+                        .MinimumLevel.Verbose()
                         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                         .Enrich.FromLogContext()
                         .WriteTo.File(@"Logs\log.txt", rollingInterval: RollingInterval.Day);

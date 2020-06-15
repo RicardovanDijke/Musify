@@ -28,20 +28,23 @@ namespace Playlist_Service
             services.AddCors();
             services.AddControllers();
 
-            //// services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
-            //services.AddDbContext<DatabaseContext>(opts =>
-            //{
-            //    // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
-            //    //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-            //    opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-            //    opts.EnableSensitiveDataLogging();
-                
-            //},ServiceLifetime.Singleton);
+            // services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
+            services.AddDbContext<DatabaseContext>(opts =>
+            {
+                // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
+                //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBDocker"],
+                    opts => opts.EnableRetryOnFailure());
+                opts.EnableDetailedErrors();
 
-            //services.AddTransient<DatabaseContext>();
+            opts.EnableSensitiveDataLogging();
 
-            //services.AddTransient<IPlaylistService, PlaylistService>();
-            //services.AddTransient<IPlaylistRepository, PlaylistRepository>();
+            }, ServiceLifetime.Singleton);
+
+            services.AddTransient<DatabaseContext>();
+
+            services.AddTransient<IPlaylistService, PlaylistService>();
+            services.AddTransient<IPlaylistRepository, PlaylistRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

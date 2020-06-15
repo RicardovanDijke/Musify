@@ -25,7 +25,7 @@ namespace Musify_Desktop_App.Service
     //todo add base Service class with 1 httpClient
     internal class PlaylistService : IPlaylistService
     {
-        private const string GatewayApi = "https://localhost:44389/api/";
+        private const string GatewayApi = "https://localhost:7000/api/";
 
         private List<Playlist> _followedPlaylistsByUser;
 

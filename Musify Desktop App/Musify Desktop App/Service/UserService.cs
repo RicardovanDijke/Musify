@@ -24,7 +24,7 @@ namespace Musify_Desktop_App.Service
 
     internal class UserService : IUserService
     {
-        private const string GatewayApi = "https://localhost:44389/api/";
+        private const string GatewayApi = "https://localhost:7000/api/";
 
         public User Login(string username, string password)
         {

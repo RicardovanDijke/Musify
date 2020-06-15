@@ -15,7 +15,7 @@ services:
     networks:
       - musify-network
 
-  #User Service
+#User Service
   userservice:
     depends_on:
       - userservicedatabase
@@ -33,22 +33,24 @@ services:
     image: mysql:5.7
     container_name: userservicedatabase
     ports:
-      - "3306:3306" 
+      - "8001:3306" 
     environment:
       MYSQL_ROOT_PASSWORD: 1
       MYSQL_DATABASE: "MusifyAuth"
       MYSQL_USER: "musify"
       MYSQL_PASSWORD: "musify"
     volumes:
-      - dbdata:/var/lib/mysql2
+      - dbuserdata:/var/lib/mysql1
     restart: always
     networks:
       - musify-network
 
 
-  #Playlist Service
+#Playlist Service
   playlistservice:
     image: ${DOCKER_REGISTRY-}playlistservice
+    depends_on: 
+    - playlistservicedatabase
     build:
       context: .
       dockerfile: Playlist Service/Dockerfile
@@ -58,9 +60,57 @@ services:
     container_name: playlistservice
     networks:
       - musify-network
+  playlistservicedatabase:
+    image: mysql:5.7
+    container_name: playlistservicedatabase
+    ports:
+      - "8002:3306" 
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: "MusifyPlaylists"
+      MYSQL_USER: "musify"
+      MYSQL_PASSWORD: "musify"
+    volumes:
+      - dbplaylistdata:/var/lib/mysql2
+    restart: always
+    networks:
+      - musify-network
+
+
+#Song Service
+  songservice:
+    depends_on:
+      - songservicedatabase
+    image: ${DOCKER_REGISTRY-}songservice
+    build:
+      context: .
+      dockerfile: Song Service/Dockerfile
+    ports:
+      - "6003:80"
+      - "7003:443"
+    container_name: songservice
+    networks:
+      - musify-network
+  songservicedatabase:
+    image: mysql:5.7
+    container_name: songservicedatabase
+    ports:
+      - "8003:3306" 
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: "MusifySongs"
+      MYSQL_USER: "musify"
+      MYSQL_PASSWORD: "musify"
+    volumes:
+      - dbsongdata:/var/lib/mysql3
+    restart: always
+    networks:
+      - musify-network
 
 networks:
   musify-network:
 
 volumes:
-    dbdata:
+    dbuserdata:
+    dbplaylistdata:
+    dbsongdata:

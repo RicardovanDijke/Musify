@@ -25,7 +25,7 @@ namespace Musify_Desktop_App.Service
 
     public class SongService : ISongService
     {
-        private const string GatewayApi = "https://localhost:44389/api/";
+        private const string GatewayApi = "https://localhost:7000/api/";
 
         public SongList GetSongsInSongList(SongList songList)
         {

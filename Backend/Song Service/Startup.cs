@@ -25,7 +25,7 @@ namespace Song_Service
             services.AddDbContext<DatabaseContext>(opts =>
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBMySql"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBDocker"]);
                 opts.EnableSensitiveDataLogging();
             });
             services.AddScoped<DatabaseContext>();

@@ -191,6 +191,8 @@ namespace Musify_Desktop_App.Service
             webClient.QueryString.Add("ipAdress", "127.0.0.1");
             webClient.QueryString.Add("songID", songId.ToString());
 
+            //todo fix crash
+			//System.Net.WebException: 'The remote server returned an error: (502) Bad Gateway.'
             webClient.UploadValues(GatewayApi + "songs/stream", webClient.QueryString);
         }
     }

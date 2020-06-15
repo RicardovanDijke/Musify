@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
 
+  #API Gateway
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway
     build:
@@ -14,7 +15,10 @@ services:
     networks:
       - musify-network
 
+  #User Service
   userservice:
+    depends_on:
+      - userservicedatabase
     image: ${DOCKER_REGISTRY-}userservice
     build:
       context: .
@@ -25,7 +29,24 @@ services:
     container_name: userservice
     networks:
       - musify-network
+  userservicedatabase:
+    image: mysql:5.7
+    container_name: userservicedatabase
+    ports:
+      - "3306:3306" 
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: "MusifyAuth"
+      MYSQL_USER: "musify"
+      MYSQL_PASSWORD: "musify"
+    volumes:
+      - dbdata:/var/lib/mysql2
+    restart: always
+    networks:
+      - musify-network
 
+
+  #Playlist Service
   playlistservice:
     image: ${DOCKER_REGISTRY-}playlistservice
     build:
@@ -41,3 +62,5 @@ services:
 networks:
   musify-network:
 
+volumes:
+    dbdata:

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace User_Service.Entities
 {
-    [Table("userfollow")]
+    [Table("UserFollow")]
     public class UserFollow
     {
         [Key]

@@ -45,6 +45,9 @@ namespace API_Gateway
             {
                 builder.Append(header.Key).Append(':').AppendLine(header.Value);
             }
+
+            builder.AppendLine("====================================================================================================================================================");
+            builder.AppendLine();
             //Save log to chosen datastore
             _logger.LogInformation(builder.ToString());
             //Copy the contents of the new memory stream (which contains the response) to the original stream, which is then returned to the client.

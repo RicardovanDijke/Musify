@@ -351,3 +351,7 @@ MigrationBackup/
 
 # EntityFramework Migration Data
 */Migrations/
+
+
+# Docker temp database data
+tmp/*

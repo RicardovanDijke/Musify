@@ -66,17 +66,17 @@ namespace User_Service
                     };
                 });
 
-            //services.AddDbContext<DatabaseContext>(opts =>
-            //{
-            //    // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
-            //    opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBMySql"],
-            //        opts => opts.EnableRetryOnFailure());
-            //    opts.EnableSensitiveDataLogging();
-            //});
+            services.AddDbContext<DatabaseContext>(opts =>
+            {
+                // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBDocker"],
+                    opts => opts.EnableRetryOnFailure());
+                opts.EnableSensitiveDataLogging();
+            });
 
-            // configure Dependency Injection
-            //services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IUserService, UserService>();
+            //configure Dependency Injection
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             // configure Messaging
             services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));

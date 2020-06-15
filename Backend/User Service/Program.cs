@@ -1,8 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using User_Service.Database;
 using User_Service.Entities;
 
 namespace User_Service
@@ -12,14 +14,14 @@ namespace User_Service
         public static void Main(string[] args)
         {
 
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 try
                 {
+                    scope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.Migrate();
                     SeedData.Initialize(services);
                 }
                 catch (Exception ex)
@@ -32,7 +34,7 @@ namespace User_Service
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

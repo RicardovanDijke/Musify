@@ -21,6 +21,7 @@ namespace Song_Service
                 try
                 {
                     scope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.Migrate();
+                    SeedData.Initialize(services);
                 }
                 catch (Exception ex)
                 {

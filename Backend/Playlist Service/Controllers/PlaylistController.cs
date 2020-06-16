@@ -66,9 +66,7 @@ namespace Playlist_Service.Controllers
             {
                 var playlistId = JsonConvert.DeserializeObject<long>(paramList[0].ToString());
                 var songIds = new List<long>(JsonConvert.DeserializeObject<long[]>(paramList[1].ToString()));
-
-                //TODO: add songs to playlist in database
-
+                
                 _playlistService.AddSongsToPlaylist(playlistId, songIds);
 
                 return new OkResult();

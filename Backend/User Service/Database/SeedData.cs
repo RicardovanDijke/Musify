@@ -2,9 +2,9 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using User_Service.Database;
+using User_Service.Entities;
 
-namespace User_Service.Entities
+namespace User_Service.Database
 {
     public static class SeedData
     {

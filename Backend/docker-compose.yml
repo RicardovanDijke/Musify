@@ -107,6 +107,24 @@ services:
     networks:
       - musify-network
 
+  #RabbitMq 
+  rabbitmq:
+    container_name: rabbitmq
+    image: lucifer8591/rabbitmq-server:3.7.17
+    hostname: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    expose:
+     - 15672
+     - 5672
+    environment:
+      RABBITMQ_DEFAULT_USER: "user"
+      RABBITMQ_DEFAULT_PASS: "password"
+    volumes:
+      - ${DATA_PATH_HOST}/rabbitmq:/var/lib/rabbitmq/mnesia
+    networks:
+      - musify-network
 networks:
   musify-network:
 

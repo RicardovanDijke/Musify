@@ -24,6 +24,7 @@ namespace User_Service.Service
         void AddFollower(long followeeId, long followerId);
         void RemoveFollower(long followeeId, long followerId);
         void Update(User user);
+        void Delete(User user);
     }
 
     public class UserService : IUserService
@@ -114,7 +115,13 @@ namespace User_Service.Service
         public void Update(User user)
         {
             _userRepository.Update(user);
-            _userUpdateSender.SendUpdate("User.DisplayName", new User{ UserId = user.UserId, DisplayName = user.DisplayName });
+            _userUpdateSender.SendUpdate("User.DisplayName", new User { UserId = user.UserId, DisplayName = user.DisplayName });
+        }
+
+        public void Delete(User user)
+        {
+            _userRepository.Delete(user);
+            _userUpdateSender.SendUpdate("User.Deleted", new User { UserId = user.UserId });
         }
     }
 }

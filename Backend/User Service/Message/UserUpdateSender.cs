@@ -26,8 +26,8 @@ namespace User_Service.Message
 
         public void SendUpdate(string queueName, User user)
         {
-            var factory = new ConnectionFactory() { HostName = _hostname };
-            
+            var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password };
+
             using var connection = factory.CreateConnection();
             using (var channel = connection.CreateModel())
             {

@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{332F7800-1B7B-4F03-8C66-73CD15A14D70}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		User Service\deployment.yaml = User Service\deployment.yaml
+		infrastructure\generate-azure-environment.ps1 = infrastructure\generate-azure-environment.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playlist Service", "Playlist Service\Playlist Service.csproj", "{5939DAD2-6174-4734-BF82-9644E4C2E661}"

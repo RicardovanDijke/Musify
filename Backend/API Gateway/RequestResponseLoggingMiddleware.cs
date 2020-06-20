@@ -39,6 +39,7 @@ namespace API_Gateway
             //Format the response from the server
             var response = await FormatResponse(context.Response);
             builder.Append("Response: ").AppendLine(response);
+
             Debug.WriteLine("| Response: "+ response);
             builder.AppendLine("Response headers: ");
             foreach (var header in context.Response.Headers)

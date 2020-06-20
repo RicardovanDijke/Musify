@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+metadata:
+  name: musify
+build:
+  artifacts:
+    - image: cr.jboi.dev/ricardo/playlist
+      docker:
+        dockerfile: "Playlist Service/Dockerfile"
+    - image: cr.jboi.dev/ricardo/song
+      docker:
+        dockerfile: "Song Service/Dockerfile"
+    #- image: cr.jboi.dev/ricardo/streaming
+   #   docker:
+    #    dockerfile: "Streaming Service/Dockerfile"
+    - image: cr.jboi.dev/ricardo/user
+      docker:
+        dockerfile: "User Service/Dockerfile"
+  local: {}

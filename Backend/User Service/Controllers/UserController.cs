@@ -82,7 +82,7 @@ namespace User_Service.Controllers
             return Ok();
         }
 
-        [HttpPatch("update/{id}")]
+        [HttpPatch("{id}")]
         [AllowAnonymous]
         public ActionResult<User> Patch(long id, [FromBody]JsonPatchDocument<User> userPatch)
         {
@@ -91,5 +91,16 @@ namespace User_Service.Controllers
             _userService.Update(user);
             return Ok(user);
         }
+
+        [HttpDelete("{id}")]
+        [AllowAnonymous]
+        public ActionResult<User> Delete(long id)
+        {
+            var user = _userService.GetById(id);
+            _userService.Delete(user);
+            return Ok(user);
+        }
+
+
     }
 }

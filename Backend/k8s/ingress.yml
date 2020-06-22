@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  name: ingress
+  namespace: ricardo
+spec:
+  rules:
+    - host: musify.ricardo.jboi.dev
+      http:
+        paths:
+          - backend:
+              serviceName: playlist
+              servicePort: 80
+            path: /api/playlists/
+          - backend:
+              serviceName: song
+              servicePort: 80
+            path: /api/songs/
+          - backend:
+              serviceName: user
+              servicePort: 80
+            path: /api/user/
+  tls:
+    - hosts:
+        - musify.ricardo.jboi.dev
+      secretName: ing-ricardo-musify-dev

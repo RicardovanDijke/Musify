@@ -39,7 +39,6 @@ namespace Playlist_Service.Message
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "User.DisplayName", durable: false, exclusive: false, autoDelete: false, arguments: null);
             _channel.QueueDeclare(queue: "User.Deleted", durable: false, exclusive: false, autoDelete: false, arguments: null);
-            //_channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
         }
 
 
@@ -72,8 +71,6 @@ namespace Playlist_Service.Message
                         }
                 }
 
-
-
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
             consumer.Shutdown += OnConsumerShutdown;
@@ -82,17 +79,12 @@ namespace Playlist_Service.Message
             consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume("User.DisplayName", false, consumer);
-            /// _channel.
             _channel.BasicConsume("User.Deleted", false, consumer);
 
             return Task.CompletedTask;
         }
 
-        //private void HandleMessage(UpdateCustomerFullNameModel updateCustomerFullNameModel)
-        //{
-        //    _customerNameUpdateService.UpdateCustomerNameInOrders(updateCustomerFullNameModel);
-        //}
-
+     
         private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
         {
         }

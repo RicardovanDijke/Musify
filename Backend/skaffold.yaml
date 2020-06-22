@@ -11,9 +11,13 @@ build:
       docker:
         dockerfile: "Song Service/Dockerfile"
     #- image: cr.jboi.dev/ricardo/streaming
-   #   docker:
+    #   docker:
     #    dockerfile: "Streaming Service/Dockerfile"
     - image: cr.jboi.dev/ricardo/user
       docker:
         dockerfile: "User Service/Dockerfile"
   local: {}
+deploy:
+  kubectl:
+    manifests:
+      - k8s/*.yml

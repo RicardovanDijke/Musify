@@ -33,7 +33,7 @@ namespace Playlist_Service
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
                 //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBDocker"],
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBK8s"],
                     opts => opts.EnableRetryOnFailure());
                 opts.EnableDetailedErrors();
 

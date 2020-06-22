@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  namespace: ricardo
+spec:
+  selector:
+    matchLabels:
+      app: user
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: cr.jboi.dev/ricardo/user
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          ports:
+            - name: http
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  namespace: ricardo
+spec:
+  ports:
+    - name: http
+      port: 80
+  selector:
+    app: user
+  type: ClusterIP

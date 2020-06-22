@@ -12,10 +12,12 @@ namespace Playlist_Service.Service
         IEnumerable<Playlist> GetAll();
         Playlist GetById(long id);
         void Add(Playlist playlist);
+        void AddRange(List<Playlist> playlists);
         List<Playlist> GetFollowedPlaylistsByUserId(long id);
         void AddSongsToPlaylist(long playlistId, List<long> songIds);
         List<Playlist> GetPublicCreatedPlaylistsByUserId(long id);
         void UpdateCreatorName(UserDisplayNameUpdate userDisplayNameUpdate);
+        void DeletePlaylistsByCreatorId(long userId);
     }
 
     public class PlaylistService : IPlaylistService
@@ -44,6 +46,11 @@ namespace Playlist_Service.Service
             _playlistRepository.Add(user);
         }
 
+        public void AddRange(List<Playlist> playlists)
+        {
+            _playlistRepository.AddRange(playlists);
+        }
+
         public List<Playlist> GetFollowedPlaylistsByUserId(long id)
         {
             return _playlistRepository.GetFollowedPlaylistsByUserId(id);
@@ -62,6 +69,16 @@ namespace Playlist_Service.Service
             {
                 playlist.CreatorName = userDisplayNameUpdate.DisplayName;
                 _playlistRepository.Update(playlist);
+            }
+        }
+
+        public void DeletePlaylistsByCreatorId(long userId)
+        {
+            var playlists = _playlistRepository.GetAllCreatedPlaylistsByUserId(userId);
+
+            foreach (var playlist in playlists)
+            {
+                _playlistRepository.Delete(playlist);
             }
         }
 

@@ -18,7 +18,7 @@ namespace User_Service.Service
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
         User GetById(long id);
-        void Add(User user);
+        User Add(User user);
         List<User> GetFollowersByUser(long userId);
         List<User> GetFollowingByUser(long userId);
         void AddFollower(long followeeId, long followerId);
@@ -80,9 +80,9 @@ namespace User_Service.Service
             return _userRepository.Get(id);
         }
 
-        public void Add(User user)
+        public User Add(User user)
         {
-            _userRepository.Add(user);
+            return _userRepository.Add(user);
         }
 
         public List<User> GetFollowersByUser(long userId)

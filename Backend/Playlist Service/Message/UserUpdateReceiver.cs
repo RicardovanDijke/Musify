@@ -33,15 +33,12 @@ namespace Playlist_Service.Message
 
         private void InitializeRabbitMqListener()
         {
-            var factory = new ConnectionFactory
-            {
-                HostName = _hostname
-            };
-
+            var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password };
             _connection = factory.CreateConnection();
             _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "User.DisplayName", durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueDeclare(queue: "User.Deleted", durable: false, exclusive: false, autoDelete: false, arguments: null);
             //_channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
         }
 
@@ -50,15 +47,32 @@ namespace Playlist_Service.Message
         {
             stoppingToken.ThrowIfCancellationRequested();
 
+            //todo add multiple consumers & channels, handlemethod for each (1 displaynameupdate 1 deleted)
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
                 Console.WriteLine(content);
 
-                var userDisplayNameUpdate = JsonConvert.DeserializeObject<UserDisplayNameUpdate>(content);
+                switch (ea.RoutingKey)
+                {
+                    case "User.DisplayName":
+                        {
+                            var userDisplayNameUpdate = JsonConvert.DeserializeObject<UserDisplayNameUpdate>(content);
+                            _playlistService.UpdateCreatorName(userDisplayNameUpdate);
 
-                _playlistService.UpdateCreatorName(userDisplayNameUpdate);
+                            break;
+                        }
+                    case "User.Deleted":
+                        {
+                            var userId = JsonConvert.DeserializeObject<UserDisplayNameUpdate>(content).UserId;
+
+                            _playlistService.DeletePlaylistsByCreatorId(userId);
+                            break;
+                        }
+                }
+
+
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
@@ -68,6 +82,8 @@ namespace Playlist_Service.Message
             consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume("User.DisplayName", false, consumer);
+            /// _channel.
+            _channel.BasicConsume("User.Deleted", false, consumer);
 
             return Task.CompletedTask;
         }

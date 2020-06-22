@@ -23,7 +23,7 @@ namespace User_Service.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
             Debug.WriteLine($"{MethodBase.GetCurrentMethod().Name} requested, userName = {model.Username}, pass = {model.Password}");
 
@@ -69,22 +69,22 @@ namespace User_Service.Controllers
         /*
          {
         "id": 1,
-        "displayName": Kenai,
+        "displayName": "Kenai",
         "username": "Yordi66",
         "password": "password",
         "role": "Admin"
         }
         */
         [HttpPost]
-        public ActionResult AddUser(User user)
+        [AllowAnonymous]
+        public ActionResult<User> AddUser(User user)
         {
-            _userService.Add(user);
-            return Ok();
+            return Ok(_userService.Add(user));
         }
 
         [HttpPatch("{id}")]
         [AllowAnonymous]
-        public ActionResult<User> Patch(long id, [FromBody]JsonPatchDocument<User> userPatch)
+        public ActionResult<User> Patch(long id, [FromBody] JsonPatchDocument<User> userPatch)
         {
             var user = _userService.GetById(id);
             userPatch.ApplyTo(user);
@@ -94,11 +94,16 @@ namespace User_Service.Controllers
 
         [HttpDelete("{id}")]
         [AllowAnonymous]
-        public ActionResult<User> Delete(long id)
+        public ActionResult Delete(long id)
         {
             var user = _userService.GetById(id);
-            _userService.Delete(user);
-            return Ok(user);
+            if (user != null)
+            {
+                _userService.Delete(user);
+                return Ok();
+            }
+
+            return NotFound();
         }
 
 

@@ -51,8 +51,8 @@ namespace Playlist_Service
             );
 
             //setup Messaging receiver
-           // services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
-            //services.AddHostedService<UserUpdateReceiver>();
+            services.Configure<RabbitMqConfiguration>(Configuration.GetSection("RabbitMq"));
+            services.AddHostedService<UserUpdateReceiver>();
 
             //configure Swagger
             services.AddSwaggerGen(c =>

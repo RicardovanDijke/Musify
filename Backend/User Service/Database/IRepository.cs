@@ -6,7 +6,7 @@ namespace User_Service.Database
     {
         IEnumerable<T> GetAll();
         T Get(long id);
-        void Add(T entity);
+        T Add(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

@@ -31,10 +31,11 @@ namespace User_Service.Database
             return _context.Users.Find(id);
         }
 
-        public void Add(User obj)
+        public User Add(User obj)
         {
-            _context.Users.Add(obj);
+            var u =_context.Users.Add(obj);
             Save();
+            return u.Entity;
         }
 
         public void Update(User obj)
@@ -46,7 +47,7 @@ namespace User_Service.Database
 
         public void Delete(User obj)
         {
-            User existing = _context.Users.Find(obj);
+            User existing = _context.Users.Find(obj.UserId);
             _context.Users.Remove(existing);
             Save();
         }

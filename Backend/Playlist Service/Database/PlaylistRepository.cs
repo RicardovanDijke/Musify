@@ -9,9 +9,9 @@ namespace Playlist_Service.Database
     {
         public Playlist FindByName(string name);
         List<Playlist> GetFollowedPlaylistsByUserId(long id);
-        void AddSongsToPlaylist(Playlist playlist, List<long> songIds);
         List<Playlist> GetPublicCreatedPlaylistsByUserId(long id);
         List<Playlist> GetAllCreatedPlaylistsByUserId(long id);
+        void AddRange(List<Playlist> playlists);
     }
 
     public class PlaylistRepository : IPlaylistRepository
@@ -50,7 +50,7 @@ namespace Playlist_Service.Database
 
         public void Delete(Playlist obj)
         {
-            var existing = table.Find(obj);
+            var existing = table.Find(obj.PlaylistId);
             table.Remove(existing);
             Save();
         }
@@ -66,19 +66,20 @@ namespace Playlist_Service.Database
             return table.Where(p => p.CreatorUserID == id).ToList();
         }
 
-        public void AddSongsToPlaylist(Playlist playlist, List<long> songIds)
-        {
-           
-        }
-
         public List<Playlist> GetPublicCreatedPlaylistsByUserId(long id)
         {
             return table.Where(p => p.CreatorUserID == id && p.Private == false).ToList();
-        } 
+        }
 
         public List<Playlist> GetAllCreatedPlaylistsByUserId(long id)
         {
             return table.Where(p => p.CreatorUserID == id).ToList();
+        }
+
+        public void AddRange(List<Playlist> playlists)
+        {
+            table.AddRange(playlists);
+            Save();
         }
 
         public void Save()

@@ -355,3 +355,6 @@ MigrationBackup/
 
 # Docker temp database data
 tmp/*
+
+# Sonarqube analysis
+.sonarqube/

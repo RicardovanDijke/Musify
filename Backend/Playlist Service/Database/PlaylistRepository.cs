@@ -16,8 +16,8 @@ namespace Playlist_Service.Database
 
     public class PlaylistRepository : IPlaylistRepository
     {
-        private DatabaseContext context;
-        private DbSet<Playlist> table;
+        private readonly DatabaseContext context;
+        private readonly DbSet<Playlist> table;
 
         public PlaylistRepository(DatabaseContext context)
         {
@@ -35,22 +35,22 @@ namespace Playlist_Service.Database
             return table.Find(id);
         }
 
-        public void Add(Playlist obj)
+        public void Add(Playlist entity)
         {
-            table.Add(obj);
+            table.Add(entity);
             Save();
         }
 
-        public void Update(Playlist obj)
+        public void Update(Playlist entity)
         {
-            table.Attach(obj);
-            context.Entry(obj).State = EntityState.Modified;
+            table.Attach(entity);
+            context.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
-        public void Delete(Playlist obj)
+        public void Delete(Playlist entity)
         {
-            var existing = table.Find(obj.PlaylistId);
+            var existing = table.Find(entity.PlaylistId);
             table.Remove(existing);
             Save();
         }

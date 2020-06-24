@@ -30,7 +30,7 @@ namespace User_Service.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private IUserUpdateSender _userUpdateSender;
+        private readonly IUserUpdateSender _userUpdateSender;
         private readonly AppSettings _appSettings;
 
         public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender, IOptions<AppSettings> appSettings)

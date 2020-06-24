@@ -21,17 +21,14 @@ namespace Song_Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<SongContext>(opts => opts.UseNpgsql(Configuration["ConnectionString:SongDB"]));
             services.AddDbContext<DatabaseContext>(opts =>
             {
-                // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
                //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBK8s"]);
                 opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:SongDBDocker"]);
                 opts.EnableSensitiveDataLogging();
             });
             services.AddScoped<DatabaseContext>();
 
-            // services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ISongRepository, SongRepository>();
             services.AddScoped<SongService>();
             services.AddScoped<AlbumService>();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -12,9 +8,9 @@ namespace User_Service.Message
 {
     public class UserUpdateSender : IUserUpdateSender
     {
-        private string _hostname;
-        private string _username;
-        private string _password;
+        private readonly string _hostname;
+        private readonly string _username;
+        private readonly string _password;
 
         public UserUpdateSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {

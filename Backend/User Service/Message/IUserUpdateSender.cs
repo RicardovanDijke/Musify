@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using User_Service.Entities;
+﻿using User_Service.Entities;
 
 namespace User_Service.Message
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace User_Service.Message
+﻿namespace User_Service.Message
 {
     public class RabbitMqConfiguration
     {

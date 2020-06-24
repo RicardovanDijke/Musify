@@ -29,22 +29,22 @@ namespace Song_Service.Database
             return _context.Songs.Find(id);
         }
 
-        public void Add(Song obj)
+        public void Add(Song entity)
         {
-            _context.Songs.Add(obj);
+            _context.Songs.Add(entity);
             Save();
         }
 
-        public void Update(Song obj)
+        public void Update(Song entity)
         {
-            _context.Songs.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
+            _context.Songs.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
-        public void Delete(Song obj)
+        public void Delete(Song entity)
         {
-            Song existing = _context.Songs.Find(obj);
+            Song existing = _context.Songs.Find(entity);
             _context.Songs.Remove(existing);
             Save();
         }

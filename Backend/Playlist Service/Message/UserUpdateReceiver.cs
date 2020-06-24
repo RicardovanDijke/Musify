@@ -35,7 +35,6 @@ namespace Playlist_Service.Message
         {
             var factory = new ConnectionFactory() { HostName = _hostname, UserName = _username, Password = _password };
             _connection = factory.CreateConnection();
-            _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "User.DisplayName", durable: false, exclusive: false, autoDelete: false, arguments: null);
             _channel.QueueDeclare(queue: "User.Deleted", durable: false, exclusive: false, autoDelete: false, arguments: null);
@@ -73,38 +72,12 @@ namespace Playlist_Service.Message
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
-            consumer.Shutdown += OnConsumerShutdown;
-            consumer.Registered += OnConsumerRegistered;
-            consumer.Unregistered += OnConsumerUnregistered;
-            consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume("User.DisplayName", false, consumer);
             _channel.BasicConsume("User.Deleted", false, consumer);
 
             return Task.CompletedTask;
         }
-
-     
-        private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e)
-        {
-        }
-
-        private void OnConsumerUnregistered(object sender, ConsumerEventArgs e)
-        {
-        }
-
-        private void OnConsumerRegistered(object sender, ConsumerEventArgs e)
-        {
-        }
-
-        private void OnConsumerShutdown(object sender, ShutdownEventArgs e)
-        {
-        }
-
-        private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
-        {
-        }
-
         public override void Dispose()
         {
             _channel.Close();

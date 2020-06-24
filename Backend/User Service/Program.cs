@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using User_Service.Database;
-using User_Service.Entities;
 
 namespace User_Service
 {

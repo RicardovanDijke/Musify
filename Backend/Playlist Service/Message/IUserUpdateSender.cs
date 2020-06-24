@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace Playlist_Service.Message
+﻿namespace Playlist_Service.Message
 {
     public interface IUserUpdateReceiver
     {

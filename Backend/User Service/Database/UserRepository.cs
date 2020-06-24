@@ -31,23 +31,23 @@ namespace User_Service.Database
             return _context.Users.Find(id);
         }
 
-        public User Add(User obj)
+        public User Add(User entity)
         {
-            var u =_context.Users.Add(obj);
+            var u =_context.Users.Add(entity);
             Save();
             return u.Entity;
         }
 
-        public void Update(User obj)
+        public void Update(User entity)
         {
-            _context.Users.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
+            _context.Users.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
-        public void Delete(User obj)
+        public void Delete(User entity)
         {
-            User existing = _context.Users.Find(obj.UserId);
+            User existing = _context.Users.Find(entity.UserId);
             _context.Users.Remove(existing);
             Save();
         }

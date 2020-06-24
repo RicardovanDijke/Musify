@@ -31,22 +31,22 @@ namespace Song_Service.Database
             return _table.Find(id);
         }
 
-        public void Add(Artist obj)
+        public void Add(Artist entity)
         {
-            _table.Add(obj);
+            _table.Add(entity);
             Save();
         }
 
-        public void Update(Artist obj)
+        public void Update(Artist entity)
         {
-            _table.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
+            _table.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
-        public void Delete(Artist obj)
+        public void Delete(Artist entity)
         {
-            var existing = _table.Find(obj);
+            var existing = _table.Find(entity);
             _table.Remove(existing);
             Save();
         }

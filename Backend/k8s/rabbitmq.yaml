@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: ricardo
+spec:
+  ports:
+    - port: 15672
+      name: "http"
+    - port: 5672
+      name: "rabbitmq"
+  selector:
+    app: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit
+  namespace: ricardo
+spec:
+  ports:
+    - port: 4369
+      name: "epmd"
+  selector:
+    app: rabbitmq
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: rabbitmq
+  namespace: ricardo
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      hostname: rabbit
+      containers:
+        - image: lucifer8591/rabbitmq-server:3.7.17
+          name: rabbitmq
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: user
+            - name: RABBITMQ_DEFAULT_PASS
+              value: password
+          ports:
+            - containerPort: 15672
+            - containerPort: 5672
+            - containerPort: 4369
+          volumeMounts:
+            - name: rabbitmq-persistent-storage
+              mountPath: /var/lib/rabbitmq/mnesia
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+      volumes:
+        - name: rabbitmq-persistent-storage
+          persistentVolumeClaim:
+            claimName: rabbitmq
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq
+  namespace: ricardo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

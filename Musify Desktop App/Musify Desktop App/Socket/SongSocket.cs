@@ -19,7 +19,17 @@ namespace Musify_Desktop_App.Socket
                 int port = 11000;
                 var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
                 listener.Start();
-                TcpClient client = listener.AcceptTcpClient();
+
+                TcpClient client;
+                try
+                {
+                    client = listener.AcceptTcpClient();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return;
+                }
 
                 Console.WriteLine("Client connected");
 

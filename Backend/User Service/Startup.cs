@@ -69,8 +69,8 @@ namespace User_Service
             services.AddDbContext<DatabaseContext>(opts =>
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:AuthDB"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBK8s"],
-                    opts => opts.EnableRetryOnFailure());
+                // opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBK8s"], opts => opts.EnableRetryOnFailure());
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:AuthDBDocker"], opts => opts.EnableRetryOnFailure());
                 opts.EnableSensitiveDataLogging();
             });
 

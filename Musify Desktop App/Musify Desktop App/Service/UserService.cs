@@ -24,8 +24,6 @@ namespace Musify_Desktop_App.Service
 
     internal class UserService : IUserService
     {
-        private const string GatewayApi = "https://musify.ricardo.jboi.dev/api/";
-
         public User Login(string username, string password)
         {
             var user = LoginTask(username, password).Result;
@@ -52,7 +50,7 @@ namespace Musify_Desktop_App.Service
                 password,
             });
 
-            var stringTask = client.PostAsync(GatewayApi + "user/auth/login", new StringContent(payload, Encoding.UTF8, "application/json"));
+            var stringTask = client.PostAsync(Environment.GatewayAPI + "user/auth/login", new StringContent(payload, Encoding.UTF8, "application/json"));
 
             try
             {
@@ -92,7 +90,7 @@ namespace Musify_Desktop_App.Service
 
             var payload = JsonConvert.SerializeObject(patch);
 
-            var stringTask = client.PatchAsync(GatewayApi + $"user/auth/update/{user.UserId}", new StringContent(payload, Encoding.UTF8, "application/json"));
+            var stringTask = client.PatchAsync(Environment.GatewayAPI + $"user/auth/update/{user.UserId}", new StringContent(payload, Encoding.UTF8, "application/json"));
 
             try
             {
@@ -123,7 +121,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var stringTask = client.GetAsync(GatewayApi + $"user/follows/getFollowersByUserId/{userId}");
+            var stringTask = client.GetAsync(Environment.GatewayAPI + $"user/follows/getFollowersByUserId/{userId}");
 
             try
             {
@@ -155,7 +153,7 @@ namespace Musify_Desktop_App.Service
             try
             {
                 var httpClient = new HttpClient(new HttpClientHandler());
-                HttpResponseMessage response = httpClient.PostAsync(GatewayApi + $"user/follows/addFollower/{followeeId}/{followerId}", null).Result;
+                HttpResponseMessage response = httpClient.PostAsync(Environment.GatewayAPI + $"user/follows/addFollower/{followeeId}/{followerId}", null).Result;
             }
             catch (Exception ex)
             {
@@ -173,7 +171,7 @@ namespace Musify_Desktop_App.Service
             try
             {
                 var httpClient = new HttpClient(new HttpClientHandler());
-                HttpResponseMessage response = httpClient.PostAsync(GatewayApi + $"user/follows/removeFollower/{followeeId}/{followerId}", null).Result;
+                HttpResponseMessage response = httpClient.PostAsync(Environment.GatewayAPI + $"user/follows/removeFollower/{followeeId}/{followerId}", null).Result;
             }
             catch (Exception ex)
             {
@@ -189,7 +187,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var stringTask = client.GetAsync(GatewayApi + $"user/follows/getFollowingByUserId/{userId}");
+            var stringTask = client.GetAsync(Environment.GatewayAPI + $"user/follows/getFollowingByUserId/{userId}");
 
             try
             {

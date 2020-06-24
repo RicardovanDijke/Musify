@@ -33,8 +33,8 @@ namespace Playlist_Service
             {
                 // opts.UseNpgsql(Configuration["ConnectionString:SongDB"]);
                 //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBMySql"]);
-                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBK8s"],
-                    opts => opts.EnableRetryOnFailure());
+                //opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBK8s"], opts => opts.EnableRetryOnFailure());
+                opts.UseLazyLoadingProxies().UseMySql(Configuration["ConnectionString:PlaylistDBDocker"], opts => opts.EnableRetryOnFailure());
                 opts.EnableDetailedErrors();
 
             opts.EnableSensitiveDataLogging();
@@ -57,7 +57,7 @@ namespace Playlist_Service
             //configure Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Playlist API", Version = "v1" });
             });
         }
 

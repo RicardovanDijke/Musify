@@ -51,7 +51,7 @@ namespace Song_Service.Entities
 
         public void SetFilePath()
         {
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MusifyStorage", Artist.Name, Album.Name, _trackNumber + " - " + Title + ".mp3");
+            FilePath = Path.Combine("songstorage", Artist.Name, Album.Name, _trackNumber + " - " + Title + ".mp3");
         }
 
         public int GetAlbumNumber()

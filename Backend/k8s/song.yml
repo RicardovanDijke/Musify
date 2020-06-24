@@ -24,6 +24,11 @@ spec:
           ports:
             - name: http
               containerPort: 80
+      volumes:
+        - name: song-persistent-storage
+          persistentVolumeClaim:
+            claimName: songstorage
+
 ---
 apiVersion: v1
 kind: Service
@@ -37,3 +42,16 @@ spec:
   selector:
     app: song
   type: ClusterIP
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: songstorage
+  namespace: ricardo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

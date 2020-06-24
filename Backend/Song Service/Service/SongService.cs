@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.Text;
 using Song_Service.Database;
 using Song_Service.Entities;
 using TagLibFile = TagLib.File;
@@ -30,7 +32,7 @@ namespace Song_Service.Service
                 var fileContent = binaryReader.ReadBytes((int)file.Length);
                 var str = Encoding.Default.GetString(fileContent);
                 //await this.UploadFile(file.ContentDisposition);
-                var filePath = "C:\\users\\ricar\\desktop\\testmp3.mp3";
+                var filePath = @"songstorage/testmp3.mp3";
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
@@ -79,6 +81,8 @@ namespace Song_Service.Service
                 {
                     await file.CopyToAsync(fileStream);
                 }
+
+                Console.WriteLine(fileInfo.FullName);
             }
 
             return true;

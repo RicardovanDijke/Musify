@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -21,6 +22,7 @@ namespace Song_Service.Sockets
             // fileTransfer.Name = "TestFile";
             var content = System.Convert.ToBase64String(File.ReadAllBytes(song.FilePath));
 
+            Console.WriteLine("song found locally: " + song.FilePath);
             // var type = (song as IProxyTargetAccessor)?.DynProxyGetTarget().GetType();
 
             byte[] bytes = File.ReadAllBytes(song.FilePath);
@@ -51,26 +53,6 @@ namespace Song_Service.Sockets
             finally
             {
                 client.Close();
-            }
-
-
-            //
-
-        }
-
-        internal static TType UnwrapProxy<TType>(TType proxy)
-        {
-            if (!ProxyUtil.IsProxy(proxy))
-                return proxy;
-
-            try
-            {
-                dynamic dynamicProxy = proxy;
-                return dynamicProxy.__target;
-            }
-            catch (RuntimeBinderException)
-            {
-                return proxy;
             }
         }
     }

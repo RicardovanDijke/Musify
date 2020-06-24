@@ -25,8 +25,6 @@ namespace Musify_Desktop_App.Service
 
     public class SongService : ISongService
     {
-        private const string GatewayApi = "https://musify.ricardo.jboi.dev/api/";
-
         public SongList GetSongsInSongList(SongList songList)
         {
             var ids = songList.Songs.Select(song => song.SongId).ToList();
@@ -54,7 +52,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
             
-            var httpTask = client.GetAsync(GatewayApi + $"songs/id/{songId}");
+            var httpTask = client.GetAsync(Environment.GatewayAPI + $"songs/id/{songId}");
 
             Song song;
             try
@@ -95,7 +93,7 @@ namespace Musify_Desktop_App.Service
                 listString,
                 Encoding.UTF8,
                 "application/json");
-            var httpTask = client.PostAsync(GatewayApi + $"songs/many", body);
+            var httpTask = client.PostAsync(Environment.GatewayAPI + $"songs/many", body);
 
             List<Song> songs;
             try
@@ -130,7 +128,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(GatewayApi + "songs/all");
+            var httpTask = client.GetAsync(Environment.GatewayAPI + "songs/all");
 
             List<Song> songs;
             try
@@ -162,7 +160,7 @@ namespace Musify_Desktop_App.Service
 
 
 
-            var httpTask = client.GetAsync(GatewayApi + "albums?songId=" + songId);
+            var httpTask = client.GetAsync(Environment.GatewayAPI + "albums?songId=" + songId);
 
             Album album;
             try
@@ -193,7 +191,7 @@ namespace Musify_Desktop_App.Service
 
             //todo fix crash
 			//System.Net.WebException: 'The remote server returned an error: (502) Bad Gateway.'
-            webClient.UploadValues(GatewayApi + "songs/stream", webClient.QueryString);
+            webClient.UploadValues(Environment.GatewayAPI + "songs/stream", webClient.QueryString);
         }
     }
 }

@@ -25,11 +25,9 @@ namespace Musify_Desktop_App.Service
     //todo add base Service class with 1 httpClient
     internal class PlaylistService : IPlaylistService
     {
-        private const string GatewayApi = "https://musify.ricardo.jboi.dev/api/";
-
         private List<Playlist> _followedPlaylistsByUser;
-
-
+        
+        //todo caching data locally
         private Dictionary<long, List<Playlist>> _createdPlaylistsByUser = new Dictionary<long, List<Playlist>>();
 
         public List<Playlist> GetFollowedPlaylistsByUserId(long userId)
@@ -45,7 +43,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var stringTask = client.GetAsync(GatewayApi + $"playlists/getFollowedPlaylistsByUserId?id={userId}");
+            var stringTask = client.GetAsync(Environment.GatewayAPI + $"playlists/getFollowedPlaylistsByUserId?id={userId}");
 
             try
             {
@@ -78,7 +76,7 @@ namespace Musify_Desktop_App.Service
                 new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
 
-            var stringTask = client.GetAsync(GatewayApi + $"playlists/getPublicCreatedPlaylistsByUserId?id={userId}");
+            var stringTask = client.GetAsync(Environment.GatewayAPI + $"playlists/getPublicCreatedPlaylistsByUserId?id={userId}");
 
             try
             {
@@ -126,7 +124,7 @@ namespace Musify_Desktop_App.Service
             try
             {
                 var httpClient = new HttpClient(new HttpClientHandler());
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync(GatewayApi + $"playlists/addSongsToPlaylist", paramList);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync(Environment.GatewayAPI + $"playlists/addSongsToPlaylist", paramList);
                 // response.EnsureSuccessStatusCode();
 
                 var data = await response.Content.ReadAsStringAsync();

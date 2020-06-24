@@ -88,7 +88,10 @@ services:
     ports:
       - "6003:80"
       - "7003:443"
+      - "11000:11000"
     container_name: songservice
+    volumes:
+      - songstorage:/app/songstorage
     networks:
       - musify-network
   songservicedatabase:
@@ -102,7 +105,7 @@ services:
       MYSQL_USER: "musify"
       MYSQL_PASSWORD: "musify"
     volumes:
-      - dbsongdata:/var/lib/mysql3
+      - dbsongdata:/songs
     restart: always
     networks:
       - musify-network
@@ -132,3 +135,4 @@ volumes:
     dbuserdata:
     dbplaylistdata:
     dbsongdata:
+    songstorage:

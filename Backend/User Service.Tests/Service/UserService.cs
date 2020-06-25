@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -34,7 +32,6 @@ namespace User_Service.Tests.Service
         {
             var user1 = new User { UserId = 0L, DisplayName = "TestUser" };
             _userService.Add(user1);
-
             userRepositoryMock.Verify(x => x.Add(user1), Times.Once);
         }
 
@@ -47,7 +44,7 @@ namespace User_Service.Tests.Service
 
             userRepositoryMock.Verify(x => x.Update(user1), Times.Once);
             userUpdateSenderMock.Verify(x => x.SendUpdate(It.IsAny<string>(), It.IsAny<User>()), Times.Once);
-        } 
+        }
         [TestMethod]
         public void TestDeleteUser()
         {

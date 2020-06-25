@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using User_Service.Entities;
 
 namespace User_Service.Database
@@ -11,8 +10,6 @@ namespace User_Service.Database
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UserFollow> UserFollows { get; set; }
-
-        public DatabaseContext() { }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,6 +29,5 @@ namespace User_Service.Database
                 userFollow.HasOne(uf => uf.Followee).WithMany(u => u.Followers).HasForeignKey(uf => uf.FolloweeId);
             });
         }
-
     }
 }

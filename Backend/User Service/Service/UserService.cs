@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -33,11 +33,6 @@ namespace User_Service.Service
         private readonly IUserUpdateSender _userUpdateSender;
         private readonly AppSettings _appSettings;
 
-        public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender)
-        {
-            _userRepository = userRepository;
-            _userUpdateSender = userUpdateSender;
-        }
         public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;
@@ -87,10 +82,6 @@ namespace User_Service.Service
 
         public User Add(User user)
         {
-            if (_userRepository.Get(user.UserId) != null)
-            {
-                return null;
-            }
             return _userRepository.Add(user);
         }
 

@@ -1,10 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using User_Service.Database;
-using User_Service.Helpers;
-using User_Service.Message;
 
 namespace User_Service.Tests.Database
 {

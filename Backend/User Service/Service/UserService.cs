@@ -87,6 +87,10 @@ namespace User_Service.Service
 
         public User Add(User user)
         {
+            if (_userRepository.Get(user.UserId) != null)
+            {
+                return null;
+            }
             return _userRepository.Add(user);
         }
 

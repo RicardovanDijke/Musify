@@ -28,7 +28,19 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: MSTest@2
+- task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: 'Backend/User Service.Tests/User Service.Tests.csproj'

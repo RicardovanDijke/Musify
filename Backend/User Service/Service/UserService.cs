@@ -33,6 +33,11 @@ namespace User_Service.Service
         private readonly IUserUpdateSender _userUpdateSender;
         private readonly AppSettings _appSettings;
 
+        public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender)
+        {
+            _userRepository = userRepository;
+            _userUpdateSender = userUpdateSender;
+        }
         public UserService(IUserRepository userRepository, IUserUpdateSender userUpdateSender, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository;

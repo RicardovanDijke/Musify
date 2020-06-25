@@ -5,6 +5,7 @@
     <RootNamespace>Playlist_Service</RootNamespace>
     <UserSecretsId>c6511089-a25d-4640-867f-01e9aea0eb04</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerTargetOS>Linux</DockerTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 

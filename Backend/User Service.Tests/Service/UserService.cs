@@ -35,5 +35,12 @@ namespace User_Service.Tests.Service
             Assert.AreEqual(users.Count, 0);
         }
 
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var users = _userService.GetAll().ToList();
+            Assert.AreEqual(users.Count, 10);
+        }
+
     }
 }

@@ -16,14 +16,5 @@ namespace User_Service.Tests.Database
         {
             _userRepository = new User_Service.Database.UserRepository(databaseContextMock.Object);
         }
-
-
-        [TestMethod]
-        public void TestGetUser()
-        {
-            //var user = _userRepository.Get(0);
-
-          //  databaseContextMock.Verify(x => x.Users.Find(0), Times.Once);
-        }
     }
 }

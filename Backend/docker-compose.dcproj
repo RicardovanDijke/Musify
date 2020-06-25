@@ -6,7 +6,9 @@
     <ProjectGuid>dc0aa2e8-e505-4f4b-b126-e932f5f66839</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>userservice</DockerServiceName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DockerServiceName>Musify</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
